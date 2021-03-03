@@ -1,5 +1,5 @@
 # QuickEatz
 
-Hey, it's me, Myles Austin! I'm testing to see if I cloned the repo and can push/pull correctly!
+Hello! I'm Myles Austin. I'll be tackling the setup tasks for the databases, as well as the queries and integration with the front/backend.
 
 QuickEatz
