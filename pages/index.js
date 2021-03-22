@@ -1,49 +1,34 @@
 import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>QuickEatz</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <Image
+          src="/images/quickeatzlogo.png" // Route of the image file
+          height={300} // Desired size with correct aspect ratio
+          width={300} // Desired size with correct aspect ratio
+          alt="QuickEatz Logo"
+        />
+        <h1 className="title">QuickEatz</h1>
 
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
+        <p className="description">Who's hungry?</p>
 
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a href="/login" className="card">
+            <h3>Login &rarr;</h3>
+            <p>Log into your account here!</p>
           </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+          <a href="/createAccount" className="card">
+            <h3>Create Account &rarr;</h3>
+            <p>Want in on the latest food spots? Make an account!</p>
           </a>
         </div>
       </main>
@@ -54,7 +39,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
@@ -150,7 +135,7 @@ export default function Home() {
 
         .card {
           margin: 1rem;
-          flex-basis: 45%;
+          flex-basis: 100%;
           padding: 1.5rem;
           text-align: left;
           color: inherit;
@@ -205,5 +190,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
