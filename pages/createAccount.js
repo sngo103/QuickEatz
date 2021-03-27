@@ -27,5 +27,40 @@ export default function FirstPost() {
         <input type="submit" value="Submit" />
       </form>
     </Layout>
-  )
+
+    <jsx>{`
+      .usernameLabel {
+      border: #FFE66D 30px 30px 30px 30px;
+      outline: #000000 30px 30px 30px 30px;
+      }
+
+      .passwordLabel {
+      border: #51B1E7 30px 30px 30px 30px;
+      outline: #000000 30px 30px 30px 30px;
+      }
+
+      .topPage {
+      background-color: #FF6B6B;
+      }
+
+      .midPage {
+      background-color: #FFE66D;
+      }
+
+      .bottomPage {
+      background-color: #4ECDC4;
+      }
+
+      .enterUsername {
+      border: #FFE66D 30px 30px 30px 30px;
+      outline: #000000 30px 30px 30px 30px;
+      }
+
+      .enterPassword {
+      border: #51B1E7 30px 30px 30px 30px;
+      outline: #000000 30px 30px 30px 30px;
+      }
+      
+    `}</jsx>
+  );
 }
