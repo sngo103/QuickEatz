@@ -11,7 +11,8 @@ export default function FirstPost() {
         <title>Create Account</title>
       </Head>
 
-      <h1>Create Account Page</h1>
+      <h1>Create Account</h1>
+      <p></p>
       <h1>Please Select a Vendor or Cusomer Account </h1>
       <select onChange={this.handleColorChange}>
         <option value="Customer">Customer</option>
