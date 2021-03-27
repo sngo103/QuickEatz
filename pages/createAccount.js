@@ -23,6 +23,8 @@ export default function FirstPost() {
         <form onSubmit={this.handleSubmit}>
           <label>
             Username: <input type="text" name="username" />
+          </label>
+          <label>
             Password: <input type="test" name="password" />
           </label>
           <input type="submit" value="Submit" />
@@ -30,7 +32,7 @@ export default function FirstPost() {
       </Layout>
 
       <style jsx>{`
-      
+
         .usernameLabel {
         border: #FFE66D 30px 30px 30px 30px;
         outline: #000000 30px 30px 30px 30px;
