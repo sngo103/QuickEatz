@@ -47,39 +47,39 @@ export default function FirstPost() {
         }
 
         .usernameLabel {
-        border: #FFE66D 30px 30px 30px 30px;
-        outline: #000000 30px 30px 30px 30px;
+          border: #FFE66D 30px 30px 30px 30px;
+          outline: #000000 30px 30px 30px 30px;
         }
 
         .passwordLabel {
-        border: #51B1E7 30px 30px 30px 30px;
-        outline: #000000 30px 30px 30px 30px;
+          border: #51B1E7 30px 30px 30px 30px;
+          outline: #000000 30px 30px 30px 30px;
         }
 
         .topPage {
-        background-color: #FF6B6B;
-        width: 100%;
-        height: 25%;
-        display: flex;
-        align-items: center;
+          background-color: #FF6B6B;
+          width: 100%;
+          height: 25%;
+          display: flex;
+          align-items: center;
         }
 
         .midPage {
-        background-color: #FFE66D;
+          background-color: #FFE66D;
         }
 
         .bottomPage {
-        background-color: #4ECDC4;
+          background-color: #4ECDC4;
         }
 
         .enterUsername {
-        border: #FFE66D 30px 30px 30px 30px;
-        outline: #000000 30px 30px 30px 30px;
+          border: #FFE66D 30px 30px 30px 30px;
+          outline: #000000 30px 30px 30px 30px;
         }
 
         .enterPassword {
-        border: #51B1E7 30px 30px 30px 30px;
-        outline: #000000 30px 30px 30px 30px;
+          border: #51B1E7 30px 30px 30px 30px;
+          outline: #000000 30px 30px 30px 30px;
         }
 
       `}</style>
