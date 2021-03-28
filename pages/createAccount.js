@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/layout'
-import Account from '../styles/Account.module.css'
 
 export default function FirstPost() {
   return (
