@@ -4,14 +4,18 @@ import Layout from '../components/layout'
 
 export default function FirstPost() {
   return (
-    <div>
+    <div class>
       <Layout>
+        <Head>
 
-        <section class="topPage">
-          <Head>
-            <title>Create Account</title>
-          </Head>
-        </section>
+          <div class="navbar">
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+          </div>
+          <section class="topPage">
+            <title class="title">Create Account</title>
+          </section>
+        </Head>
 
         <section class="midPage">
           <h1>Create Account</h1>
@@ -20,29 +24,42 @@ export default function FirstPost() {
 
         <section class="bottomPage">
 
-          <h1>Please Select a Vendor or Cusomer Account </h1>
-          <select onChange={this.handleColorChange}>
+          <h1>Please Select a Vendor or Customer Account </h1>
+          <select>
             <option value="Customer">Customer</option>
             <option value="Vendor">Vendor</option>
           </select>
 
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit>
             <label class="usernameLabel">
               Username: <input type="text" name="username" />
             </label>
+            <div></div>
             <label class="passwordLabel">
               Password: <input type="test" name="password" />
             </label>
+            <div></div>
             <input type="submit" value="Submit" />
           </form>
 
         </section>
-      </Layout>
+      </Layout >
+
 
       <style jsx>{`
 
+        .navbar {
+          overflow: hidden;
+          background-color: #23272a;
+          padding: 10px;
+          width: 100%;
+          display: flex;
+
+          align-items: center;
+        }
+
         .title {
-          font: 30px "bungee-shade";
+          font: 30px "Bungee Shade";
         }
 
         .usernameLabel {
@@ -82,6 +99,9 @@ export default function FirstPost() {
         }
 
       `}</style>
-    </div>
+    </div >
   );
 }
+
+// <select onChange={this.handleChange} >
+// form onSubmit={this.handleSubmit}>
