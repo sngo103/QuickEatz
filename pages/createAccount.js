@@ -1,4 +1,3 @@
-/*
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/layout'
@@ -28,10 +27,10 @@ export default function FirstPost() {
           </select>
 
           <form onSubmit={this.handleSubmit}>
-            <label>
+            <label class="usernameLabel">
               Username: <input type="text" name="username" />
             </label>
-            <label>
+            <label class="passwordLabel">
               Password: <input type="test" name="password" />
             </label>
             <input type="submit" value="Submit" />
@@ -86,4 +85,3 @@ export default function FirstPost() {
     </div>
   );
 }
-*/
