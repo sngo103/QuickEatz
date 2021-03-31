@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -29,6 +28,10 @@ export default function Home() {
           <a href="/createAccount" className="card">
             <h3>Create Account &rarr;</h3>
             <p>Want in on the latest food spots? Make an account!</p>
+          </a>
+          <a href="/vendors" className="card">
+            <h3>See Vendors &rarr;</h3>
+            <p>Check out vendors nearby!</p>
           </a>
         </div>
       </main>
