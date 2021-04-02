@@ -26,20 +26,21 @@ export default function FirstPost() {
       </section>
 
       <section className="bottomPage">
+
         <select>
           <option value="Customer">Customer</option>
           <option value="Vendor">Vendor</option>
         </select>
 
-        <form onSubmit>
+        <form onSubmit className="usernameLabel">
           <label className="usernameLabel">
             Username: <input type="text" name="username" />
           </label>
-          <div></div>
+
           <label className="passwordLabel">
             Password: <input type="test" name="password" />
           </label>
-          <div></div>
+
           <input type="submit" value="Submit" />
         </form>
 
