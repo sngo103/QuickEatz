@@ -53,10 +53,11 @@ export default function FirstPost() {
 
 
       <style jsx>{`
+      @import url('https://fonts.googleapis.com/css?family=Bungee-shade');
 
         .navbar {
           overflow: hidden;
-          background-color: #F7FFF7;
+          background-color: #F9FEFF; /*#F7FFF7;*/
           padding: 10px;
           width: 100%;
           display: flex
@@ -129,6 +130,21 @@ export default function FirstPost() {
           color: black;
         }
 
+      `}</style>
+
+      <style jsx global>{`
+          html,
+          body {
+            padding: 0;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+          }
+        
+          * {
+            box-sizing: border-box;
+          }
       `}</style>
 
     </div >
