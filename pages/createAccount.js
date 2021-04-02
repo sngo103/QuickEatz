@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Layout from '../components/layout'
+import Layout from '../components/accountLayout'
 
 
 export default function FirstPost() {
@@ -13,16 +13,17 @@ export default function FirstPost() {
       </div>
 
       <section className="topPage">
+
+        <Head>
+          <title className="title">Create Account</title>
+        </Head>
         <Layout>
-          <Head>
-            <title className="title">Create Account</title>
-          </Head>
           <h1 className="title">Create Account</h1>
         </Layout>
       </section>
 
       <section className="midPage">
-        <h1>Please Select a Vendor or Customer Account </h1>
+        <h1 className="accountMessage">Please Select a Vendor or Customer Account </h1>
       </section>
 
       <section className="bottomPage">
@@ -32,14 +33,18 @@ export default function FirstPost() {
           <option value="Vendor">Vendor</option>
         </select>
 
-        <form onSubmit className="usernameLabel">
+        <form onSubmit>
           <label className="usernameLabel">
             Username: <input type="text" name="username" />
           </label>
 
+          <div></div>
+
           <label className="passwordLabel">
             Password: <input type="test" name="password" />
           </label>
+
+          <div></div>
 
           <input type="submit" value="Submit" />
         </form>
@@ -54,7 +59,8 @@ export default function FirstPost() {
           background-color: #F7FFF7;
           padding: 10px;
           width: 100%;
-          display: flex;
+          display: flex
+          position: fixed;
 
           align-items: center;
         }
@@ -79,7 +85,8 @@ export default function FirstPost() {
         }
 
         .title {
-          font: 60px "Bungee Shade";
+          font: 70px "Bungee Shade";
+          color: white;
         }
 
         .usernameLabel {
@@ -93,9 +100,9 @@ export default function FirstPost() {
         }
 
         .topPage {
-          background-color: #FF6B6B;
+          background-color: #B3DEE5; /*#FF6B6B Red*/
           width: 100%;
-          height: 10%;
+          height: 575px;
           display: flex;
           align-items: center;
           text-align: center;
@@ -103,28 +110,23 @@ export default function FirstPost() {
         }
 
         .midPage {
-          background-color: #FFE66D;
-          padding: 30px 30px 30px 30px;
+          background-color: #F8981D;/*#FFE66D;*/
+          padding: 20px 20px 20px 30px;
           align-items: center;
           text-align: center;
         }
 
         .bottomPage {
-          background-color: #4ECDC4;
+          background-color: #FFE66D;/*#4ECDC4;*/
           align-items: center;
           text-align: center;
-          height 75%;
           padding 200px 200px 200px 200px;
+          position: relative;
+          bottom: 0;
         }
 
-        .enterUsername {
-          border: #FFE66D 30px 30px 30px 30px;
-          outline: #000000 30px 30px 30px 30px;
-        }
-
-        .enterPassword {
-          border: #51B1E7 30px 30px 30px 30px;
-          outline: #000000 30px 30px 30px 30px;
+        .accountMessage {
+          color: black;
         }
 
       `}</style>
