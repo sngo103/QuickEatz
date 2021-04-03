@@ -37,6 +37,7 @@ export default function FirstPost() {
           <label className="usernameLabel">
             Username: <input className="textbox" type="text" name="username" />
           </label>
+          <></>
 
           <div></div>
 
@@ -136,7 +137,8 @@ export default function FirstPost() {
 
 
         .topPage {
-          background-color: #B3DEE5; /*#FF6B6B Red*/
+          background-color: #B3DEE5;
+          /*#FF6B6B Red*/ /*#FEB557;peach orange*/
           width: 100%;
           height: 400px;
           display: flex;
@@ -147,7 +149,7 @@ export default function FirstPost() {
 
         .midPage {
           background-color: #E2A60B;
-           /*#FFAC41;*/ 
+           /*#FFAC41; #FFE66D;*/ 
           /*#FEB75D;*/
           /*#927E65;*/
           /*#F8981D; orange;  #FEB557;*/
@@ -159,7 +161,8 @@ export default function FirstPost() {
         }
 
         .bottomPage {
-          background-color: #FFE66D; /*#4ECDC4;*/
+          background-color: #FFE66D; 
+          /*#4ECDC4;*/
           align-items: center;
           text-align: center;
           padding 225px 225px 275px 225px;
@@ -168,9 +171,11 @@ export default function FirstPost() {
         }
 
         .message {
-          font-family: "Bungee"; /*Pridi*/
+          font-family: "Bungee"; 
           font-size: 35px;
-          color: black;
+          color: #4F3D13;
+          /*#5C4917;*/
+          /*color: #775D1D;*/
         }
 
       `}</style>
