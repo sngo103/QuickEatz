@@ -146,7 +146,8 @@ export default function FirstPost() {
         }
 
         .midPage {
-          background-color: #FFAC41; 
+          background-color: #E2A60B;
+           /*#FFAC41;*/ 
           /*#FEB75D;*/
           /*#927E65;*/
           /*#F8981D; orange;  #FEB557;*/
