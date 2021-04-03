@@ -23,12 +23,12 @@ export default function FirstPost() {
       </section>
 
       <section className="midPage">
-        <h1 className="accountMessage">Please Select a Vendor or Customer Account </h1>
+        <h1 className="message">Please Select a Vendor or Customer Account </h1>
       </section>
 
       <section className="bottomPage">
 
-        <select>
+        <select className="">
           <option value="Customer">Customer</option>
           <option value="Vendor">Vendor</option>
         </select>
@@ -53,7 +53,7 @@ export default function FirstPost() {
 
 
       <style jsx>{`
-      @import url('https://fonts.googleapis.com/css?family=Bungee-shade');
+        @import url('https://fonts.googleapis.com/css?family=Bungee Shade');
 
         .navbar {
           overflow: hidden;
@@ -86,13 +86,16 @@ export default function FirstPost() {
         }
 
         .title {
-          font: 70px "Bungee Shade";
+          font-family: "Bungee Shade";
+          font-size: 55px;
           color: white;
+          height: 0px;
         }
 
         .usernameLabel {
           border: #FFE66D 30px 30px 30px 30px;
           outline: #000000 30px 30px 30px 30px;
+          height: 200px;
         }
 
         .passwordLabel {
@@ -103,7 +106,7 @@ export default function FirstPost() {
         .topPage {
           background-color: #B3DEE5; /*#FF6B6B Red*/
           width: 100%;
-          height: 575px;
+          height: 400px;
           display: flex;
           align-items: center;
           text-align: center;
@@ -111,7 +114,9 @@ export default function FirstPost() {
         }
 
         .midPage {
-          background-color: #F8981D;/*#FFE66D;*/
+          background-color: #FEB557; /* orange; #FFE66D;*/
+          /* FEB04C slightly orange white; */
+
           padding: 20px 20px 20px 30px;
           align-items: center;
           text-align: center;
@@ -121,13 +126,22 @@ export default function FirstPost() {
           background-color: #FFE66D;/*#4ECDC4;*/
           align-items: center;
           text-align: center;
-          padding 200px 200px 200px 200px;
+          padding 225px 225px 225px 225px;
           position: relative;
           bottom: 0;
         }
 
-        .accountMessage {
+        .message {
+          font-family: "Bungee Shade";
+          font-size: 40px;
           color: black;
+        }
+
+        .messageBox {
+          padding: 70px;
+          border: 2px black;
+          margin: 100px;
+          width: 150px;
         }
 
       `}</style>
