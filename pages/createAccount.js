@@ -28,20 +28,20 @@ export default function FirstPost() {
 
       <section className="bottomPage">
 
-        <select className="">
+        <select className="dropdown">
           <option value="Customer">Customer</option>
           <option value="Vendor">Vendor</option>
         </select>
 
-        <form onSubmit>
+        <form>
           <label className="usernameLabel">
-            Username: <input type="text" name="username" />
+            Username: <input className="textbox" type="text" name="username" />
           </label>
 
           <div></div>
 
           <label className="passwordLabel">
-            Password: <input type="test" name="password" />
+            Password: <input className="textbox" type="test" name="password" />
           </label>
 
           <div></div>
@@ -54,6 +54,8 @@ export default function FirstPost() {
 
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css?family=Bungee Shade');
+        @import url('https://fonts.googleapis.com/css?family=Bungee');
+      
         
         .navbar {
           overflow: hidden;
@@ -92,27 +94,46 @@ export default function FirstPost() {
           height: 0px;
         }
 
+        .dropdown {
+          background: #F9FEEF;
+          padding: 5px 5px 5px 45px;
+          align-text: center;
+          height: 50px;
+          width: 200px;
+          font-size: 25px;
+          
+        }
+
+        dropdown:hover .dropdown-content {
+          display: block;
+        }
+
         .usernameLabel {
-          font-size: 40px;
-          font-family: "Bungee";
-          border: #FFE66D 30px 30px 30px 30px;
+          font-size: 40px;  
+          border: #FFE66D 10px 10px 10px 10px;
           outline: #000000 30px 30px 30px 30px;
+          height: 100px;
         }
 
         .passwordLabel {
           font-size: 40px;
-          font-family: "Bungee Inline";
-          color: #000000;
           border: #51B1E7 30px 30px 30px 30px;
           outline: #000000 30px 30px 30px 30px;
         }
 
+        .textbox {
+          height: 50px;
+          background: #F9FEEF;
+          font-size: 35px;
+          padding: 2px 7px 0px 7px;
+        }        
+
         submissionField {
-          width: 500px; 
-          height: 50px; 
-          border: 10px solid #999999; 
-          padding: 5px;
+          width: 100px; 
+          height: 500px; 
+          background: #B3DEE5; 
         }
+
 
         .topPage {
           background-color: #B3DEE5; /*#FF6B6B Red*/
@@ -125,7 +146,10 @@ export default function FirstPost() {
         }
 
         .midPage {
-          background-color: #FEB557; /* orange; #FFE66D;*/
+          background-color: #FFAC41; 
+          /*#FEB75D;*/
+          /*#927E65;*/
+          /*#F8981D; orange;  #FEB557;*/
           /* FEB04C slightly orange white; */
 
           padding: 20px 20px 20px 30px;
@@ -137,22 +161,15 @@ export default function FirstPost() {
           background-color: #FFE66D; /*#4ECDC4;*/
           align-items: center;
           text-align: center;
-          padding 225px 225px 225px 225px;
+          padding 225px 225px 275px 225px;
           position: relative;
           bottom: 0;
         }
 
         .message {
-          font-family: "Bungee Shade";
-          font-size: 40px;
+          font-family: "Bungee"; /*Pridi*/
+          font-size: 35px;
           color: black;
-        }
-
-        .messageBox {
-          padding: 70px;
-          border: 2px black;
-          margin: 100px;
-          width: 150px;
         }
 
       `}</style>
