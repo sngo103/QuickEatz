@@ -46,7 +46,7 @@ export default function FirstPost() {
 
           <div></div>
 
-          <input type="submit" value="Submit" />
+          <input className="submissionField" type="submit" value="Submit" />
         </form>
 
       </section>
@@ -54,7 +54,7 @@ export default function FirstPost() {
 
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css?family=Bungee Shade');
-
+        
         .navbar {
           overflow: hidden;
           background-color: #F9FEFF; /*#F7FFF7;*/
@@ -93,14 +93,25 @@ export default function FirstPost() {
         }
 
         .usernameLabel {
+          font-size: 40px;
+          font-family: "Bungee";
           border: #FFE66D 30px 30px 30px 30px;
           outline: #000000 30px 30px 30px 30px;
-          height: 200px;
         }
 
         .passwordLabel {
+          font-size: 40px;
+          font-family: "Bungee Inline";
+          color: #000000;
           border: #51B1E7 30px 30px 30px 30px;
           outline: #000000 30px 30px 30px 30px;
+        }
+
+        submissionField {
+          width: 500px; 
+          height: 50px; 
+          border: 10px solid #999999; 
+          padding: 5px;
         }
 
         .topPage {
@@ -123,7 +134,7 @@ export default function FirstPost() {
         }
 
         .bottomPage {
-          background-color: #FFE66D;/*#4ECDC4;*/
+          background-color: #FFE66D; /*#4ECDC4;*/
           align-items: center;
           text-align: center;
           padding 225px 225px 225px 225px;
