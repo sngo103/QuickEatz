@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from "next/image";
 import Link from 'next/link';
 
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, useSession } from 'next-auth/client'
 
 export default function Home() {
   const [ session, loading ] = useSession()
