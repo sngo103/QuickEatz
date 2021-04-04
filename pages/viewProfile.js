@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-export default function LogoutPage() {
+export default function ViewProfilePage() {
   return (
     <div>
       <Head>
-        <title>Logout</title>
+        <title>Profile</title>
       </Head>
-      <h1>Logout Page</h1>
+      <h1>My Profile</h1>
     </div>
   )
 }
