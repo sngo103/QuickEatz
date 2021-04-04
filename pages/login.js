@@ -1,14 +1,10 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import Layout from '../components/layout'
+import Login from '../components/Login.js'
 
-export default function FirstPost() {
+export default function LoginPage() {
   return (
-    <Layout>
-      <Head>
-        <title>Login</title>
-      </Head>
-      <h1>Login Page</h1>
-    </Layout>
-  )
+    <div>
+      <Login />
+    </div>
+  );
 }
