@@ -4,18 +4,26 @@ import Image from "next/image";
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = { 
+      email: "",
+      password: ""
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    const target = event.target;
+    if(target.type === "text"){
+      this.setState({ email: target.value });
+    } else if(target.type === "password"){
+      this.setState({ password: target.value });
+    }
   }
 
   handleSubmit(event) {
-    alert("A name was submitted: " + this.state.value);
+    alert("A name was submitted: " + this.state.email + " and " + this.state.password);
     event.preventDefault();
   }
 
@@ -37,7 +45,7 @@ class LoginForm extends React.Component {
             <br />
             <input
               type="text"
-              value={this.state.value}
+              value={this.state.email}
               onChange={this.handleChange}
               className="border-2 border-black"
             />
@@ -48,8 +56,8 @@ class LoginForm extends React.Component {
             Password
             <br />
             <input
-              type="text"
-              value={this.state.value}
+              type="password"
+              value={this.state.password}
               onChange={this.handleChange}
               className="border-2 border-black"
             />
