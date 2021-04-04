@@ -4,19 +4,18 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="container">
-        <div className="container mx-auto">
+    <div className="container mx-auto px-6 text-center">
+        <div className="mx-auto text-center">
           <Image
             src="/images/quickeatzlogo.png" // Route of the image file
             height={300} // Desired size with correct aspect ratio
             width={300} // Desired size with correct aspect ratio
             alt="QuickEatz Logo"
           />
-          <h1 className="title">QuickEatz</h1>
-
-          <p className="description">Who's hungry?</p>
+          <h1 className="title text-6xl font-bungee">QuickEatz</h1><br />
+          <p className="description">Who's hungry?</p><br />
           <Link href="/login">
-            <span className="sm:ml-3">
+            <span >
               <button
                 type="button"
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

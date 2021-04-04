@@ -1,14 +1,72 @@
 import React from "react";
-import Image from 'next/image'
+import Image from "next/image";
 
-export class Login extends React.Component {
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit(event) {
+    alert("A name was submitted: " + this.state.value);
+    event.preventDefault();
+  }
+
   render() {
     return (
-      <div>
-       Hello, this is the login page.
+      <div className="container inline-block p-6 text-center font-pridi text-lg">
+        <Image
+          src="/images/quickeatzlogo.png" // Route of the image file
+          height={300} // Desired size with correct aspect ratio
+          width={300} // Desired size with correct aspect ratio
+          alt="QuickEatz Logo"
+        />
+        <h1 className="title text-6xl font-bungee">QuickEatz</h1>
+        <br />
+
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Email
+            <br />
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+              className="border-2 border-black"
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            Password
+            <br />
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+              className="border-2 border-black"
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            <input
+              className="bg-white border-2 border-black rounded-md hover:text-white hover:bg-gray-700 px-3 py-1.5"
+              type="submit"
+              value="Login"
+            />
+          </label>
+        </form>
       </div>
     );
   }
 }
 
-export default Login;
+export default LoginForm;
