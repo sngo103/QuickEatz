@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap");
+
+.bungeeShade {
+  font-family: "Bungee Shade", cursive;
+  text-align: center;
+  font-size: xx-large;
+  margin-left: 20px;
+}
+
+.hello {
+  font-family: "Courier New", Courier, monospace;
+}
