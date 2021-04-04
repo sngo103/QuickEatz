@@ -2,7 +2,11 @@ import Head from 'next/head'
 import Image from "next/image";
 import Link from 'next/link';
 
+import { signIn, signOut, useSession } from 'next-auth/client'
+
 export default function Home() {
+  const [ session, loading ] = useSession()
+
   return (
     <div className="container mx-auto px-6 text-center">
         <div className="mx-auto text-center">
@@ -19,6 +23,7 @@ export default function Home() {
               <button
                 type="button"
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={signIn}
               >
                 <svg
                   className="-ml-1 mr-2 h-5 w-5"
@@ -83,7 +88,6 @@ export default function Home() {
       <footer>
        Footer here.
       </footer>
-
     </div>
   );
 }
