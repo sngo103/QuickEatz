@@ -4,6 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export class NavBar extends React.Component {
+  state = { loggedin: false, account: "customer" };
+  // loggedin and account determine what the navbar will display
+  // As of now: loggedin set to false and account type is customer 
   render() {
     return (
       <div>
