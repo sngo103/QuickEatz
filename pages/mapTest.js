@@ -22,12 +22,12 @@ const options = {
 
 export default function mApp({current_vendor, vendors, customers}){
 	
-	console.log({current_vendor, vendors, customers});
-	
+	//console.log({current_vendor, vendors, customers});
+	console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 	
 	//NOTE BAD PRACTICE TO SHOEHORN API KEY IN USE ENVLOCAL MAYBE
 	const {isLoaded, loadError} = useLoadScript({
-		googleMapsApiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4",
+		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 		libraries,
 	});
 	const [markers, setMarkers] = React.useState([]); //MAYBE A BETTER WAY TO DO THIS
@@ -59,7 +59,7 @@ export default function mApp({current_vendor, vendors, customers}){
 	// const MyMap = withScriptjs(withGoogleMap((props) => (<GoogleMap />)));
 	return (
 	<>
-	//<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4"></script>
+	
 	
 	<h1> My current location </h1>
 	<div>
