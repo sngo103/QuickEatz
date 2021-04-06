@@ -41,10 +41,7 @@ class SignUp extends React.Component {
                                 width={150} // Desired size with correct aspect ratio
                                 alt="QuickEatz Logo"
                             />
-
                             <h1 className="title text-7xl font-bungee">QuickEatz</h1>
-                            <div></div>
-
 
                             <h1 className={styles.title}>Create Account</h1>
 
@@ -61,6 +58,9 @@ class SignUp extends React.Component {
                         <option value="Vendor">Vendor</option>
                     </select>
 
+                    <br />
+                    <br />
+
                     <form onSubmit={this.handleSubmit}>
                         <label>
                             <h className={styles.usernameLabel}>Email</h> &emsp; &emsp; &emsp; &emsp; &ensp;
@@ -70,7 +70,8 @@ class SignUp extends React.Component {
                             />
                         </label>
 
-                        <p className="space"></p>
+                        <br />
+                        <br />
 
                         <label>
                             <h className={styles.passwordLabel}>Password</h> &emsp; &emsp;
@@ -80,7 +81,8 @@ class SignUp extends React.Component {
                             />
                         </label>
 
-                        <div></div>
+                        <br />
+                        <br />
 
                         <input className={styles.submissionField} type="submit" value="Submit" />
                     </form>
