@@ -1,7 +1,7 @@
 // import Link from 'next/link'
 import React from "react";
 import Image from "next/image";
-import "../styles/SignUp.module.css"
+import styles from "../styles/SignUp.module.css"
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -32,50 +32,51 @@ class SignUp extends React.Component {
     render() {
         return (
 
-            <div className="container inline-block p-6 text-center font-pridi text-lg">
-                <section className="topPage">
+            <div className="mx-auto text-center">
+                <section className={styles.topPage}>
                     <Image
                         src="/images/quickeatzlogo.png" // Route of the image file
-                        height={100} // Desired size with correct aspect ratio
-                        width={100} // Desired size with correct aspect ratio
+                        height={150} // Desired size with correct aspect ratio
+                        width={150} // Desired size with correct aspect ratio
                         alt="QuickEatz Logo"
                     />
-                    <h1 className="title text-6xl font-bungee">QuickEatz</h1>
-                    <br />
+
+                    <h1 className="title text-7xl font-bungee">QuickEatz</h1>
+                    <div></div>
 
 
-                    <h1 className="title">Create Account</h1>
+                    <h1 className={styles.title}>Create Account</h1>
 
                 </section>
 
-                <section className="midPage">
-                    <h1 className="message">Please Select a Vendor or Customer Account </h1>
+                <section className={styles.midPage}>
+                    <h1 className={styles.message}>Please Select a Vendor or Customer Account </h1>
                 </section>
 
-                <section className="bottomPage">
-                    <select className="dropdown">
+                <section className={styles.bottomPage}>
+                    <select className={styles.dropdown}>
                         <option value="Customer">Customer</option>
                         <option value="Vendor">Vendor</option>
                     </select>
 
                     <form onSubmit={this.handleSubmit}>
-                        <label className="usernameLabel">
-                            Username: <input className="textbox" type="text" name="username"
+                        <label className={styles.usernameLabel}>
+                            Username: <input className={styles.textbox} type="text" name="username"
                                 value={this.state.email}
                                 onChange={this.handleChange} />
                         </label>
 
                         <div></div>
 
-                        <label className="passwordLabel">
-                            Password: <input className="textbox" type="test" name="password"
+                        <label className={styles.passwordLabel}>
+                            Password: <input className={styles.textbox} type="test" name="password"
                                 value={this.state.email}
                                 onChange={this.handleChange} />
                         </label>
 
                         <div></div>
 
-                        <input className="submissionField" type="submit" value="Submit" />
+                        <input className={styles.submissionField} type="submit" value="Submit" />
                     </form>
                 </section>
             </div>

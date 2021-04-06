@@ -34,11 +34,16 @@
 
 */
 
+.logotext {
+    color: #FFE66D;
+}
+
 .title {
-  font-family: "Bungee Shade";
+  font-family: "Bungee";
   font-size: 55px;
-  color: white;
-  height: 0px;
+  color: #FF6B6F;
+  height: 20px;
+  text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;
 }
 
 .dropdown {
@@ -58,14 +63,14 @@ dropdown:hover .dropdown-content {
 .usernameLabel {
   font-size: 40px;  
   border: #FFE66D 10px 10px 10px 10px;
-  outline: #000000 30px 30px 30px 30px;
+  outline-style: solid;
   height: 100px;
 }
 
 .passwordLabel {
   font-size: 40px;
   border: #51B1E7 30px 30px 30px 30px;
-  outline: #000000 30px 30px 30px 30px;
+  outline-style: solid;
 }
 
 .textbox {
@@ -77,14 +82,20 @@ dropdown:hover .dropdown-content {
 
 .submissionField {
   width: 100px; 
-  height: 500px; 
-  background: #B3DEE5; 
+  height: 50px; 
+  font-size: 20px;
+  color: #000000;
+  background: #F9FEEF;
+  /*padding: 2px 7px 0px 7px #F9FEEF;*/
+  outline-style: solid;
+  outline-color: #000000;
+
 }
 
 
 .topPage {
-  background-color: #4ECDC4; 
-  /* #4ECDC4; */
+  background-color: #FFFFFF;
+  /* #4ECDC4; cyan*/
   /*#B3DEE5; light blue */
   /*#FF6B6B Red*/ 
   /*#FEB557;peach orange*/
@@ -112,7 +123,7 @@ dropdown:hover .dropdown-content {
 }
 
 .bottomPage {
-  background-color: #FF6B6B;
+  background-color: #4ECDC4;
   /* #FF9C5E; peach orange*/
   /* #FF6B6B; red */
   /*#FFE66D; yellow */ 
