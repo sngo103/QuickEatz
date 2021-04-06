@@ -40,20 +40,22 @@
 
 .title {
   font-family: "Bungee";
-  font-size: 55px;
-  color: #FF6B6F;
-  height: 20px;
+  font-size: 50px;
+  color: #4ECDC4;
+  height: 0px;
   text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;
 }
 
 .dropdown {
-  background: #F9FEEF;
-  padding: 5px 5px 5px 45px;
+  background: #000000;
+  color: #F9FEEF;
+  padding: 5px 5px 5px 25px;
    /*align-text: center; */
-  height: 50px;
-  width: 200px;
-  font-size: 25px;
-  
+
+  height: 40px;
+  width: 140px;
+  font-size: 20px;
+  border-radius: 15px;
 }
 
 dropdown:hover .dropdown-content {
@@ -61,34 +63,41 @@ dropdown:hover .dropdown-content {
 }
 
 .usernameLabel {
-  font-size: 40px;  
-  border: #FFE66D 10px 10px 10px 10px;
+  font-size: 30px;  
+  color: #F9FEEF; 
+  background-color: black;
   outline-style: solid;
-  height: 100px;
+  outline-width: 5px;
+  outline-color: black;
 }
 
+
 .passwordLabel {
-  font-size: 40px;
-  border: #51B1E7 30px 30px 30px 30px;
+  font-size: 30px;
+  color: #F9FEEF;
+  background-color: black;
   outline-style: solid;
+  outline-width: 5px;
+  outline-color: black;
 }
 
 .textbox {
-  height: 50px;
-  background: #F9FEEF;
-  font-size: 35px;
-  padding: 2px 7px 0px 7px;
-}        
+    height: 40px;
+    background: #F9FEEF;
+    font-size: 25px;
+    padding: 2px 7px 0px 7px;
+    border-radius: 15px;
+    
+}         
 
 .submissionField {
   width: 100px; 
   height: 50px; 
   font-size: 20px;
-  color: #000000;
-  background: #F9FEEF;
+  color: #F9FEEF;
+  background: #000000;
+  border-radius: 10px;
   /*padding: 2px 7px 0px 7px #F9FEEF;*/
-  outline-style: solid;
-  outline-color: #000000;
 
 }
 
@@ -123,7 +132,7 @@ dropdown:hover .dropdown-content {
 }
 
 .bottomPage {
-  background-color: #4ECDC4;
+  background-color: #FF6B6B;
   /* #FF9C5E; peach orange*/
   /* #FF6B6B; red */
   /*#FFE66D; yellow */ 
@@ -142,3 +151,10 @@ dropdown:hover .dropdown-content {
   /*#5C4917;*/
   /*color: #775D1D;*/
 }
+
+.space {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 80px;
+  }

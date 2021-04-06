@@ -31,24 +31,26 @@ class SignUp extends React.Component {
 
     render() {
         return (
+            <div>
+                <div className="container mx-auto px-6 text-center">
+                    <div className="mx-auto text-center">
+                        <section className={styles.topPage}>
+                            <Image
+                                src="/images/quickeatzlogo.png" // Route of the image file
+                                height={150} // Desired size with correct aspect ratio
+                                width={150} // Desired size with correct aspect ratio
+                                alt="QuickEatz Logo"
+                            />
 
-            <div className="mx-auto text-center">
-                <section className={styles.topPage}>
-                    <Image
-                        src="/images/quickeatzlogo.png" // Route of the image file
-                        height={150} // Desired size with correct aspect ratio
-                        width={150} // Desired size with correct aspect ratio
-                        alt="QuickEatz Logo"
-                    />
-
-                    <h1 className="title text-7xl font-bungee">QuickEatz</h1>
-                    <div></div>
+                            <h1 className="title text-7xl font-bungee">QuickEatz</h1>
+                            <div></div>
 
 
-                    <h1 className={styles.title}>Create Account</h1>
+                            <h1 className={styles.title}>Create Account</h1>
 
-                </section>
-
+                        </section>
+                    </div>
+                </div>
                 <section className={styles.midPage}>
                     <h1 className={styles.message}>Please Select a Vendor or Customer Account </h1>
                 </section>
@@ -60,18 +62,22 @@ class SignUp extends React.Component {
                     </select>
 
                     <form onSubmit={this.handleSubmit}>
-                        <label className={styles.usernameLabel}>
-                            Username: <input className={styles.textbox} type="text" name="username"
+                        <label>
+                            <h className={styles.usernameLabel}>Email</h> &emsp; &emsp; &emsp; &emsp; &ensp;
+                            <input className={styles.textbox} type="text" name="username"
                                 value={this.state.email}
-                                onChange={this.handleChange} />
+                                onChange={this.handleChange}
+                            />
                         </label>
 
-                        <div></div>
+                        <p className="space"></p>
 
-                        <label className={styles.passwordLabel}>
-                            Password: <input className={styles.textbox} type="test" name="password"
+                        <label>
+                            <h className={styles.passwordLabel}>Password</h> &emsp; &emsp;
+                            <input className={styles.textbox} type="test" name="password"
                                 value={this.state.email}
-                                onChange={this.handleChange} />
+                                onChange={this.handleChange}
+                            />
                         </label>
 
                         <div></div>
@@ -79,7 +85,8 @@ class SignUp extends React.Component {
                         <input className={styles.submissionField} type="submit" value="Submit" />
                     </form>
                 </section>
-            </div>
+
+            </div >
         );
     }
 
