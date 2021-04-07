@@ -9,7 +9,7 @@ export class NavBar extends React.Component {
     this.state = {
       loggedIn: false, account: "", showMenu: false
     }
-    this.dropdownClicked = this.dropdownClicked.bind(this);
+    this.menuClicked = this.menuClicked.bind(this);
   };
 
   dropdownClicked(event) {
@@ -76,7 +76,7 @@ export class NavBar extends React.Component {
                   <div className="ml-3 relative">
                     <div>
                       <button
-                        onClick={this.dropdownClicked}
+                        onClick={this.menuClicked}
                         type="button"
                         className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                         id="user-menu"
@@ -208,7 +208,7 @@ export class NavBar extends React.Component {
               </div>
               <div className="mt-3 px-2 space-y-1">
                 <a
-                  href="#"
+                  href="/viewProfile"
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                 >
                   Your Profile
@@ -222,7 +222,7 @@ export class NavBar extends React.Component {
                 </a>
 
                 <a
-                  href="#"
+                  href="/logout"
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                 >
                   Sign out
