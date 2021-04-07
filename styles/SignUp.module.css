@@ -1,38 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Bungee Shade');
 @import url('https://fonts.googleapis.com/css?family=Bungee');
 
-/*
-.navbar {
-  overflow: hidden;
-  background-color: #F9FEFF; 
-  padding: 10px;
-  width: 100%;
-  display: flex
-  position: fixed;
-
-  align-items: center;
-}
-
-.navbar a {
-  float: left;
-  color: #000000;
-  text-align: center;
-  padding: 10px 10px 10px 10px;
-  text-decoration: none;
-  font-size: 30px;
-}
-
-.navbar a:hover {
-  background-color: #DDD;
-  color: black;
-}
-
-.navbar a.active {
-  background-color: #7289DA;
-  color: white;
-}
-
-*/
 
 .logotext {
     color: #FFE66D;
