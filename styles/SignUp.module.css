@@ -72,11 +72,6 @@ dropdown:hover .dropdown-content {
 
 .topPage {
   background-color: #FFFFFF;
-  /* #4ECDC4; cyan*/
-  /*#B3DEE5; light blue */
-  /*#FF6B6B Red*/ 
-  /*#FEB557;peach orange*/
-
   width: 100%;
   height: 400px;
   display: flex;
@@ -87,13 +82,6 @@ dropdown:hover .dropdown-content {
 
 .midPage {
   background-color: #FFE66D;
-  /* #E2A60B; orange */
-   /*#FFAC41; #FFE66D;*/ 
-  /*#FEB75D;*/
-  /*#927E65;*/
-  /*#F8981D; orange;  #FEB557;*/
-  /* FEB04C slightly orange white; */
-
   padding: 20px 20px 20px 30px;
   align-items: center;
   text-align: center;
@@ -101,10 +89,6 @@ dropdown:hover .dropdown-content {
 
 .bottomPage {
   background-color: #FF6B6B;
-  /* #FF9C5E; peach orange*/
-  /* #FF6B6B; red */
-  /*#FFE66D; yellow */ 
-  /*#4ECDC4; cyan */
   align-items: center;
   text-align: center;
   padding: 225px 225px 275px 225px;
@@ -116,7 +100,5 @@ dropdown:hover .dropdown-content {
   font-family: "Bungee"; 
   font-size: 35px;
   color: #4F3D13;
-  /*#5C4917;*/
-  /*color: #775D1D;*/
 }
 
