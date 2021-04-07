@@ -9,13 +9,28 @@ export class NavBar extends React.Component {
     this.state = {
       loggedIn: false, account: "", showMenu: false
     }
-    this.menuClicked = this.menuClicked.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   };
 
-  dropdownClicked(event) {
+  openMenu(event) {
+    event.preventDefault();
+
     this.setState({
       showMenu: true
-    });
+    }), () => {
+      document.addEventListener("click", this.closeMenu)
+    }
+  }
+
+  closeMenu(event) {
+    event.preventDefault();
+
+    this.setState({
+      showMenu: true
+    }), () => {
+      document.addEventListener("click", this.closeMenu)
+    }
   }
 
   // loggedin and account determine what the navbar will display
