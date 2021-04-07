@@ -1,5 +1,5 @@
 import React from "react";
-import Head from 'next/head';
+// import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,10 +10,8 @@ export class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <Head>
-          <link rel="icon" href="images/quickeatzclip.png" />
-          <title>QuickEatz</title>
-        </Head>
+
+
         <nav className="bg-yellow-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
