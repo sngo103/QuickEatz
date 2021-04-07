@@ -43,10 +43,13 @@ export default function mApp({current_vendor, vendors, customers}){
 	const sendLatLon = async (current_vendor, latitude, longitude) => {
 		
 		console.log(current_vendor);
-		
+		console.log("---------------");
 		console.log(current_vendor._id);
 		
-		const data = await fetch(`http://localhost:3000/api/sendLatLon?_id=${current_vendor._id}&latitude=${latitude}&longitude=${longitude}&test=1231231`)
+		const id_str = current_vendor._id.toString();
+		
+		
+		const data = await fetch(`http://localhost:3000/api/sendLatLon?_id=${id_str}&latitude=${latitude}&longitude=${longitude}&test=1231231`)
 		
 		const res = await data.json();
 		
@@ -162,7 +165,7 @@ export async function getServerSideProps(){
     props: {
       vendors: JSON.parse(JSON.stringify(vendors)),
 	  customers: JSON.parse(JSON.stringify(customers)),
-	  current_vendor: JSON.parse(JSON.stringify(current_vendor)),
+	  current_vendor: JSON.parse(JSON.stringify(current_vendor[0])),
     },
   };
 	
