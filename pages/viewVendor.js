@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { connectToDatabase } from "../util/mongodb";
 
+const ObjectId = require('mongodb').ObjectID;
 
 export default function FirstPost({vendor, vendor_reviews}) {
 	//console.log({vendor});
@@ -44,16 +45,20 @@ export default function FirstPost({vendor, vendor_reviews}) {
 
 export async function getServerSideProps() {
   const { db } = await connectToDatabase();
+//HARDCODED
+  const test_id_str = "60519b709b7aa38721d085f7";
+  const test_id = new ObjectId(test_id_str);
+  
   const vendor = await db
     .collection("vendors")
-    .find({vendor_id: 123123})
-    .sort({ vendor_id: -1 })
+    .find({_id: test_id})
+    .sort({ average_rating: -1 })
     .limit(1)
     .toArray();
 	
   const vendor_reviews = await db
     .collection("reviews")
-    .find({vendor_id: 123123})
+    .find({vendor_id: test_id})
     .sort({ created_at: -1})
     .limit(20)
     .toArray();

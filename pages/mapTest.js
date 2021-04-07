@@ -4,7 +4,9 @@ import React from "react";
 //import { GoogleMap, Marker } from "react-google-maps";
 import {GoogleMap, Marker, InfoWindow, useLoadScript, } from "@react-google-maps/api";
 
+const { GOOGLE_MAPS_API_KEY } = process.env;
 
+const ObjectId = require('mongodb').ObjectID;
 
 const libraries = ["places"]; //libraries to avoid rerender?
 const mapContainerStyle = {
@@ -23,11 +25,13 @@ const options = {
 export default function mApp({current_vendor, vendors, customers}){
 	
 	//console.log({current_vendor, vendors, customers});
-	console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+	//console.log("Hey");
+	//console.log(process.env.GOOGLE_MAPS_API_KEY);
 	
 	//NOTE BAD PRACTICE TO SHOEHORN API KEY IN USE ENVLOCAL MAYBE
+	
 	const {isLoaded, loadError} = useLoadScript({
-		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+		googleMapsApiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4",
 		libraries,
 	});
 	const [markers, setMarkers] = React.useState([]); //MAYBE A BETTER WAY TO DO THIS
@@ -40,9 +44,9 @@ export default function mApp({current_vendor, vendors, customers}){
 		
 		console.log(current_vendor);
 		
-		console.log(current_vendor.vendor_id);
+		console.log(current_vendor._id);
 		
-		const data = await fetch(`http://localhost:3000/api/sendLatLon?vendor_id=${current_vendor.vendor_id}&latitude=${latitude}&longitude=${longitude}&test=1231231`)
+		const data = await fetch(`http://localhost:3000/api/sendLatLon?_id=${current_vendor._id}&latitude=${latitude}&longitude=${longitude}&test=1231231`)
 		
 		const res = await data.json();
 		
@@ -129,16 +133,19 @@ export async function getServerSideProps(){
   
   
   //HARDCODED
+  const test_id_str = "60519b709b7aa38721d085f7";
+  const test_id = new ObjectId(test_id_str);
+  
   const current_vendor = await db
     .collection("vendors")
-    .find({vendor_id: 123123})
+    .find({_id: test_id})
     .sort({ average_rating: -1 })
     .limit(1)
     .toArray();
   
   const vendors = await db
     .collection("vendors")
-    .find({vendor_id: 123123})
+    .find({"_id": test_id})
     .sort({ average_rating: -1 })
     .limit(20)
     .toArray();
@@ -150,11 +157,12 @@ export async function getServerSideProps(){
     .limit(20)
     .toArray(); 
 
+	console.log(current_vendor);
   return {
     props: {
       vendors: JSON.parse(JSON.stringify(vendors)),
 	  customers: JSON.parse(JSON.stringify(customers)),
-	  current_vendor: JSON.parse(JSON.stringify(current_vendor[0])),
+	  current_vendor: JSON.parse(JSON.stringify(current_vendor)),
     },
   };
 	
