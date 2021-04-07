@@ -1,19 +1,54 @@
 import React from "react";
-import Head from 'next/head';
+// import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export class NavBar extends React.Component {
-  state = { loggedin: false, account: "customer" };
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false, account: "", openMenu: false
+    }
+
+    this.clickMenu = this.clickMenu.bind(this);
+    //this.openMenu = this.openMenu.bind(this);
+    //this.closeMenu = this.closeMenu.bind(this);
+  };
+
+  clickMenu() {
+    this.setState({
+      openMenu: !this.state.openMenu
+    });
+  }
+
+  /*
+  openMenu(event) {
+    event.preventDefault();
+
+    this.setState({
+      openMenu: true
+    });
+    document.addEventListener("click", this.closeMenu)
+  }
+
+  closeMenu(event) {
+    //if (!this.dropdownMenu.contains(event.target)) {
+    if (!event) {
+      this.setState({
+        openMenu: false
+      });
+    }
+    document.removeEventListener("click", this.closeMenu);
+  }
+  */
+
   // loggedin and account determine what the navbar will display
   // As of now: loggedin set to false and account type is customer 
   render() {
     return (
       <div>
-        <Head>
-          <link rel="icon" href="images/quickeatzclip.png" />
-          <title>QuickEatz</title>
-        </Head>
+
+
         <nav className="bg-yellow-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
@@ -66,53 +101,63 @@ export class NavBar extends React.Component {
                     <div>
                       <button
                         type="button"
+                        onClick={this.clickMenu}
                         className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                         id="user-menu"
                         aria-expanded="false"
-                        aria-haspopup="true"
+                        aria-haspopup="true" /*true*/
                       >
                         <span className="sr-only">Open user menu</span>
                         <Image src="/images/profile.png" alt="Profile Image" width={32} height={32} />
                       </button>
                     </div>
-                    {/*
-                Dropdown menu, show/hide based on menu state.
+                    { /*
+                      Dropdown menu, show/hide based on menu state.
 
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              */}
-                    <div
-                      className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="user-menu"
-                    >
-                      <Link href="/viewProfile">
-                        <a
-                          href="/viewProfile"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          role="menuitem"
+                      Entering: "transition ease-out duration-100"
+                        From: "transform opacity-0 scale-95"
+                        To: "transform opacity-100 scale-100"
+                      Leaving: "transition ease-in duration-75"
+                        From: "transform opacity-100 scale-100"
+                        To: "transform opacity-0 scale-95"
+                      */
+
+
+                    }
+
+                    {
+                      this.state.openMenu && (
+                        <div
+                          className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                          role="menu"
+                          aria-orientation="vertical"
+                          aria-labelledby="user-menu"
                         >
-                          Your Profile
+                          <Link href="/viewProfile">
+                            <a
+                              href="/viewProfile"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              role="menuitem"
+                            >
+                              Your Profile
                       </a>
-                      </Link>
-                      <Link href="/logout">
-                        <a
-                          href="/logout"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          role="menuitem"
-                        >
-                          Sign out
+                          </Link>
+                          <Link href="/logout">
+                            <a
+                              href="/logout"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              role="menuitem"
+                            >
+                              Sign out
                       </a>
-                      </Link>
-                    </div>
+                          </Link>
+                        </div>
+                      )
+                    }
+
                   </div>
-                </div>
-              </div>
+                </div >
+              </div >
               <div className="-mr-2 flex md:hidden">
                 {/*<!-- Mobile menu button -->*/}
                 <button type="button" className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
@@ -135,8 +180,8 @@ export class NavBar extends React.Component {
                   </svg>
                 </button>
               </div>
-            </div>
-          </div>
+            </div >
+          </div >
 
           <div className="md:hidden" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -188,7 +233,7 @@ export class NavBar extends React.Component {
               </div>
               <div className="mt-3 px-2 space-y-1">
                 <a
-                  href="#"
+                  href="/viewProfile"
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                 >
                   Your Profile
@@ -202,7 +247,7 @@ export class NavBar extends React.Component {
                 </a>
 
                 <a
-                  href="#"
+                  href="/logout"
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                 >
                   Sign out
@@ -210,7 +255,7 @@ export class NavBar extends React.Component {
               </div>
             </div>
           </div>
-        </nav>
+        </nav >
       </div >
     );
   }
