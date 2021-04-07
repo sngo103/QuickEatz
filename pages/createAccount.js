@@ -8,15 +8,3 @@ export default function createAccount() {
     </div>
   );
 }
-/*
-export default function FirstPost() {
-  return (
-      <div>
-      <Head>
-        <title>Create Account</title>
-      </Head>
-      <h1>Create Account Page</h1>
-      </div>
-  )
-}
-*/
