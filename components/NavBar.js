@@ -7,31 +7,40 @@ export class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false, account: "", showMenu: false
+      loggedIn: false, account: "", openMenu: false
     }
-    this.openMenu = this.openMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
+
+    this.clickMenu = this.clickMenu.bind(this);
+    //this.openMenu = this.openMenu.bind(this);
+    //this.closeMenu = this.closeMenu.bind(this);
   };
 
+  clickMenu() {
+    this.setState({
+      openMenu: !this.state.openMenu
+    });
+  }
+
+  /*
   openMenu(event) {
     event.preventDefault();
 
     this.setState({
-      showMenu: true
-    }), () => {
-      document.addEventListener("click", this.closeMenu)
-    }
+      openMenu: true
+    });
+    document.addEventListener("click", this.closeMenu)
   }
 
   closeMenu(event) {
-    event.preventDefault();
-
-    this.setState({
-      showMenu: true
-    }), () => {
-      document.addEventListener("click", this.closeMenu)
+    //if (!this.dropdownMenu.contains(event.target)) {
+    if (!event) {
+      this.setState({
+        openMenu: false
+      });
     }
+    document.removeEventListener("click", this.closeMenu);
   }
+  */
 
   // loggedin and account determine what the navbar will display
   // As of now: loggedin set to false and account type is customer 
@@ -91,8 +100,8 @@ export class NavBar extends React.Component {
                   <div className="ml-3 relative">
                     <div>
                       <button
-                        onClick={this.menuClicked}
                         type="button"
+                        onClick={this.clickMenu}
                         className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                         id="user-menu"
                         aria-expanded="false"
@@ -117,7 +126,7 @@ export class NavBar extends React.Component {
                     }
 
                     {
-                      this.state.showMenu ? (
+                      this.state.openMenu && (
                         <div
                           className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                           role="menu"
@@ -143,11 +152,12 @@ export class NavBar extends React.Component {
                       </a>
                           </Link>
                         </div>
-                      ) : (null)}
+                      )
+                    }
 
                   </div>
-                </div>
-              </div>
+                </div >
+              </div >
               <div className="-mr-2 flex md:hidden">
                 {/*<!-- Mobile menu button -->*/}
                 <button type="button" className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
@@ -170,8 +180,8 @@ export class NavBar extends React.Component {
                   </svg>
                 </button>
               </div>
-            </div>
-          </div>
+            </div >
+          </div >
 
           <div className="md:hidden" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -245,7 +255,7 @@ export class NavBar extends React.Component {
               </div>
             </div>
           </div>
-        </nav>
+        </nav >
       </div >
     );
   }
