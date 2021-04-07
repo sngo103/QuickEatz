@@ -4,7 +4,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export class NavBar extends React.Component {
-  state = { loggedin: false, account: "customer" };
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false, account: "", showMenu: false
+    }
+    this.dropdownClicked = this.dropdownClicked.bind(this);
+  };
+
+  dropdownClicked(event) {
+    this.setState({
+      showMenu: true
+    });
+  }
+
   // loggedin and account determine what the navbar will display
   // As of now: loggedin set to false and account type is customer 
   render() {
@@ -63,51 +76,60 @@ export class NavBar extends React.Component {
                   <div className="ml-3 relative">
                     <div>
                       <button
+                        onClick={this.dropdownClicked}
                         type="button"
                         className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                         id="user-menu"
                         aria-expanded="false"
-                        aria-haspopup="true"
+                        aria-haspopup="true" /*true*/
                       >
                         <span className="sr-only">Open user menu</span>
                         <Image src="/images/profile.png" alt="Profile Image" width={32} height={32} />
                       </button>
                     </div>
-                    {/*
-                Dropdown menu, show/hide based on menu state.
+                    { /*
+                      Dropdown menu, show/hide based on menu state.
 
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              */}
-                    <div
-                      className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="user-menu"
-                    >
-                      <Link href="/viewProfile">
-                        <a
-                          href="/viewProfile"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          role="menuitem"
+                      Entering: "transition ease-out duration-100"
+                        From: "transform opacity-0 scale-95"
+                        To: "transform opacity-100 scale-100"
+                      Leaving: "transition ease-in duration-75"
+                        From: "transform opacity-100 scale-100"
+                        To: "transform opacity-0 scale-95"
+                      */
+
+
+                    }
+
+                    {
+                      this.state.showMenu ? (
+                        <div
+                          className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                          role="menu"
+                          aria-orientation="vertical"
+                          aria-labelledby="user-menu"
                         >
-                          Your Profile
+                          <Link href="/viewProfile">
+                            <a
+                              href="/viewProfile"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              role="menuitem"
+                            >
+                              Your Profile
                       </a>
-                      </Link>
-                      <Link href="/logout">
-                        <a
-                          href="/logout"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          role="menuitem"
-                        >
-                          Sign out
+                          </Link>
+                          <Link href="/logout">
+                            <a
+                              href="/logout"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              role="menuitem"
+                            >
+                              Sign out
                       </a>
-                      </Link>
-                    </div>
+                          </Link>
+                        </div>
+                      ) : (null)}
+
                   </div>
                 </div>
               </div>
