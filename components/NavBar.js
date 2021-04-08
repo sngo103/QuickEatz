@@ -10,9 +10,9 @@ export class NavBar extends React.Component {
       loggedIn: true, account: "", openMenu: false
     }
 
-    container = React.createRef();
+    //container = React.createRef();
     this.clickMenu = this.clickMenu.bind(this);
-    this.clickOutside = this.clickOutside.bind(this);
+    //this.clickOutside = this.clickOutside.bind(this);
     //this.openMenu = this.openMenu.bind(this);
     //this.closeMenu = this.closeMenu.bind(this);
   };
@@ -23,6 +23,7 @@ export class NavBar extends React.Component {
     });
   }
 
+  /*
   clickOutside() {
     if (this.container.current && !this.container.current.contains(event.target)) {
       this.setState({ openMenu: false });
@@ -36,6 +37,7 @@ export class NavBar extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.clickOutside);
   }
+ */
 
   /*
   openMenu(event) {
@@ -78,22 +80,18 @@ export class NavBar extends React.Component {
                 <div className="flex-shrink-0 text-white font-bungee text-2xl"> <Link href="/">QuickEatz</Link> </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    <Link href="/trending">
-                      <a
-                        href="/trending"
-                        className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                      >
-                        Trending
+                    <a
+                      href="/trending"
+                      className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                    >
+                      Trending
                     </a>
-                    </Link>
-                    <Link href="/dashboard">
-                      <a
-                        href="/dashboard"
-                        className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                      >
-                        Dashboard
+                    <a
+                      href="/dashboard"
+                      className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                    >
+                      Dashboard
                     </a>
-                    </Link>
                   </div>
                 </div>
               </div>
