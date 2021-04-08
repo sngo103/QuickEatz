@@ -60,8 +60,7 @@ export class NavBar extends React.Component {
   }
   */
 
-  // loggedin and account determine what the navbar will display
-  // As of now: loggedin set to false and account type is customer 
+  // state determines if some navbar components render or not 
   render() {
     return (
 
