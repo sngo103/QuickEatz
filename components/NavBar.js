@@ -10,7 +10,9 @@ export class NavBar extends React.Component {
       loggedIn: true, account: "", openMenu: false
     }
 
+    container = React.createRef();
     this.clickMenu = this.clickMenu.bind(this);
+    this.clickOutside = this.clickOutside.bind(this);
     //this.openMenu = this.openMenu.bind(this);
     //this.closeMenu = this.closeMenu.bind(this);
   };
@@ -19,6 +21,20 @@ export class NavBar extends React.Component {
     this.setState({
       openMenu: !this.state.openMenu
     });
+  }
+
+  clickOutside() {
+    if (this.container.current && !this.container.current.contains(event.target)) {
+      this.setState({ openMenu: false });
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.clickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.clickOutside);
   }
 
   /*
@@ -46,8 +62,14 @@ export class NavBar extends React.Component {
   // As of now: loggedin set to false and account type is customer 
   render() {
     return (
+
       <div>
 
+        <style>
+          .container {
+
+          }
+        </style>
 
         <nav className="bg-yellow-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,42 +143,42 @@ export class NavBar extends React.Component {
                         From: "transform opacity-100 scale-100"
                         To: "transform opacity-0 scale-95"
                       */
-
-
                     }
 
                     {
                       this.state.openMenu && (
-                        <div
-                          className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                          role="menu"
-                          aria-orientation="vertical"
-                          aria-labelledby="user-menu"
-                        >
-                          <Link href="/viewProfile">
-                            <a
-                              href="/viewProfile"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                              role="menuitem"
-                            >
-                              Your Profile
-                      </a>
-                          </Link>
-                          <Link href="/logout">
-                            <a
-                              href="/logout"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                              role="menuitem"
-                            >
-                              Sign out
-                      </a>
-                          </Link>
+                        <div className="container" ref={this.container}>
+                          <div
+                            className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-labelledby="user-menu"
+                          >
+                            <Link href="/viewProfile">
+                              <a
+                                href="/viewProfile"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem"
+                              >
+                                Your Profile
+                              </a>
+                            </Link>
+                            <Link href="/logout">
+                              <a
+                                href="/logout"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem"
+                              >
+                                Sign out
+                              </a>
+                            </Link>
+                          </div>
                         </div>
                       )
                     }
 
                   </div>
-                </div >
+                </div>
               </div >
               <div className="-mr-2 flex md:hidden">
                 {/*<!-- Mobile menu button -->*/}
