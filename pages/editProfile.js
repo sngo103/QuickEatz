@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import Router from "next/router";
 
-export default function FirstPost() {
+export default function editProfile() {
   const [session, loading] = useSession();
   const router = useRouter();
 

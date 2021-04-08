@@ -2,11 +2,8 @@ import React from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { signOut, useSession } from 'next-auth/client'
-
 
 export default function NavBar() {
-  const[session, loading] = useSession();
 
   return (
     <div>
@@ -32,7 +29,6 @@ export default function NavBar() {
                       Trending
                     </a>
                   </Link>
-                  {session ? (
                     <Link href="/dashboard">
                       <a
                         href="/dashboard"
@@ -41,7 +37,6 @@ export default function NavBar() {
                         Dashboard
                       </a>
                     </Link>
-                  ) : null}
                 </div>
               </div>
             </div>
@@ -113,7 +108,7 @@ export default function NavBar() {
                     <Link href="/logout">
                       <a
                         href="/logout"
-                        onClick={signOut}
+                        onClick={null}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         role="menuitem"
                       >
