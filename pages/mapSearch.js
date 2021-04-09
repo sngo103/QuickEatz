@@ -53,7 +53,7 @@ export default function mApp({current_vendor, vendors, customers}){
 		
 		console.log(res);
 		
-		close_vendors = res;
+		//close_vendors = res;
 	}
 	
 	if(loadError) return "Error loading Maps";
@@ -66,32 +66,6 @@ export default function mApp({current_vendor, vendors, customers}){
 	// const MyMap = withScriptjs(withGoogleMap((props) => (<GoogleMap />)));
 	return (
 	<>
- 
-	<script> 
-		function displayVendors(){
-			document.getElementById("vendor_list_block").style.display = "block";
-			var i;
-			document.getElementById("vendor_list").innerHTML = "";
-			for(i = 0; i < close_vendors.length; i++){
-				document.getElementById("vendor_list").innerHTML += ('<li>'+close_vendors[i].business_name+'</li>');
-			}
-		}
-		function hideVendors(){
-			
-			
-		}
-	</script>
-	
-	
-	
-	<script>
-		if(close_vendors.length == 0){
-			document.getElementById("empty_text").innerHTML = "Find a vendor by clicking on the map!";
-		}
-		else{
-			document.getElementById("empty_text").innerHTML = "Nearby Vendors";
-		}
-	</script>
 	
 	
 	<p id="empty_text"> </p>
@@ -128,7 +102,7 @@ export default function mApp({current_vendor, vendors, customers}){
 			},
 			]);
 			searchLatLon(event.latLng.lat(), event.latLng.lng());
-			displayVendors();
+			
 			
 		}}>
 		{markers.map(marker => <Marker key={marker.time.toISOString()} 
