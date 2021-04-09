@@ -10,8 +10,9 @@ export class NavBar extends React.Component {
       loggedIn: true, account: "customer", openMenu: false
     }
 
-    //container = React.createRef();
     this.clickMenu = this.clickMenu.bind(this);
+
+    //container = React.createRef();
     //this.clickOutside = this.clickOutside.bind(this);
     //this.openMenu = this.openMenu.bind(this);
     //this.closeMenu = this.closeMenu.bind(this);
@@ -23,7 +24,9 @@ export class NavBar extends React.Component {
     });
   }
 
-  /*
+  /* Comments Here and Above are incomplete code that is to make the dropdown also
+  disapear if the user clicks outside of the dropdown instead of only again on it
+
   clickOutside() {
     if (this.container.current && !this.container.current.contains(event.target)) {
       this.setState({ openMenu: false });
