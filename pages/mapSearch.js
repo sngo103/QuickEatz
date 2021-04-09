@@ -20,7 +20,9 @@ const center = {
 
 const options = {
 	
-}
+};
+
+const close_vendors = [];
 
 export default function mApp({current_vendor, vendors, customers}){
 	
@@ -40,48 +42,70 @@ export default function mApp({current_vendor, vendors, customers}){
 	
 	
 	//I think this is the right notation for function declaration
-	const sendLatLon = async (current_vendor, latitude, longitude) => {
+	const searchLatLon = async (latitude, longitude) => {
 		
-		//console.log(current_vendor);
-		//console.log("---------------");
-		//console.log(current_vendor._id);
 		
-		const id_str = current_vendor._id.toString();
-		//console.log(id_str);
 		
-		const data = await fetch(`http://localhost:3000/api/sendLatLon?_id=${id_str}&latitude=${latitude}&longitude=${longitude}&test=1231231`)
+		
+		const data = await fetch(`http://localhost:3000/api/searchLatLon?latitude=${latitude}&longitude=${longitude}`)
 		
 		const res = await data.json();
 		
-		//console.log(res);
+		console.log(res);
+		
+		close_vendors = res;
 	}
 	
 	if(loadError) return "Error loading Maps";
 	if (!isLoaded) return "Loading Maps";
 	
-	//console.log(vendors);
+	
+	
+	
+	console.log(vendors);
 	// const MyMap = withScriptjs(withGoogleMap((props) => (<GoogleMap />)));
 	return (
 	<>
+ 
+	<script> 
+		function displayVendors(){
+			document.getElementById("vendor_list_block").style.display = "block";
+			var i;
+			document.getElementById("vendor_list").innerHTML = "";
+			for(i = 0; i < close_vendors.length; i++){
+				document.getElementById("vendor_list").innerHTML += ('<li>'+close_vendors[i].business_name+'</li>');
+			}
+		}
+		function hideVendors(){
+			
+			
+		}
+	</script>
+	
+	
+	
+	<script>
+		if(close_vendors.length == 0){
+			document.getElementById("empty_text").innerHTML = "Find a vendor by clicking on the map!";
+		}
+		else{
+			document.getElementById("empty_text").innerHTML = "Nearby Vendors";
+		}
+	</script>
+	
+	
+	<p id="empty_text"> </p>
+	<div id="vendor_list_block"> 
+	  <ul id="vendor_list">
+        
+      </ul>
+	</div>
+	
+	
 	
 	
 	<h1> My current location </h1>
 	<div>
-      <h1>Top 1 Vendors of All Time</h1>
-      <p>
-        <small>(According to Notacritic)</small>
-      </p>
-      <ul>
-        {vendors.map((vendor) => (
-          <li>
-            <h2>{vendor.business_name}</h2>
-            <h3>{vendor.first_name + " " + vendor.last_name}</h3>
-            <p>{vendor.cuisine}</p>
-			<p> Lat: {vendor.current_location.coordinates[0]} </p>
-			<p> Lon: {vendor.current_location.coordinates[1]} </p>
-          </li>
-        ))}
-      </ul>
 	  <ul>
         {customers.map((customer) => (
           <li>
@@ -103,7 +127,8 @@ export default function mApp({current_vendor, vendors, customers}){
 				time: new Date(),
 			},
 			]);
-			sendLatLon(current_vendor, event.latLng.lat(), event.latLng.lng());
+			searchLatLon(event.latLng.lat(), event.latLng.lng());
+			displayVendors();
 			
 		}}>
 		{markers.map(marker => <Marker key={marker.time.toISOString()} 
@@ -121,7 +146,9 @@ export default function mApp({current_vendor, vendors, customers}){
 										
 		</GoogleMap>
 	</div>
-
+	
+	
+	
 	</>);
 	
 }
@@ -157,12 +184,11 @@ export async function getServerSideProps(){
     .limit(20)
     .toArray(); 
 
-	//console.log(current_vendor);
+	console.log(current_vendor);
   return {
     props: {
       vendors: JSON.parse(JSON.stringify(vendors)),
 	  customers: JSON.parse(JSON.stringify(customers)),
-	  current_vendor: JSON.parse(JSON.stringify(current_vendor[0])),
     },
   };
 	

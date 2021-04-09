@@ -33,7 +33,7 @@ export default function FirstPost({vendor, vendor_reviews}) {
 	  <ul>
         {vendor_reviews.map((review) => (
           <li>
-            <h2><strong>User {review.user_id}</strong></h2>
+            <h2><strong>User {review.customer_id}</strong></h2>
             
             <p>{review.review_content}</p>
           </li>
