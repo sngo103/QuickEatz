@@ -15,23 +15,19 @@ export default class CustomerDashboard extends React.Component {
       <div>
         <section className="h-40">
           <header className="bg-white shadow text-center">
-            <h1 className={styles.title}>Dashboard</h1>
-            <div className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+              <h1 className={styles.title}>Dashboard</h1>
             </div>
           </header>
         </section>
 
-        <section className="py-10">
-          <h3></h3>
-        </section>
-
-        <section className="bg-red">
+        <section>
 
           <main>
-            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto py-20 sm:px-6 lg:px-8">
 
               <div className="px-4 py-6 sm:px-0">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+                <div className="border-4 border-solid border-gray-300 rounded-lg h-96"></div>
               </div>
 
             </div>
