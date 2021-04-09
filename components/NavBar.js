@@ -7,7 +7,7 @@ export class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true, account: "customer", openMenu: false
+      loggedIn: false, account: "customer", openMenu: false
     }
 
     this.clickMenu = this.clickMenu.bind(this);
@@ -108,6 +108,28 @@ export class NavBar extends React.Component {
                         >
                           Dashboard
                       </a>
+                      )
+                    }
+                    {
+                      !this.state.loggedIn &&
+                      (
+                        <a
+                          href="/createAccount"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Sign Up
+                        </a>
+                      )
+                    }
+                    {
+                      !this.state.loggedIn &&
+                      (
+                        <a
+                          href="/login"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Log In
+                        </a>
                       )
                     }
                   </div>
