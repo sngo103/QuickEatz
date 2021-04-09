@@ -12,7 +12,7 @@ function App({ Component, pageProps }) {
       </style>
       <NavBar />
       <main>
-      <Component />
+      <Component {...pageProps} />
       </main>
     </>
   );
