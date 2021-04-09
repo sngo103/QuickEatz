@@ -39,16 +39,10 @@ export default async (req, res) => {
       console.log("CUSTOMER:", customer);
       if(!_.isEmpty(customer)){
         res.send(customer);
-        resolve();
+        res.end();
+      } else {
+        // If not, create a new user
+        res.status(400).json({"message":"You can create a new user."});
       }
-      // If not, create a new user
-      throw "You can create a new user.";
-      return reject();
     }
-    const movies = await db
-      .collection("all_users")
-      .find({})
-      .toArray();
-
-    res.json(movies);
 };
