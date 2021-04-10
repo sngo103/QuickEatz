@@ -70,7 +70,7 @@ class SignUp extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <label>
                             <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black">Email</h> &emsp; &emsp; &emsp; &ensp;
-                            <input className={styles.textbox} type="text" name="username"
+                            <input className={styles.textbox} type="text"
                                 value={this.state.email}
                                 onChange={this.handleChange}
                             />
@@ -81,8 +81,8 @@ class SignUp extends React.Component {
 
                         <label>
                             <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black"> Password</h> &emsp; &emsp;
-                            <input className={styles.textbox} type="test" name="password"
-                                value={this.state.email}
+                            <input className={styles.textbox} type="text"
+                                value={this.state.password}
                                 onChange={this.handleChange}
                             />
                         </label>
@@ -90,7 +90,8 @@ class SignUp extends React.Component {
                         <br />
                         <br />
 
-                        <input className={styles.submissionField} type="submit" value="Submit" />
+                        <input className="bg-white border-2 border-black rounded-md hover:text-white hover:bg-gray-700 px-3 py-1.5"
+                            type="submit" value="Submit" />
                     </form>
                 </section>
 
