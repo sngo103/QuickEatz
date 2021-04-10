@@ -9,13 +9,30 @@ export default class CustomerDashboard extends React.Component {
     this.state = {
       cuisine: "",
       openMap: false,
-
+      buttonSelected: "",
+      queryText: ""
     }
-  };
+    this.handleCuisineSubmit = this.handleCuisineSubmit.bind(this);
+    this.handleButtonsSubmit = this.handleButtonsSubmit.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+  }
+
+  handleCuisineSubmit() {
+    console.log("submitted")
+  }
+
+  handleButtonsSubmit() {
+    console.log("submitted")
+  }
+
+  handleSearchSubmit() {
+    console.log("submitted")
+  }
+
   render() {
     return (
       <div>
-        <section className="h-50">
+        <section className="h-50 bg-mintcream">
           <header className="bg-white shadow text-center">
             <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
               <h1 className={styles.title}>Dashboard</h1>
@@ -34,38 +51,80 @@ export default class CustomerDashboard extends React.Component {
           </h>
         </section>
 
+
         <section className={styles.bottomPage}>
-          {/*
-          Nearest Me Trending Best Prices
-          Search by {Name, Food}
-          */}
-          <button
-            className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+          <br />
+          <br />
 
-          >
-            Nearest Me
-          </button>
-          <button
-            className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-            o
-          >
-            Trending
-          </button>
-          <button
-            className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+          <form onSubmit={this.handleButtonSubmit}>
+            <button
+              className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
 
-          >
-            Best Prices
-          </button>
-          {/*
-          <form onSubmit={this.handleSubmit}>
-            <button>
-              <h className="nearbutton">Nearest Me</h>
-              <input
-                value={this.state}></input>
+            >
+              Nearest Me
             </button>
-          </form >
-          */}
+
+            &emsp;
+            &emsp;
+
+            <button
+              className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+
+            >
+              Trending
+            </button>
+
+            &emsp;
+            &emsp;
+
+
+
+            <button
+              className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+
+            >
+              Best Prices
+            </button>
+          </form>
+
+          <br />
+          <br />
+          <br />
+
+          <form onSubmit={this.handleCuisineSubmit}>
+            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search By Cuisine Type:</h>
+            &emsp; &emsp;
+            <select className={styles.dropdown}>
+              <option value="Italian">Italian</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Halal">Halal</option>
+              <option value="Mexican">Mexican</option>
+              <option value="American">American</option>
+              <option value="Spanish">Spanish</option>
+              <option value="Greek">Greek</option>
+              <option value="Dessert">Dessert</option>
+            </select>
+            &emsp; &emsp;
+            <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
+          </form>
+
+          <br />
+          <br />
+          <br />
+
+          <form onSubmit={this.handleCuisineSubmit}>
+            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search Vendor Truck By Name:</h>
+            &emsp; &emsp;
+
+            <input className={styles.textbox} type="test" name="password"
+              value={this.state.queryText}
+              onChange={this.handleChange}
+            />
+
+            &emsp; &emsp;
+            <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
+          </form>
+
 
           {
             this.state.openMap && (
@@ -99,30 +158,3 @@ export default class CustomerDashboard extends React.Component {
     );
   }
 };
-/*
-export class CustomerDashboard extends React.Component {
-  render() {
-    return (
-      <div>
-        <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-6xl font-bungee text-gray-900">Customer Dashboard</h1>
-          </div>
-        </header>
-        <main>
-          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            //{ Replace with your content }
-            <div className="px-4 py-6 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
-            </div>
-            //{ /End replace }
-          </div>
-        </main>
-      </div>
-    );
-  }
-}
-
-
-export default CustomerDashboard;
-*/

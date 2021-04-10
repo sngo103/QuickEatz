@@ -15,8 +15,8 @@
 }
 
 .dropdown {
-  background: #000000;
-  color: #F9FEEF;
+  background:  #F9FEEF;
+  color: #000000;
   padding: 5px 5px 5px 25px;
    /*align-text: center; */
 
@@ -69,8 +69,8 @@ dropdown:hover .dropdown-content {
 }         
 
 .submissionField {
-  width: 100px; 
-  height: 50px; 
+  width: 80px; 
+  height: 40px; 
   font-size: 20px;
   color: #F9FEEF;
   background: #000000;
@@ -91,7 +91,7 @@ dropdown:hover .dropdown-content {
 }
 
 .midPage {
-  background-color: #FFE66D;
+  background-color: #FF6B6B;
   padding: 30px 0px 20px 0px;
   align-items: center;
   text-align: center;
@@ -99,7 +99,7 @@ dropdown:hover .dropdown-content {
 }
 
 .bottomPage {
-  background-color: #FF6B6B;
+  background-color: #FFE66D;
   align-items: center;
   text-align: center;
   /*padding: 150px 100px 150px 100px;*/
@@ -112,12 +112,13 @@ dropdown:hover .dropdown-content {
 .message {
   font-family: "Bungee"; 
   font-size: 35px;
-  color: #4F3D13;
+  /*color: #4F3D13;*/
+  color: black;
 }
 
 .secondmessage {
   font-family: "Bungee"; 
   font-size: 25px;
-  color: #4ECDC4;
+  color: white;/* #4ECDC4;*/
 }
 
