@@ -1,3 +1,4 @@
+
 const colors = require("tailwindcss/colors");
 
 module.exports = {
@@ -26,10 +27,10 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
-      eaglegreen: "1A535C", 
-      turquoise: "4ECDC4", 
-      mintcream: "F7FFF7", 
-      bittersweetred: "FF6B6B", 
+      eaglegreen: "1A535C",
+      turquoise: "4ECDC4",
+      mintcream: "F7FFF7",
+      bittersweetred: "FF6B6B",
       naplesyellow: "FFE66D"
     },
     spacing: {
@@ -78,12 +79,12 @@ module.exports = {
     },
     backgroundColor: theme => ({
       ...theme('colors'),
-      eaglegreen: "1A535C", 
-      turquoise: "4ECDC4", 
-      mintcream: "F7FFF7", 
-      bittersweetred: "FF6B6B", 
+      eaglegreen: "1A535C",
+      turquoise: "4ECDC4",
+      mintcream: "F7FFF7",
+      bittersweetred: "FF6B6B",
       naplesyellow: "FFE66D"
-     }),
+    }),
     backgroundImage: {
       none: "none",
       "gradient-to-t": "linear-gradient(to top, var(--tw-gradient-stops))",
@@ -153,7 +154,9 @@ module.exports = {
       inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
       none: "none",
     },
-    container: {},
+    container: {
+      center: true,
+    },
     cursor: {
       auto: "auto",
       default: "default",
@@ -933,3 +936,4 @@ module.exports = {
   },
   plugins: [],
 };
+
