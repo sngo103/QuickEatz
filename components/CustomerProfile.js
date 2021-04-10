@@ -8,7 +8,7 @@ export default class CustomerProfile extends React.Component {
         return (
             <div>
                 <section className={styles.topPage}>
-                    <h1> QuickEatz</h1 >
+                    <h1 className={styles}>QuickEatz</h1 >
                     <header className={styles.title}>Edit Profile</header>
                 </section>
 
