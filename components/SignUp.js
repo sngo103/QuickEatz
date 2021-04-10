@@ -29,19 +29,25 @@ class SignUp extends React.Component {
         event.preventDefault();
     }
 
+    /*
+    <Image
+                                src="/images/quickeatzlogo.png" // Route of the image file
+                                height={150} // Desired size with correct aspect ratio
+                                width={150} // Desired size with correct aspect ratio
+                                alt="QuickEatz Logo"
+                            />
+    */
+
     render() {
         return (
             <div>
                 <div className="container mx-auto px-6 text-center">
                     <div className="mx-auto text-center">
                         <section className={styles.topPage}>
-                            <Image
-                                src="/images/quickeatzlogo.png" // Route of the image file
-                                height={150} // Desired size with correct aspect ratio
-                                width={150} // Desired size with correct aspect ratio
-                                alt="QuickEatz Logo"
-                            />
-                            <h1 className="title text-7xl font-bungee">QuickEatz</h1>
+
+
+                            <h1 className={styles.logotext}>QuickEatz</h1>
+
 
                             <h1 className={styles.title}>Create Account</h1>
 
@@ -63,7 +69,7 @@ class SignUp extends React.Component {
 
                     <form onSubmit={this.handleSubmit}>
                         <label>
-                            <h className={styles.usernameLabel}>Email</h> &emsp; &emsp; &emsp; &emsp; &ensp;
+                            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black">Email</h> &emsp; &emsp; &emsp; &ensp;
                             <input className={styles.textbox} type="text" name="username"
                                 value={this.state.email}
                                 onChange={this.handleChange}
@@ -74,7 +80,7 @@ class SignUp extends React.Component {
                         <br />
 
                         <label>
-                            <h className={styles.passwordLabel}>Password</h> &emsp; &emsp;
+                            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black"> Password</h> &emsp; &emsp;
                             <input className={styles.textbox} type="test" name="password"
                                 value={this.state.email}
                                 onChange={this.handleChange}
