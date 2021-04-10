@@ -1,7 +1,17 @@
 import Head from 'next/head'
 //import Layout from '../components/layout'
-import { getSortedVendorsData } from '../lib/vendors'
 
+//import { getSortedVendorsData } from '../lib/vendors'
+
+export default function Vendors() {
+  return (
+    <div>
+
+    </div>
+  )
+}
+
+/*
 export async function getStaticProps() {
   const allVendorsData = getSortedVendorsData()
   return {
@@ -10,11 +20,13 @@ export async function getStaticProps() {
     }
   }
 }
+*/
 
+/*
 export default function Vendors({ allVendorsData }) {
   return (
     <div>
-      {/*<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>*/}
+      {<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>}
       <section>
         <h2>Blog</h2>
         <ul>
@@ -32,3 +44,4 @@ export default function Vendors({ allVendorsData }) {
     </div>
   )
 }
+*/
