@@ -28,6 +28,16 @@
 
 dropdown:hover .dropdown-content {
   display: block;
+  
+}
+
+.nearbutton {
+  font-size: 15px;
+  color: #F9FEEF; 
+  background-color: black;
+  outline-style: solid;
+  outline-width: 5px;
+  outline-color: black;
 }
 
 .usernameLabel {
@@ -82,16 +92,19 @@ dropdown:hover .dropdown-content {
 
 .midPage {
   background-color: #FFE66D;
-  padding: 20px 20px 20px 30px;
+  padding: 30px 0px 20px 0px;
   align-items: center;
   text-align: center;
+  
 }
 
 .bottomPage {
   background-color: #FF6B6B;
   align-items: center;
   text-align: center;
-  padding: 225px 225px 275px 225px;
+  /*padding: 150px 100px 150px 100px;*/
+  padding-bottom: 300px;
+  margin-bottom: -300px;
   position: relative;
   bottom: 0;
 }
@@ -100,5 +113,11 @@ dropdown:hover .dropdown-content {
   font-family: "Bungee"; 
   font-size: 35px;
   color: #4F3D13;
+}
+
+.secondmessage {
+  font-family: "Bungee"; 
+  font-size: 25px;
+  color: #4ECDC4;
 }
 
