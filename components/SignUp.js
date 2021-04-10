@@ -81,7 +81,7 @@ class SignUp extends React.Component {
 
                         <label>
                             <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black"> Password</h> &emsp; &emsp;
-                            <input className={styles.textbox} type="text"
+                            <input className={styles.textbox} type="password"
                                 value={this.state.password}
                                 onChange={this.handleChange}
                             />
