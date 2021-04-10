@@ -301,13 +301,22 @@ export class NavBar extends React.Component {
                 </button>
               </div>
               <div className="mt-3 px-2 space-y-1">
-                <a
-                  href="/viewProfile"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
-                >
-                  Your Profile
+                {
+                  <a
+                    href="/viewProfile"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
+                  >
+                    Your Profile
                 </a>
-
+                }
+                {
+                  <a
+                    href="/viewProfile"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
+                  >
+                    Your Profile
+                </a>
+                }
                 <a
                   href="#"
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
