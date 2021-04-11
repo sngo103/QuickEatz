@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar.js";
 
 function App({ Component, pageProps }) {
   return (
-    <div>
+    <>
       <style>
         @import
         url('https://fonts.googleapis.com/css2?family=Pridi:wght@300&display=swap');
@@ -12,9 +12,9 @@ function App({ Component, pageProps }) {
       </style>
       <NavBar />
       <main>
-      <Component />
+      <Component {...pageProps} />
       </main>
-    </div>
+    </>
   );
 }
 

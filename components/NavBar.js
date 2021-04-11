@@ -10,8 +10,9 @@ export class NavBar extends React.Component {
       loggedIn: true, account: "customer", openMenu: false
     }
 
-    //container = React.createRef();
     this.clickMenu = this.clickMenu.bind(this);
+
+    //container = React.createRef();
     //this.clickOutside = this.clickOutside.bind(this);
     //this.openMenu = this.openMenu.bind(this);
     //this.closeMenu = this.closeMenu.bind(this);
@@ -23,17 +24,16 @@ export class NavBar extends React.Component {
     });
   }
 
-  /*
+  /* Comments Here and Above are incomplete code that is to make the dropdown also
+  disapear if the user clicks outside of the dropdown instead of only again on it
   clickOutside() {
     if (this.container.current && !this.container.current.contains(event.target)) {
       this.setState({ openMenu: false });
     }
   }
-
   componentDidMount() {
     document.addEventListener("mousedown", this.clickOutside);
   }
-
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.clickOutside);
   }
@@ -42,13 +42,11 @@ export class NavBar extends React.Component {
   /*
   openMenu(event) {
     event.preventDefault();
-
     this.setState({
       openMenu: true
     });
     document.addEventListener("click", this.closeMenu)
   }
-
   closeMenu(event) {
     //if (!this.dropdownMenu.contains(event.target)) {
     if (!event) {
@@ -107,6 +105,28 @@ export class NavBar extends React.Component {
                       </a>
                       )
                     }
+                    {
+                      !this.state.loggedIn &&
+                      (
+                        <a
+                          href="/createAccount"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Sign Up
+                        </a>
+                      )
+                    }
+                    {
+                      !this.state.loggedIn &&
+                      (
+                        <a
+                          href="/login"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Log In
+                        </a>
+                      )
+                    }
                   </div>
                 </div>
               </div>
@@ -154,7 +174,6 @@ export class NavBar extends React.Component {
                         </div>
                         { /*
                       Dropdown menu, show/hide based on menu state.
-
                       Entering: "transition ease-out duration-100"
                         From: "transform opacity-0 scale-95"
                         To: "transform opacity-100 scale-100"
@@ -208,7 +227,6 @@ export class NavBar extends React.Component {
                   <span className="sr-only">Open main menu</span>
                   {/*--
               Heroicon name: outline/menu
-
               Menu open: "hidden", Menu closed: "block"
             */}
                   <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -216,7 +234,6 @@ export class NavBar extends React.Component {
                   </svg>
                   {/*
               Heroicon name: outline/x
-
               Menu open: "block", Menu closed: "hidden"
             */}
                   <svg className="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -276,6 +293,7 @@ export class NavBar extends React.Component {
                 </button>
               </div>
               <div className="mt-3 px-2 space-y-1">
+
                 <a
                   href="/viewProfile"
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
