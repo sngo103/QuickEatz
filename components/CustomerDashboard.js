@@ -13,148 +13,184 @@ export default class CustomerDashboard extends React.Component {
       queryText: ""
     }
     this.handleCuisineSubmit = this.handleCuisineSubmit.bind(this);
-    this.handleButtonsSubmit = this.handleButtonsSubmit.bind(this);
+    this.handleNearestSubmit = this.handleNearestSubmit.bind(this);
+    this.handleTrendingSubmit = this.handleTrendingSubmit.bind(this);
+    this.handlePricesSubmit = this.handlePricesSubmit.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
-  handleCuisineSubmit() {
-    console.log("submitted")
+  handleCuisineChange(event) {
+    this.setState({ cuisine: event.target.value });
   }
+  
+    handleCuisineSubmit() {
+      event.preventDefault();
+      console.log("submitted")
+      this.setState({
+        buttonSelected: "Italian"
+      });
+    }
 
-  handleButtonsSubmit() {
-    console.log("submitted")
-  }
+    handleNearestSubmit(event) {
+      event.preventDefault();
+      console.log("submitted")
+      this.setState({
+        buttonSelected: "Nearest"
+      });
+    }
 
-  handleSearchSubmit() {
-    console.log("submitted")
-  }
+    handleTrendingSubmit(event) {
+      event.preventDefault();
+      console.log("submitted")
+      this.setState({
+        buttonSelected: "Trending"
+      });
+    }
 
-  render() {
-    return (
-      <div>
-        <section className="h-50 bg-mintcream">
-          <header className="bg-white shadow text-center">
-            <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-              <h1 className={styles.title}>Dashboard</h1>
-            </div>
-          </header>
-        </section>
+    handlePricesSubmit(event) {
+      event.preventDefault();
+      console.log("submitted")
+      this.setState({
+        buttonSelected: "Prices"
+      });
+    }
 
-        <section className={styles.midPage}>
-          <h className={styles.message}>
-            Search For Vendors Nearby!
+    handleSearchSubmit(event) {
+      this.setState({ queryText: event.target.value });
+    }
+
+    render() {
+      return (
+        <div>
+          <section className="h-50 bg-mintcream">
+            <header className="bg-white shadow text-center">
+              <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+                <h1 className={styles.title}>Dashboard</h1>
+              </div>
+            </header>
+          </section>
+
+          <section className={styles.midPage}>
+            <h className={styles.message}>
+              Search For Vendors Nearby!
           </h>
-          <br />
-          <br />
-          <h className={styles.secondmessage}>
-            Select Search Criteria
+            <br />
+            <br />
+            <h className={styles.secondmessage}>
+              Select Search Criteria
           </h>
-        </section>
+          </section>
 
 
-        <section className={styles.bottomPage}>
-          <br />
-          <br />
+          <section className={styles.bottomPage}>
+            <br />
+            <br />
 
-          <form onSubmit={this.handleButtonSubmit}>
-            <button
-              className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-              type="submit"
-            >
-              Nearest Me
+            <form onSubmit={this.handleNearestSubmit} className="">
+              <button
+                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                type="submit"
+              >
+                Nearest Me
             </button>
+              
+            </form>
 
-            &emsp;
-            &emsp;
+            <br />
 
-            <button
-              className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-              type="submit"
-            >
-              Trending
+            <form onSubmit={this.handleTrendingSubmit} className="">
+              <button
+                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                type="submit"
+              >
+                Trending
             </button>
-
-            &emsp;
-            &emsp;
-
-
-
-            <button
-              className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-              type="submit"
-            >
-              Best Prices
-            </button>
+              
           </form>
 
           <br />
-          <br />
-          <br />
 
-          <form onSubmit={this.handleCuisineSubmit}>
-            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search By Cuisine Type:</h>
-            &emsp; &emsp;
-            <select className={styles.dropdown}>
-              <option value="Italian">Italian</option>
-              <option value="Chinese">Chinese</option>
-              <option value="Halal">Halal</option>
-              <option value="Mexican">Mexican</option>
-              <option value="American">American</option>
-              <option value="Spanish">Spanish</option>
-              <option value="Greek">Greek</option>
-              <option value="Dessert">Dessert</option>
-            </select>
-            &emsp; &emsp;
+            <form onSubmit={this.handlePricesSubmit} className="" >
+            
+              <button
+                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                type="submit"
+              >
+                Best Prices
+              </button>
+            </form>
+
+            <br />
+            <br />
+            <br />
+
+            <form onSubmit={this.handleCuisineSubmit}>
+              <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search By Cuisine Type:</h>
+              &emsp; &emsp;
+            <select className={styles.dropdown}
+                value={this.state.cuisine}
+                onChange={this.handleCuisineChange}
+              >
+                <option value="Italian">Italian</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Halal">Halal</option>
+                <option value="Mexican">Mexican</option>
+                <option value="American">American</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Greek">Greek</option>
+                <option value="Dessert">Dessert</option>
+              </select>
+              &emsp; &emsp;
             <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
-          </form>
+            </form>
 
-          <br />
-          <br />
-          <br />
+            <br />
+            <br />
+            <br />
 
-          <form onSubmit={this.handleCuisineSubmit}>
-            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search Vendor Truck By Name:</h>
-            &emsp; &emsp;
+            <form onSubmit={this.handleCuisineSubmit}>
+              <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search Vendor Truck By Name:</h>
+              &emsp; &emsp;
+  
+            <input className={styles.textbox} type="text" 
+                value={this.state.queryText}
+                onChange={this.handleChange}
+              />
 
-            <input className={styles.textbox} type="test" name="password"
-              value={this.state.queryText}
-              onChange={this.handleChange}
-            />
-
-            &emsp; &emsp;
+              &emsp; &emsp;
             <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
-          </form>
+            </form>
 
 
-          {
-            this.state.openMap && (
-              <div>
-                <main>
-                  <div className="max-w-2xl mx-auto py-20 sm:px-6 lg:px-8">
+            {
+              this.state.openMap && (
+                <div>
+                  <main>
+                    <div className="max-w-2xl mx-auto py-20 sm:px-6 lg:px-8">
 
-                    <div className="px-4 py-6 sm:px-0">
-                      <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96"></div>
+                      <div className="px-4 py-6 sm:px-0">
+                        <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96"></div>
+                      </div>
+
                     </div>
+                  </main>
 
-                  </div>
-                </main>
+                </div>
+              )
+            }
+
+            <main>
+              <div className="max-w-7xl mx-auto py-20 sm:px-6 lg:px-8">
+
+                <div className="px-4 py-6 sm:px-0">
+                  <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96"></div>
+                </div>
 
               </div>
-            )
-          }
+            </main>
 
-          <main>
-            <div className="max-w-7xl mx-auto py-20 sm:px-6 lg:px-8">
-
-              <div className="px-4 py-6 sm:px-0">
-                <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96"></div>
-              </div>
-
-            </div>
-          </main>
-
-        </section>
-      </div>
-    );
-  }
-};
+          </section>
+        </div>
+      );
+    }
+  };
