@@ -8,12 +8,18 @@ class SignUp extends React.Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            account: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChosen = this.handleChosen.bind(this);
     };
 
+    handleChosen() {
+        const target = event.target.value;
+        this.setState({ account: target.value });
+    }
 
     handleChange(event) {
         const target = event.target;
@@ -27,6 +33,12 @@ class SignUp extends React.Component {
     handleSubmit(event) {
         alert("A name was submitted: " + this.state.email + " and " + this.state.password);
         event.preventDefault();
+    }
+
+    handleChosen(event) {
+        event.preventDefault();
+
+
     }
 
     /*
@@ -59,7 +71,7 @@ class SignUp extends React.Component {
                 </section>
 
                 <section className={styles.bottomPage}>
-                    <select className={styles.dropdown}>
+                    <select className={styles.dropdown} value={this.state.account} onChange={this.handleChosen}>
                         <option value="Customer">Customer</option>
                         <option value="Vendor">Vendor</option>
                     </select>
