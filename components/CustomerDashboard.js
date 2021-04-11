@@ -59,7 +59,7 @@ export default class CustomerDashboard extends React.Component {
           <form onSubmit={this.handleButtonSubmit}>
             <button
               className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-
+              type="submit"
             >
               Nearest Me
             </button>
@@ -69,7 +69,7 @@ export default class CustomerDashboard extends React.Component {
 
             <button
               className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-
+              type="submit"
             >
               Trending
             </button>
@@ -81,7 +81,7 @@ export default class CustomerDashboard extends React.Component {
 
             <button
               className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-
+              type="submit"
             >
               Best Prices
             </button>
