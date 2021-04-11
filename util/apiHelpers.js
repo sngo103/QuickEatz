@@ -1,5 +1,6 @@
 import { connectToDatabase } from "./mongodb";
 import { Double } from 'mongodb';
+import { hashSync } from 'bcrypt';
 
 export async function findUser(email, coll) {
   const { db } = await connectToDatabase();
@@ -19,7 +20,7 @@ export function formatNewCustomer(
     first_name: firstName,
     last_name: lastName,
     username: username,
-    password: password,
+    password: hashSync(password, 10),
     email: email,
     created_at: Date.now(),
     reviews: [],
@@ -28,7 +29,7 @@ export function formatNewCustomer(
   const allUsersDoc = {
     relevant_id: undefined,
     email: email,
-    password: password,
+    password: hashSync(password, 10),
     account_type: "customer",
   };
   return [customersDoc, allUsersDoc];
@@ -37,7 +38,7 @@ export function formatNewCustomer(
 export function formatNewVendor(userInput) {
   const vendorsDoc = {
     username: userInput.username,
-    password: userInput.password,
+    password: hashSync(userInput.password, 10),
     first_name: userInput.first_name,
     last_name: userInput.last_name,
     email: userInput.email,
@@ -65,9 +66,8 @@ export function formatNewVendor(userInput) {
   const allUsersDoc = {
     relevant_id: undefined,
     email: userInput.email,
-    password: userInput.password,
+    password: hashSync(userInput.password, 10),
     account_type: "vendor",
   };
-  console.log("vendorsDoc:", vendorsDoc);
   return [vendorsDoc, allUsersDoc];
 }
