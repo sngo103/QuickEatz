@@ -1,12 +1,45 @@
 import { connectToDatabase } from "./mongodb";
-import { Double } from 'mongodb';
-import { hashSync } from 'bcrypt';
+import { ObjectId, Double } from "mongodb";
+// import ObjectId from 'mongodb';
+import { hashSync } from "bcrypt";
+
+// var ObjectId = require('mongodb').ObjectID;
 
 export async function findUser(email, coll) {
   const { db } = await connectToDatabase();
   const query = { email: email };
   const searchResult = await db.collection(coll).find(query).toArray();
   return searchResult;
+}
+
+// Token == ObjId
+export async function checkToken(token) {
+  const { db } = await connectToDatabase();
+  const obj_id = ObjectId(token);
+  console.log("TOKEN:", obj_id)
+  const query = {
+    _id: obj_id,
+  };
+  const searchResult = await db.collection("user_sessions").findOne(query);
+  console.log(searchResult)
+  return searchResult;
+}
+
+export async function addNewToken(email) {
+  const { db } = await connectToDatabase();
+  // Delete session in db if one exists:
+  db.collection("user_sessions").findOneAndDelete({ email: email });
+  const sessionDoc = {
+    email: email,
+    created_at: Date.now(),
+    is_deleted: false,
+  };
+  const newToken = await db
+    .collection("user_sessions")
+    .insertOne(sessionDoc)
+    .then(result => result.insertedId)
+    .catch((err) => console.log("Error:", err))
+  return newToken;
 }
 
 export function formatNewCustomer(
