@@ -10,8 +10,9 @@ export class NavBar extends React.Component {
       loggedIn: true, account: "customer", openMenu: false
     }
 
-    //container = React.createRef();
     this.clickMenu = this.clickMenu.bind(this);
+
+    //container = React.createRef();
     //this.clickOutside = this.clickOutside.bind(this);
     //this.openMenu = this.openMenu.bind(this);
     //this.closeMenu = this.closeMenu.bind(this);
@@ -23,7 +24,9 @@ export class NavBar extends React.Component {
     });
   }
 
-  /*
+  /* Comments Here and Above are incomplete code that is to make the dropdown also
+  disapear if the user clicks outside of the dropdown instead of only again on it
+
   clickOutside() {
     if (this.container.current && !this.container.current.contains(event.target)) {
       this.setState({ openMenu: false });
@@ -105,6 +108,28 @@ export class NavBar extends React.Component {
                         >
                           Dashboard
                       </a>
+                      )
+                    }
+                    {
+                      !this.state.loggedIn &&
+                      (
+                        <a
+                          href="/createAccount"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Sign Up
+                        </a>
+                      )
+                    }
+                    {
+                      !this.state.loggedIn &&
+                      (
+                        <a
+                          href="/login"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Log In
+                        </a>
                       )
                     }
                   </div>
@@ -276,6 +301,7 @@ export class NavBar extends React.Component {
                 </button>
               </div>
               <div className="mt-3 px-2 space-y-1">
+
                 <a
                   href="/viewProfile"
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"

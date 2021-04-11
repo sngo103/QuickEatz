@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from 'next/link';
 
 export default function Home() {
+
   return (
     <div className="container mx-auto px-6 text-center">
       <div className="mx-auto text-center">
@@ -12,13 +13,14 @@ export default function Home() {
           width={300} // Desired size with correct aspect ratio
           alt="QuickEatz Logo"
         />
-        <h1 className="title text-6xl font-bungee #FFE66D">QuickEatz</h1><br />
+        <h1 className="title text-6xl font-bungee">QuickEatz</h1><br />
         <p className="description">Who's hungry?</p><br />
         <Link href="/login">
           <span >
             <button
               type="button"
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={null}
             >
               <svg
                 className="-ml-1 mr-2 h-5 w-5"
@@ -83,7 +85,6 @@ export default function Home() {
       <footer>
         Footer here.
       </footer>
-
     </div>
   );
 }
