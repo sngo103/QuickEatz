@@ -17,11 +17,13 @@ export default class CustomerProfile extends React.Component {
                 <section className={styles.midPage}>
                     <h2> What would you like to edit today?</h2>
 
-                    <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" button1>
+                    <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" >
                         <p1> Settings</p1>
                     </button>
 
-                    <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" button1>
+                    &ensp; &ensp;
+
+                    <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" >
                         <p2> Apply </p2>
                     </button>
                 </section>
