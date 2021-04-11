@@ -22,9 +22,9 @@ const options = {
 };
 
 var close_vendors = [];
-
-
-
+var geo_url = "";
+var address_parts = [];
+var your_address_parts = [];
 
 export default function mApp({current_vendor, vendors, customers}){
 		
@@ -92,37 +92,41 @@ export default function mApp({current_vendor, vendors, customers}){
 	
 	<h1> My current location </h1>
 	<div>
-	  <ul>
-        {customers.map((customer) => (
-          <li>
-            <h3>{customer.first_name + " " + customer.last_name}</h3>
-          </li>
-        ))}
-      </ul>
-    </div>
-	<div>
 		
 		<GoogleMap mapContainerStyle={mapContainerStyle} 
 		zoom={8} 
 		center = {center}
 		onClick={(event) => {
-			setMarkers(current => [
+			geo_url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${event.latLng.lat()},${event.latLng.lng()}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`;
+			fetch(geo_url).then(response => response.json())
+			.then( data => {
+				console.log(data);
+				your_address_parts = data.results[0].formatted_address;
+				setMarkers(current => [
 			{
 				owner: "YOU",
 				lat: event.latLng.lat(),
 				lng: event.latLng.lng(),
 				time: new Date(),
+				buttontext: "",
+				actualaddress: your_address_parts,
 			},
 			]);
+			})
+			.catch(err => console.warn(err.message));
+			
+			
 			//setVendors( async current => await searchLatLon(event.latLng.lat(), event.latLng.lng()));
-			searchLatLon(event.latLng.lat(), event.latLng.lng());
-			setVendors(current => close_vendors);
+			searchLatLon(event.latLng.lat(), event.latLng.lng()).then(() => {setVendors(current => close_vendors);});
+			
 			//setMarkers(current => [...current, ...close_vendors]);
-			console.log("HEY");
-			console.log(markers);
-			console.log(close_vendors);
-			console.log(nearby_vendors);
+			//console.log("HEY");
+			//console.log(markers);
+			//console.log(close_vendors);
+			//console.log(nearby_vendors);
 		}}>
+		
+		
 		{markers.map(marker => <Marker key={marker.time.toISOString()} 
 										position = {{lat: marker.lat, lng: marker.lng}}
 										onClick={() => {setSelected(marker);}}
@@ -132,20 +136,35 @@ export default function mApp({current_vendor, vendors, customers}){
 		{Array.from(nearby_vendors).map((single_vendor) => 
 			<Marker key={single_vendor._id.toString()}
 					position = {{lat: single_vendor.current_location.coordinates[0], lng: single_vendor.current_location.coordinates[1]}} 
-					onClick={() => {setSelected({
+					onClick={() => {
+						geo_url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${single_vendor.current_location.coordinates[0]},${single_vendor.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`;
+						fetch(geo_url).then(response => response.json())
+						.then( data => {
+							console.log(data);
+							address_parts = data.results[0].formatted_address;
+							setSelected({
 						owner: single_vendor.business_name,
 						lat: single_vendor.current_location.coordinates[0],
 						lng: single_vendor.current_location.coordinates[1],
 						time: new Date(),
-						});}}
+						buttontext: "Go to the vendor!",
+						actualaddress: address_parts,
+						});
+							
+						})
+						.catch(err => console.warn(err.message));
+						
+						}}
 			/>
 		)}
-			
-		{selected ? (<InfoWindow position = {{lat: selected.lat, lng: selected.lng}} onCloseClick={()=> {setSelected(null);}}>
+	//AGAIN, DONT SHOEHORN API KEY
+		{selected ? (<InfoWindow position = {{lat: selected.lat, lng: selected.lng}} onClick={() => console.log("Power Pizza")} onCloseClick={()=> {setSelected(null);}}>
 			<div>
 				<p> {selected.owner} </p>
 				<p> Lat: {selected.lat} </p>
 				<p> Lon: {selected.lng} </p>
+				<p> Address: {selected.actualaddress} </p> 
+				<button onClick={() => console.log("Power Pizza")}> {selected.buttontext} </button>
 			</div> 
 			</InfoWindow>) : null} //ternary
 										
