@@ -17,17 +17,16 @@ export default class CustomerDashboard extends React.Component {
     this.handleTrendingSubmit = this.handleTrendingSubmit.bind(this);
     this.handlePricesSubmit = this.handlePricesSubmit.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleCuisineChange(event) {
-    this.setState({ cuisine: event.target.value });
-  }
   
-    handleCuisineSubmit() {
+    handleCuisineSubmit(event) {
       event.preventDefault();
+      target = event.target;
       console.log("submitted")
       this.setState({
-        buttonSelected: "Italian"
+        cuisine: target.value
       });
     }
 
@@ -56,8 +55,15 @@ export default class CustomerDashboard extends React.Component {
     }
 
     handleSearchSubmit(event) {
-      this.setState({ queryText: event.target.value });
+      event.preventDefault();
+      target = event.target;
+      this.setState({ queryText: target.value });
     }
+
+    handleChange(event) {
+      const target = event.target;
+      this.setState({ email: target.value });
+  }
 
     render() {
       return (
