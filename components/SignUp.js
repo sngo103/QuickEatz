@@ -17,7 +17,7 @@ class SignUp extends React.Component {
     };
 
     handleChosen() {
-        const target = event.target.value;
+        const target = event.target;
         this.setState({ account: target.value });
     }
 
