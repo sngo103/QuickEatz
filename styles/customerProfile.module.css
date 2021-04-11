@@ -3,14 +3,16 @@
 
 
 .logotext {
-    color: #FFE66D;
+    font-size: 75px;
+    height: 200px;
+    font-family: "Bungee Shade"
 }
 
 .title {
   font-family: "Bungee";
-  font-size: 75px;
+  font-size: 50px;
   color: #4ECDC4;
-  height: 110px;
+  height: 0px;
   text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;
 }
 
@@ -84,7 +86,6 @@ dropdown:hover .dropdown-content {
   background-color: #FFFFFF;
   width: 100%;
   height: 400px;
-  display: flex;
   align-items: center;
   text-align: center;
   
@@ -116,9 +117,4 @@ dropdown:hover .dropdown-content {
   color: black;
 }
 
-.secondmessage {
-  font-family: "Bungee"; 
-  font-size: 25px;
-  color: white;/* #4ECDC4;*/
-}
 

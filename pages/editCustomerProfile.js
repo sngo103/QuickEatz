@@ -5,8 +5,9 @@ export default function editCustomerProfile() {
     return (
         <div>
             <Head>
-                <CustomerProfile />
+                <title>editCustomerProfile</title>
             </Head >
+            <CustomerProfile />
         </div>
     )
 }
