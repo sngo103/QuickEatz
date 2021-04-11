@@ -7,7 +7,7 @@ export class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true, account: "customer", openMenu: false
+      loggedIn: false, account: "customer", openMenu: false
     }
 
     this.clickMenu = this.clickMenu.bind(this);
