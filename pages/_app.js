@@ -10,7 +10,7 @@ function App({ Component, pageProps }) {
         @import
         url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
       </style>
-      <ExtendedNavBar />
+      <ExtendedNavBar {...pageProps}/>
       <main>
       <Component {...pageProps} />
       </main>

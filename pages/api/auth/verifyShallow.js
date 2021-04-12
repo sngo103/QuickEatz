@@ -13,11 +13,11 @@ export default async (req, res) => {
         success: false,
       }); // Redirect to login in this case.
     } else {
-      const newToken = addNewToken(req.body.email);
+      //const newToken = addNewToken(req.body.email); THIS DOESNT SEEM NECESSARY, IT MESSES WITH THE ID WHEN SEARCHING THE DB
       res.status(200).json({
         message: "Session found.",
         success: true,
-        newToken: newToken,
+      //  newToken: newToken, 
       }); // User is authorized to view page.
     }
   } else {

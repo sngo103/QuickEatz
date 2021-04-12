@@ -1,7 +1,9 @@
-import React from "react";
+import React, {Component} from "react";
 import Image from "next/image";
 import { checkLogin, refreshToken } from "../lib/loginFunctions";
 import Router from 'next/router';
+
+import jsCookie from "js-cookie";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -28,12 +30,22 @@ class LoginForm extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+	
+	console.log(this.state.email, this.state.password, this.state.account_type);
+	
     const pass = await checkLogin(this.state.email, this.state.password, this.state.account_type);
     if(pass){
+	
       const newToken = await refreshToken(this.state.email);
+	  console.log("HEYO");
+	  console.log(typeof(newToken));
+	  console.log(newToken);
       localStorage.setItem("quickeatz_token", newToken);
       localStorage.setItem("quickeatz_email", this.state.email);
       localStorage.setItem("quickeatz", true);
+	  	//New stuff
+	  jsCookie.set(this.state.email, pass.token)
+	  
       Router.push("/dashboard");
     } else {
       this.setState({incorrect:true})
