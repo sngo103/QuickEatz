@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import NavBar from "../components/NavBar";
 import jsCookie from "js-cookie";
 import styles from "../styles/CustomerDashboard.module.css"
+import UserContext from "../components/UserContext";
+
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {
@@ -71,6 +73,8 @@ export class CustomerDashboard extends React.Component {
 	}
 	
   render() {
+	
+	  
     if (this.state.isLoading) {
       return <div> Loading... </div>;
     } else if (this.state.isLoggedIn) {
@@ -124,7 +128,7 @@ export class CustomerDashboard extends React.Component {
           <section className="h-50 bg-mintcream">
             <header className="bg-white shadow text-center">
               <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-                <h1 className={styles.title}>Dashboard</h1>
+                <h1 className={styles.title}>Dashboard </h1>
               </div>
             </header>
           </section>

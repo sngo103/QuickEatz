@@ -1,29 +1,34 @@
-import React from "react";
+import React, {useContext} from "react";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import Router from 'next/router';
 import { logout, checkLogin } from "../lib/loginFunctions";
+import UserContext from "../components/UserContext";
 
-class NavBar extends React.Component {
-  constructor(props) {
-    super(props); 
-	console.log(props);
-    this.state = {
+function NavBar(){
+  //constructor(props) {
+    //super(props); 
+	
+    var state = {
       openMenu: false,
       account: "customer",
       loggedIn: false
      };
-	this.handleLogin = this.handleLogin.bind(this); //JUST FOLLOWING THE PATTERN -MYLES
-    this.handleLogout = this.handleLogout.bind(this);
-    this.clickMenu = this.clickMenu.bind(this);
-	console.log(this.state);
-  }
+//	this.handleLogin = this.handleLogin.bind(this); //JUST FOLLOWING THE PATTERN -MYLES
+ //   this.handleLogout = this.handleLogout.bind(this);
+ //   this.clickMenu = this.clickMenu.bind(this); 
+ 
+	const {email, signOut} = useContext(UserContext);
+ 
+ 
+	console.log(email);
+ // }
 
-  async handleLogin() {
+  const handleLogin = async () => {
 	  console.log("ME NEXT");
-	  await checkLogin(this.state.email, this.state.password, this.state.account_type)
-      this.setState(prevState => {
+	  await checkLogin(state.email, state.password, state.account_type)
+      setState(prevState => {
 	  let openMenu_val = {...prevState.openMenu};
 	  let account_val = {...prevState.account};
 	  loggedIn_val = true;
@@ -35,21 +40,21 @@ class NavBar extends React.Component {
 	  })
   }
 
-  async handleLogout() {
-    await logout(this.state.email);
+  const  handleLogout= async () => {
+    await logout(state.email);
     localStorage.removeItem("quickeatz_token");
     localStorage.removeItem("quickeatz_email");
     localStorage.setItem("quickeatz", false);
-    Router.push("/");
+    signOut();
   }
 
-  clickMenu() {
-    this.setState({
-      openMenu: !this.state.openMenu
+  const clickMenu = () => {
+    setState({
+      openMenu: !state.openMenu
     });
   }
 
-  render() {
+  
     return (
       <div>
         <Head>
@@ -70,7 +75,7 @@ class NavBar extends React.Component {
                       Trending
                     </a>
                     {
-                      this.state.loggedIn && this.state.account == "customer" &&
+                      state.loggedIn && state.account == "customer" &&
                       (
                         <a
                           href="/dashboard"
@@ -81,7 +86,7 @@ class NavBar extends React.Component {
                       )
                     }
                     {
-                      this.state.loggedIn && this.state.account == "vendor" &&
+                      state.loggedIn && state.account == "vendor" &&
                       (
                         <a
                           href="/vendorDashboard"
@@ -92,7 +97,7 @@ class NavBar extends React.Component {
                       )
                     }
                     {
-                      !this.state.loggedIn &&
+                      !state.loggedIn &&
                       (
                         <a
                           href="/createAccount"
@@ -103,7 +108,7 @@ class NavBar extends React.Component {
                       )
                     }
                     {
-                      !this.state.loggedIn &&
+                      !state.loggedIn &&
                       (
                         <a
                           href="/login"
@@ -120,7 +125,7 @@ class NavBar extends React.Component {
 
 
               {
-                this.state.loggedIn && (
+                state.loggedIn && (
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
                       <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -148,7 +153,7 @@ class NavBar extends React.Component {
                         <div>
                           <button
                             type="button"
-                            onClick={this.clickMenu}
+                            onClick={clickMenu}
                             className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                             id="user-menu"
                             aria-expanded="false"
@@ -170,8 +175,8 @@ class NavBar extends React.Component {
                         }
 
                         {
-                          this.state.openMenu && (
-                            <div className="container" ref={this.container}>
+                          state.openMenu && (
+                            <div className="container" ref={container}>
                               <div
                                 className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu"
@@ -190,7 +195,7 @@ class NavBar extends React.Component {
                                 <Link href="/">
                                   <a
                                     href="/"
-                                    onClick={this.handleLogout}
+                                    onClick={handleLogout}
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     role="menuitem"
                                   >
@@ -295,7 +300,7 @@ class NavBar extends React.Component {
 
                 <a
                   href="/"
-                  onClick={this.handleLogout}
+                  onClick={handleLogout}
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                 >
                   Sign out
@@ -306,7 +311,7 @@ class NavBar extends React.Component {
         </nav>
       </div>
     );
-  }
+  
 }
 
 export default NavBar;
