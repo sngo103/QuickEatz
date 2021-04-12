@@ -1,6 +1,9 @@
+import Head from 'next/head'
+import Link from 'next/link'
 import React from "react";
 
-export class CustomerDashboard extends React.Component {
+
+export class SecretTest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +67,7 @@ export class CustomerDashboard extends React.Component {
           </header>
           <main>
             <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-              You are logged in!!!
+              You are logged in to the secret page!!
               <div className="px-4 py-6 sm:px-0">
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
               </div>
@@ -98,4 +101,4 @@ export class CustomerDashboard extends React.Component {
   }
 }
 
-export default CustomerDashboard;
+export default SecretTest;
