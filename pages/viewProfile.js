@@ -1,13 +1,10 @@
-import Head from 'next/head'
-import Link from 'next/link'
+import ViewCustomerProfile from '../components/ViewCustomerProfile';
+import ViewVendorProfile from '../components/ViewVendorProfile';
 
-export default function ViewProfilePage() {
+export default function ViewProfile() {
   return (
     <div>
-      <Head>
-        <title>Profile</title>
-      </Head>
-      <h1>My Profile</h1>
+      <ViewCustomerProfile />
     </div>
   )
 }

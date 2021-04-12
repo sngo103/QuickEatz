@@ -36,11 +36,11 @@ class NavBar extends React.Component {
   }
 
   async handleLogout() {
-      await logout(this.state.email);
-      localStorage.removeItem("quickeatz_token");
-      localStorage.removeItem("quickeatz_email");
-      localStorage.setItem("quickeatz", false);
-      Router.push("/");
+    await logout(this.state.email);
+    localStorage.removeItem("quickeatz_token");
+    localStorage.removeItem("quickeatz_email");
+    localStorage.setItem("quickeatz", false);
+    Router.push("/");
   }
 
   clickMenu() {
@@ -205,7 +205,7 @@ class NavBar extends React.Component {
                     </div>
                   </div >
                 )}
-                
+
               <div className="-mr-2 flex md:hidden">
                 {/*<!-- Mobile menu button -->*/}
                 <button type="button" className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">

@@ -1,5 +1,3 @@
-import Head from 'next/head'
-//import Layout from '../components/layout'
 import { getSortedVendorsData } from '../lib/vendors'
 
 export async function getStaticProps() {
@@ -14,7 +12,6 @@ export async function getStaticProps() {
 export default function Vendors({ allVendorsData }) {
   return (
     <div>
-
       {/*<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>*/}
       < section >
         <h2>Blog</h2>
@@ -29,7 +26,7 @@ export default function Vendors({ allVendorsData }) {
             </li>
           ))}
         </ul>
-      </section >
+      </section>
     </div>
   )
 }
