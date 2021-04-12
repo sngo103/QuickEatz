@@ -33,6 +33,7 @@ class LoginForm extends React.Component {
       const newToken = await refreshToken(this.state.email);
       localStorage.setItem("quickeatz_token", newToken);
       localStorage.setItem("quickeatz_email", this.state.email);
+      localStorage.setItem("quickeatz", true);
       Router.push("/dashboard");
     } else {
       this.setState({incorrect:true})

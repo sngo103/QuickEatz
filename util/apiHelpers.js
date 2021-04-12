@@ -42,6 +42,13 @@ export async function addNewToken(email) {
   return newToken;
 }
 
+export async function deleteToken(email) {
+  const { db } = await connectToDatabase();
+  // Delete session in db if one exists:
+  db.collection("user_sessions").findOneAndDelete({ email: email });
+  return;
+}
+
 export function formatNewCustomer(
   firstName,
   lastName,

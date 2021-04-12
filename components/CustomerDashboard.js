@@ -1,19 +1,17 @@
 import React from "react";
-import Image from "next/image";
-import { get } from "lodash";
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
     };
   }
 
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email")
-    if (storedToken) {
+    const storedState = localStorage.getItem("quickeatz")
+    if (storedState) {
       const data = {
         token: storedToken,
         email: storedEmail
@@ -30,6 +28,7 @@ export class CustomerDashboard extends React.Component {
           if (json.success) {
             console.log("Token verified!")
             localStorage.setItem("quickeatz_token", json.newToken)
+            localStorage.setItem("quickeatz", true)
             this.setState({
               isLoggedIn: true,
               isLoading: false,
