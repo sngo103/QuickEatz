@@ -1,7 +1,7 @@
 import React from "react";
 import Image from 'next/image';
 import styles from '../styles/CustomerDashboard.module.css';
-import vendors from '../pages/vendors';
+//import viewVendor from '/viewVendor';
 
 export default class CustomerDashboard extends React.Component {
   constructor(props) {
@@ -189,7 +189,11 @@ export default class CustomerDashboard extends React.Component {
               <div className="max-w-7xl mx-auto py-20 sm:px-6 lg:px-8">
 
                 <div className="px-4 py-6 sm:px-0">
-                  <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96"></div>
+                  <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
+                    
+                    {}
+                    
+                  </div>
                 </div>
 
               </div>
