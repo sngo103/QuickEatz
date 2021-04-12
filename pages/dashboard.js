@@ -10,8 +10,7 @@ export default function DashboardPage() {
         <title>Dashboard</title>
       </Head>
       <CustomerDashboard />
-      <VendorDashboard />
-      <h1>Customer Dashboard Page</h1>
+      {/* <VendorDashboard />*/}
     </div>
   )
 }
