@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Layout from '../components/layout'
+//import Layout from '../components/layout'
 import { getSortedVendorsData } from '../lib/vendors'
 
 export async function getStaticProps() {
@@ -11,11 +11,12 @@ export async function getStaticProps() {
   }
 }
 
-export default function Vendors({allVendorsData}) {
+export default function Vendors({ allVendorsData }) {
   return (
-    <Layout>
+    <div>
+
       {/*<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>*/}
-      <section>
+      < section >
         <h2>Blog</h2>
         <ul>
           {allVendorsData.map(({ id, date, title }) => (
@@ -28,7 +29,7 @@ export default function Vendors({allVendorsData}) {
             </li>
           ))}
         </ul>
-      </section>
-    </Layout>
+      </section >
+    </div>
   )
 }
