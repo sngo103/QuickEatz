@@ -3,19 +3,36 @@ import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import Router from 'next/router';
-import { logout } from "../lib/loginFunctions";
+import { logout, checkLogin } from "../lib/loginFunctions";
 
 class NavBar extends React.Component {
   constructor(props) {
-    super(props);
+    super(props); 
+	console.log(props);
     this.state = {
       openMenu: false,
       account: "customer",
       loggedIn: false
      };
-
+	this.handleLogin = this.handleLogin.bind(this); //JUST FOLLOWING THE PATTERN -MYLES
     this.handleLogout = this.handleLogout.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
+	console.log(this.state);
+  }
+
+  async handleLogin() {
+	  console.log("ME NEXT");
+	  await checkLogin(this.state.email, this.state.password, this.state.account_type)
+      this.setState(prevState => {
+	  let openMenu_val = {...prevState.openMenu};
+	  let account_val = {...prevState.account};
+	  loggedIn_val = true;
+		  return {
+			  openMenu: openMenu_val,
+			  account: account_val,
+			  loggedIn: loggedIn_val
+		  };
+	  })
   }
 
   async handleLogout() {

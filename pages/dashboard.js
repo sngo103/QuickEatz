@@ -3,9 +3,18 @@ import Link from 'next/link'
 import CustomerDashboard from '../components/CustomerDashboard.js'
 import VendorDashboard from '../components/VendorDashboard.js'
 
-export default function DashboardPage() {
+import jsHttpCookie from 'cookie';
+import React, {Component} from 'react'
+
+
+
+
+
+export default function DashboardPage({initProps}) {
+	console.log(initProps);
   return (
     <div>
+	  
       <Head>
         <title>Dashboard</title>
       </Head>
@@ -14,3 +23,5 @@ export default function DashboardPage() {
     </div>
   )
 }
+
+

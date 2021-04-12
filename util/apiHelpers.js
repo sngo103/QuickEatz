@@ -15,20 +15,21 @@ export async function findUser(email, coll) {
 // Token == ObjId
 export async function checkToken(token) {
   const { db } = await connectToDatabase();
+  console.log(token);
   const obj_id = ObjectId(token);
   console.log("TOKEN:", obj_id)
   const query = {
-    _id: obj_id,
+    "_id": obj_id,
   };
   const searchResult = await db.collection("user_sessions").findOne(query);
-  console.log(searchResult)
+  console.log(searchResult);
   return searchResult;
 }
 
 export async function addNewToken(email) {
   const { db } = await connectToDatabase();
   // Delete session in db if one exists:
-  db.collection("user_sessions").findOneAndDelete({ email: email });
+  await db.collection("user_sessions").findOneAndDelete({ email: email });
   const sessionDoc = {
     email: email,
     created_at: Date.now(),
@@ -37,8 +38,10 @@ export async function addNewToken(email) {
   const newToken = await db
     .collection("user_sessions")
     .insertOne(sessionDoc)
-    .then(result => result.insertedId)
-    .catch((err) => console.log("Error:", err))
+.then(result => {console.log(result.insertedId); return result.insertedId})
+    .catch((err) => console.log("Error:", err));
+	console.log("HHHHHHH");
+	console.log(newToken);
   return newToken;
 }
 
