@@ -1,12 +1,16 @@
 import React from "react";
 import Image from "next/image";
+import { checkLogin, refreshToken } from "../lib/loginFunctions";
+import Router from 'next/router';
 
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
       email: "",
-      password: ""
+      password: "",
+      account_type: "customer",
+      incorrect: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,9 +26,18 @@ class LoginForm extends React.Component {
     }
   }
 
-  handleSubmit(event) {
-    alert("A name was submitted: " + this.state.email + " and " + this.state.password);
+  async handleSubmit(event) {
     event.preventDefault();
+    const pass = await checkLogin(this.state.email, this.state.password, this.state.account_type);
+    if(pass){
+      const newToken = await refreshToken(this.state.email);
+      localStorage.setItem("quickeatz_token", newToken);
+      localStorage.setItem("quickeatz_email", this.state.email);
+      localStorage.setItem("quickeatz", true);
+      Router.push("/dashboard");
+    } else {
+      this.setState({incorrect:true})
+    }
   }
 
   render() {
@@ -38,6 +51,8 @@ class LoginForm extends React.Component {
         />
         <h1 className="title text-6xl font-bungee">QuickEatz</h1>
         <br />
+
+        {this.state.incorrect ? <div> Username and/or password incorrect! </div> : null}
 
         <form onSubmit={this.handleSubmit}>
           <label>
