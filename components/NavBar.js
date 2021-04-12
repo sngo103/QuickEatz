@@ -11,7 +11,7 @@ class NavBar extends React.Component {
     this.state = {
       openMenu: false,
       account: "customer",
-      loggedIn: true
+      loggedIn: false
      };
 
     this.handleLogout = this.handleLogout.bind(this);
