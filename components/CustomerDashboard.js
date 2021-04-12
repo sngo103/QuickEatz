@@ -1,68 +1,101 @@
 import React from "react";
-import Image from 'next/image';
-import styles from '../styles/CustomerDashboard.module.css';
-//import viewVendor from '/viewVendor';
+import styles from "../styles/CustomerDashboard.module.css"
 
-export default class CustomerDashboard extends React.Component {
+export class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cuisine: "",
-      openMap: false,
-      buttonSelected: "",
-      queryText: ""
-    }
-    this.handleCuisineSubmit = this.handleCuisineSubmit.bind(this);
-    this.handleNearestSubmit = this.handleNearestSubmit.bind(this);
-    this.handleTrendingSubmit = this.handleTrendingSubmit.bind(this);
-    this.handlePricesSubmit = this.handlePricesSubmit.bind(this);
-    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this)
+    };
   }
 
-  
-    handleCuisineSubmit(event) {
-      event.preventDefault();
-      target = event.target;
-      console.log("submitted")
+  componentDidMount() {
+    const storedToken = localStorage.getItem("quickeatz_token");
+    const storedEmail = localStorage.getItem("quickeatz_email")
+    const storedState = localStorage.getItem("quickeatz")
+    if (storedState) {
+      const data = {
+        token: storedToken,
+        email: storedEmail
+      };
+      fetch("/api/auth/verifyShallow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.success) {
+            console.log("Token verified!")
+            localStorage.setItem("quickeatz_token", json.newToken)
+            localStorage.setItem("quickeatz", true)
+            this.setState({
+              isLoggedIn: true,
+              isLoading: false,
+            });
+          } else {
+            this.setState({
+              isLoggedIn: false,
+              isLoading: false,
+            });
+          }
+        });
+    } else {
+      console.log("Token not found!")
       this.setState({
-        cuisine: target.value
+        isLoggedIn: false,
+        isLoading: true,
       });
     }
+  }
 
-    handleNearestSubmit(event) {
-      event.preventDefault();
-      console.log("submitted")
-      this.setState({
-        buttonSelected: "Nearest"
-      });
+  render() {
+    if (this.state.isLoading) {
+      return <div> Loading... </div>;
+    } else if (this.state.isLoggedIn) {
+      return (
+        <div>
+          <header className="bg-white shadow">
+            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+              <h1 className="text-3xl font-bold text-gray-900">
+                Customer Dashboard
+              </h1>
+            </div>
+          </header>
+          <main>
+            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+              You are logged in!!!
+              <div className="px-4 py-6 sm:px-0">
+                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+              </div>
+              {/* /End replace */}
+            </div>
+          </main>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <header className="bg-white shadow">
+            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+              <h1 className="text-3xl font-bold text-gray-900">
+                Customer Dashboard
+              </h1>
+            </div>
+          </header>
+          <main>
+            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+              Not logged in.
+              <div className="px-4 py-6 sm:px-0">
+                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+              </div>
+              {/* /End replace */}
+            </div>
+          </main>
+        </div>
+      );
     }
-
-    handleTrendingSubmit(event) {
-      event.preventDefault();
-      console.log("submitted")
-      this.setState({
-        buttonSelected: "Trending"
-      });
-    }
-
-    handlePricesSubmit(event) {
-      event.preventDefault();
-      console.log("submitted")
-      this.setState({
-        buttonSelected: "Prices"
-      });
-    }
-
-    handleSearchSubmit(event) {
-      event.preventDefault();
-      target = event.target;
-      this.setState({ queryText: target.value });
-    }
-
-    handleChange(event) {
-      const target = event.target;
-      this.setState({ email: target.value });
   }
 
     render() {
@@ -204,3 +237,5 @@ export default class CustomerDashboard extends React.Component {
       );
     }
   };
+
+export default CustomerDashboard;

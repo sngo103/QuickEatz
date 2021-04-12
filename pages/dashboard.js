@@ -10,21 +10,7 @@ export default function DashboardPage() {
         <title>Dashboard</title>
       </Head>
       <CustomerDashboard />
+      {/* <VendorDashboard />*/}
     </div>
   )
 }
-
-/*
-export default function DashboardPage() {
-  return (
-    <div>
-      <Head>
-        <title>Dashboard</title>
-      </Head>
-      <CustomerDashboard />
-      <VendorDashboard />
-      <h1>Customer Dashboard Page</h1>
-    </div>
-  )
-}
-*/

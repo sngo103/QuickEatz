@@ -14,8 +14,12 @@ export async function getStaticProps() {
 export default function Vendors({ allVendorsData }) {
   return (
     <div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
       {/*<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>*/}
-      <section>
+      < section >
         <h2>Blog</h2>
         <ul>
           {allVendorsData.map(({ id, date, title }) => (
@@ -28,7 +32,11 @@ export default function Vendors({ allVendorsData }) {
             </li>
           ))}
         </ul>
+<<<<<<< HEAD
       </section>
+=======
+      </section >
+>>>>>>> main
     </div>
   )
 }
