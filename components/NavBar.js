@@ -1,22 +1,30 @@
 import React from "react";
-// import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Head from "next/head";
+import Link from "next/link";
+import Router from 'next/router';
+import { logout } from "../lib/loginFunctions";
 
-export class NavBar extends React.Component {
+class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true, account: "customer", openMenu: false
-    }
+      openMenu: false,
+      account: "customer",
+      loggedIn: false
+     };
 
+    this.handleLogout = this.handleLogout.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
+  }
 
-    //container = React.createRef();
-    //this.clickOutside = this.clickOutside.bind(this);
-    //this.openMenu = this.openMenu.bind(this);
-    //this.closeMenu = this.closeMenu.bind(this);
-  };
+  async handleLogout() {
+      await logout(this.state.email);
+      localStorage.removeItem("quickeatz_token");
+      localStorage.removeItem("quickeatz_email");
+      localStorage.setItem("quickeatz", false);
+      Router.push("/");
+  }
 
   clickMenu() {
     this.setState({
@@ -24,52 +32,13 @@ export class NavBar extends React.Component {
     });
   }
 
-  /* Comments Here and Above are incomplete code that is to make the dropdown also
-  disapear if the user clicks outside of the dropdown instead of only again on it
-  clickOutside() {
-    if (this.container.current && !this.container.current.contains(event.target)) {
-      this.setState({ openMenu: false });
-    }
-  }
-  componentDidMount() {
-    document.addEventListener("mousedown", this.clickOutside);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.clickOutside);
-  }
- */
-
-  /*
-  openMenu(event) {
-    event.preventDefault();
-    this.setState({
-      openMenu: true
-    });
-    document.addEventListener("click", this.closeMenu)
-  }
-  closeMenu(event) {
-    //if (!this.dropdownMenu.contains(event.target)) {
-    if (!event) {
-      this.setState({
-        openMenu: false
-      });
-    }
-    document.removeEventListener("click", this.closeMenu);
-  }
-  */
-
-  // state determines if some navbar components render or not 
   render() {
     return (
-
       <div>
-
-        <style>
-          .container {
-
-          }
-        </style>
-
+        <Head>
+          <link rel="icon" href="images/quickeatzclip.png" />
+          <title>QuickEatz</title>
+        </Head>
         <nav className="bg-yellow-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
@@ -201,9 +170,10 @@ export class NavBar extends React.Component {
                                     Your Profile
                               </a>
                                 </Link>
-                                <Link href="/logout">
+                                <Link href="/">
                                   <a
-                                    href="/logout"
+                                    href="/"
+                                    onClick={this.handleLogout}
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     role="menuitem"
                                   >
@@ -309,7 +279,8 @@ export class NavBar extends React.Component {
                 </a>
 
                 <a
-                  href="/logout"
+                  href="/"
+                  onClick={this.handleLogout}
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                 >
                   Sign out
@@ -317,8 +288,8 @@ export class NavBar extends React.Component {
               </div>
             </div>
           </div>
-        </nav >
-      </div >
+        </nav>
+      </div>
     );
   }
 }

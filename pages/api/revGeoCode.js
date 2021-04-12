@@ -7,8 +7,8 @@ export default async function handler(req, res){
   
   const data = req.query;
 	
-	const customer_lat = parseFloat(data.latitude);
-	const customer_lng = parseFloat(data.longitude);
+	const input_lat = parseFloat(data.latitude);
+	const input_lng = parseFloat(data.longitude);
 	
 	
 

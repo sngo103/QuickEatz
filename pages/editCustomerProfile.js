@@ -6,7 +6,7 @@ export default function editCustomerProfile() {
         <div>
             <Head>
                 <title>editCustomerProfile</title>
-            </Head >
+            </Head>
             <CustomerProfile />
         </div>
     )

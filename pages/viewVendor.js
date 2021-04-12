@@ -1,11 +1,32 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import React from 'react'
 import { connectToDatabase } from "../util/mongodb";
 
 const ObjectId = require('mongodb').ObjectID;
 
+
 export default function FirstPost({vendor, vendor_reviews}) {
 	//console.log({vendor});
+	var username = "";
+	
+	const getUserName = (user_id) => {
+		
+		
+		const data = fetch(`http://localhost:3000/api/getUserName?_id=${user_id}`);
+		
+		const res =  data.json();
+		
+		
+		//console.log(res);
+		/*let username = res.username;
+		return await username;*/
+		
+		return  res;
+	}
+	
+	
+	const [review_item, setReview] = React.useState(null);
 	
   return (
   <>
@@ -29,15 +50,24 @@ export default function FirstPost({vendor, vendor_reviews}) {
 	  
 	  ))}
 	  </ul>
+	  
 	  <h2>Reviews:</h2>
 	  <ul>
-        {vendor_reviews.map((review) => (
-          <li>
-            <h2><strong>User {review.customer_id}</strong></h2>
-            
+		{
+			vendor_reviews.map((review) => {
+				
+			//let fetch_url = fetch(`http://localhost:3000/api/getUserName?_id=${review.customer_id}`).then(response => (response.json()))
+			//																						.then(body => {setReview(current => { rev_name: body.username}, () => console.log(review_item))} )
+			//let userdata = ;
+			//console.log(review_item);
+          return (<li>
+            <h2><strong> User {review.customer_id} </strong></h2>
+            <p> Rated {review.rating} Stars</p>
             <p>{review.review_content}</p>
-          </li>
-        ))}
+			<br />
+          </li>)
+		  })
+		}
       </ul>
  </>
   );
@@ -63,7 +93,7 @@ export async function getServerSideProps() {
     .limit(20)
     .toArray();
 
-	
+ 
   return {
     props: {
       vendor: JSON.parse(JSON.stringify(vendor[0])),
