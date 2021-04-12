@@ -14,7 +14,10 @@ export async function getStaticProps() {
 export default function Vendors({ allVendorsData }) {
   return (
     <div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
       {/*<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>*/}
       < section >
         <h2>Blog</h2>
@@ -29,7 +32,11 @@ export default function Vendors({ allVendorsData }) {
             </li>
           ))}
         </ul>
+<<<<<<< HEAD
+      </section>
+=======
       </section >
+>>>>>>> main
     </div>
   )
 }
