@@ -1,4 +1,6 @@
 import React from "react";
+import NavBar from "../components/NavBar";
+import jsCookie from "js-cookie";
 import styles from "../styles/CustomerDashboard.module.css"
 
 export class CustomerDashboard extends React.Component {
@@ -10,13 +12,17 @@ export class CustomerDashboard extends React.Component {
 
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
-    const storedEmail = localStorage.getItem("quickeatz_email")
-    const storedState = localStorage.getItem("quickeatz")
+    const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedState = localStorage.getItem("quickeatz");
+	console.log(storedEmail);
+	console.log(storedToken);
+	const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
         email: storedEmail
       };
+	  console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -24,12 +30,13 @@ export class CustomerDashboard extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then((res) => res.json())
-        .then((json) => {
+        .then(res => res.json())
+        .then(json => {
           if (json.success) {
-            console.log("Token verified!")
-            localStorage.setItem("quickeatz_token", json.newToken)
-            localStorage.setItem("quickeatz", true)
+            console.log("Token verified!");
+			//console.log(json.newToken); I STOPPED THE USE OF A NEW TOKEN IN VERIFYSHALLOW
+            //localStorage.setItem("quickeatz_token", json.newToken);
+            localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
               isLoading: false,
@@ -49,7 +56,20 @@ export class CustomerDashboard extends React.Component {
       });
     }
   }
-
+	
+	static async getInitialProps({req}){
+		console.log(req);
+		const initProps = {};
+		if(req && req.headers){
+			const cookies = req.headers.cookie;
+			if(typeof(cookies) === 'string'){
+				const cookiesJSON = jsHttpCookie.parse(cookies);
+				initProps.token = cookiesJSON.token;
+			}
+		}
+		return initProps;
+	}
+	
   render() {
     if (this.state.isLoading) {
       return <div> Loading... </div>;
