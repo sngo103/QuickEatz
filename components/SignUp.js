@@ -1,7 +1,7 @@
 // import Link from 'next/link'
 import React from "react";
 import Image from "next/image";
-import styles from "../styles/SignUp.module.css"
+import styles from "../styles/ui.module.css"
 
 class SignUp extends React.Component {
     constructor(props) {

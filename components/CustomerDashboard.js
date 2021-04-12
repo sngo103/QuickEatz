@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/CustomerDashboard.module.css"
+import styles from "../styles/ui.module.css"
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {

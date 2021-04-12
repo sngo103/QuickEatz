@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import ExtendedNavBar from "../components/ExtendedNavBar.js";
 
+
 function App({ Component, pageProps }) {
   return (
     <>
@@ -12,7 +13,7 @@ function App({ Component, pageProps }) {
       </style>
       <ExtendedNavBar />
       <main>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
       </main>
     </>
   );
