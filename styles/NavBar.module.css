@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Pridi:wght@300&display=swap');
+
+.bungeeShade {
+  font-family: "Bungee Shade", cursive;
+  text-align: center;
+  font-size: xx-large;
+  margin-left: 20px;
+}
+
+.navLinks {
+  font-family: 'Pridi', serif;
+  font-size: 20px;
+  color: pink;
+}
+
+.navLinks:hover {
+  
+}
+
+.navLinksRight {
+  font-family: 'Pridi', serif;
+  padding-right: 20px;
+  font-size: 20px;
+}
