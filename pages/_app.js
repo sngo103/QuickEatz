@@ -41,8 +41,9 @@ export default class MyApp extends App{
         @import
         url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
       </style>
+
 	  <UserContext.Provider value={{email: this.state.user, signIn: this.signIn, signOut: this.signOut}}>
-      <ExtendedNavBar />
+      <ExtendedNavBar {...pageProps}/>
 	  </UserContext.Provider>
       <main>
 	

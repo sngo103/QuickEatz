@@ -5,6 +5,7 @@ export default function ViewProfile() {
   return (
     <div>
       <ViewCustomerProfile />
+      {/* <ViewVendorProfile /> */}
     </div>
   )
 }

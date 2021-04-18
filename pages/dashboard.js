@@ -1,12 +1,10 @@
+import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import CustomerDashboard from '../components/CustomerDashboard.js'
-// import VendorDashboard from '../components/vendorDashboard.js'
-
+// import CustomerDashboard from '../components/CustomerDashboard.js'
+import VendorDashboard from '../components/vendorDashboard.js'
 import jsHttpCookie from 'cookie';
 import React, {Component} from 'react'
-
-
 
 
 
@@ -18,8 +16,8 @@ export default function DashboardPage({initProps}) {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <CustomerDashboard />
-      {/* <VendorDashboard />*/}
+      {/* <CustomerDashboard /> */}
+      <VendorDashboard />
     </div>
   )
 }
