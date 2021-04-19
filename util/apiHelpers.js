@@ -15,6 +15,7 @@ export async function findUser(email, coll) {
 // Token == ObjId
 export async function checkToken(token) {
   const { db } = await connectToDatabase();
+  console.log("CHECKING TOKEN");
   console.log(token);
   const obj_id = ObjectId(token);
   console.log("TOKEN:", obj_id)

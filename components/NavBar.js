@@ -14,7 +14,9 @@ class NavBar extends React.Component {
     this.state = {
       openMenu: false,
       account: "customer",
+	  isUpToDate: false,
     };
+	console.log("HEYOOOOOO");
     this.handleLogin = this.handleLogin.bind(this); //JUST FOLLOWING THE PATTERN -MYLES
     this.handleLogout = this.handleLogout.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
@@ -51,11 +53,13 @@ class NavBar extends React.Component {
             this.setState({
               isLoggedIn: true,
               isLoading: false,
+			  isUpToDate: false,
             });
           } else {
             this.setState({
               isLoggedIn: false,
               isLoading: false,
+			  isUpToDate: false,
             });
           }
         });
@@ -64,8 +68,57 @@ class NavBar extends React.Component {
       this.setState({
         isLoggedIn: false,
         isLoading: true,
+		isUpToDate: false,
       });
     }
+  }
+  
+   componentDidUpdate() { //To get the navbar to change on load
+	//When updating the page, check if we're logged in. THis is more frequent than componentDidMount
+    const storedToken = localStorage.getItem("quickeatz_token");
+    const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedState = localStorage.getItem("quickeatz");
+    console.log(storedEmail);
+    console.log(storedToken);
+    const cookie_val = jsCookie.get();
+    if (storedState) {
+      const data = {
+        token: storedToken,
+        email: storedEmail,
+      };
+      console.log(JSON.stringify(data));
+      fetch("/api/auth/verifyShallow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.success && !this.state.isLoggedIn) {//Prevent loop. ASSUMES LOG OUT WORKS. If logged out when actually logged in, update.
+            console.log("Token verified!");
+            //console.log(json.newToken); I STOPPED THE USE OF A NEW TOKEN IN VERIFYSHALLOW
+            //localStorage.setItem("quickeatz_token", json.newToken);
+            localStorage.setItem("quickeatz", true);
+            this.setState({
+              isLoggedIn: true,
+              isLoading: false,
+			  isUpToDate: false,
+            });
+          } 
+        });
+    }
+	/* OUT OF DATE
+	console.log("Checking if NavBar needs an update. State:");
+	console.log(this.state);
+	if(!this.state.isUpToDate){
+		console.log("Updating Navbar...");
+		this.setState({isUpToDate: true});
+	}
+	else{
+		console.log("Navbar is up to date.");
+	} */
   }
 
   static async getInitialProps({ req }) {
@@ -88,7 +141,12 @@ class NavBar extends React.Component {
       this.state.password,
       this.state.account_type
     );
-    this.setState((prevState) => {
+	
+	this.setState({
+              isLoggedIn: true,
+              isLoading: false,
+            });
+   /* this.setState((prevState) => {
       let openMenu_val = { ...prevState.openMenu };
       let account_val = { ...prevState.account };
       loggedIn_val = true;
@@ -97,15 +155,34 @@ class NavBar extends React.Component {
         account: account_val,
         loggedIn: loggedIn_val,
       };
-    });
+    }); */
+	//Router.reload();
   }
 
-  const  handleLogout= async () => {
-    await logout(state.email);
+  async handleLogout() {
+    await logout(this.state.email);
     localStorage.removeItem("quickeatz_token");
     localStorage.removeItem("quickeatz_email");
     localStorage.setItem("quickeatz", false);
-    signOut();
+	this.setState({
+              isLoggedIn: false,
+              isLoading: false,
+			  isUpToDate: false,
+            });
+	
+	/*this.setState((prevState) => {
+      let openMenu_val = { ...prevState.openMenu };
+      let account_val = { ...prevState.account };
+      loggedIn_val = true;
+      return {
+        openMenu: openMenu_val,
+        account: account_val,
+        loggedIn: loggedIn_val,
+      };
+    }); */
+	
+	//Router.reload();
+    //signOut();
   }
 
 
@@ -116,7 +193,7 @@ class NavBar extends React.Component {
   }
 
   
-    return (
+  render(){  return (
       <div>
         <Head>
           <link rel="icon" href="images/quickeatzclip.png" />
@@ -379,7 +456,7 @@ class NavBar extends React.Component {
 
                 <a
                   href="/"
-                  onClick={handleLogout}
+                  onClick={this.handleLogout}
                   className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                 >
                   Sign out
@@ -389,7 +466,8 @@ class NavBar extends React.Component {
           </div>
         </nav>
       </div>
-    );
+  ); }
+
   
 }
 

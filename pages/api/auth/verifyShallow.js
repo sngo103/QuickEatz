@@ -5,6 +5,9 @@ import _ from "lodash";
 export default async (req, res) => {
   // Request body should have email and token
   if (req.method === "POST") {
+	  console.log("VERIFYING");
+	console.log(req.body.token);
+	console.log(typeof(req.body.token));
     const response = await checkToken(req.body.token);
     console.log("RESPONSE:", response);
     if (_.isEmpty(response)) {

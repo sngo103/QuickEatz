@@ -12,7 +12,8 @@ class LoginForm extends React.Component {
       email: "",
       password: "",
       account_type: "customer",
-      incorrect: false
+      incorrect: false,
+	  success: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,16 +38,17 @@ class LoginForm extends React.Component {
     if(pass){
 	
       const newToken = await refreshToken(this.state.email);
-	  console.log("HEYO");
-	  console.log(typeof(newToken));
-	  console.log(newToken);
+	  //console.log("HEYO");
+	  //console.log(typeof(newToken));
+	  //console.log(newToken);
       localStorage.setItem("quickeatz_token", newToken);
       localStorage.setItem("quickeatz_email", this.state.email);
       localStorage.setItem("quickeatz", true);
 	  	//New stuff
 	  jsCookie.set(this.state.email, pass.token)
-	  
+	  this.setState({success: true});
       Router.push("/dashboard");
+	  
     } else {
       this.setState({incorrect:true})
     }

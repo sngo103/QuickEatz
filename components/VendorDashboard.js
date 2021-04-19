@@ -10,6 +10,7 @@ export class VendorDashboard extends React.Component {
   }
 
   componentDidMount() {
+	 
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
