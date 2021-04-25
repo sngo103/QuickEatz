@@ -5,11 +5,11 @@ import _ from "lodash";
 export default async (req, res) => {
   // Request body should have email and token
   if (req.method === "POST") {
-	  console.log("VERIFYING");
-	console.log(req.body.token);
-	console.log(typeof(req.body.token));
+	  //console.log("VERIFYING");
+	//console.log(req.body.token);
+	//console.log(typeof(req.body.token));
     const response = await checkToken(req.body.token);
-    console.log("RESPONSE:", response);
+    //console.log("RESPONSE:", response);
     if (_.isEmpty(response)) {
       res.status(401).json({
         error: "No active session for this user.",

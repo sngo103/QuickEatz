@@ -10,32 +10,32 @@ import { logout, checkLogin } from "../lib/loginFunctions";
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    //console.log(props);
     this.state = {
       openMenu: false,
       account: "customer",
 	  isUpToDate: false,
     };
-	console.log("HEYOOOOOO");
+	//console.log("HEYOOOOOO");
     this.handleLogin = this.handleLogin.bind(this); //JUST FOLLOWING THE PATTERN -MYLES
     this.handleLogout = this.handleLogout.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-    console.log(this.state);
+    //console.log(this.state);
   }
 
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
-    console.log(storedEmail);
-    console.log(storedToken);
+    //console.log(storedEmail);
+    //console.log(storedToken);
     const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
+      //console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -78,15 +78,15 @@ class NavBar extends React.Component {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
-    console.log(storedEmail);
-    console.log(storedToken);
+    //console.log(storedEmail);
+    //console.log(storedToken);
     const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
+      //console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {

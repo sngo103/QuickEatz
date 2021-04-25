@@ -1,3 +1,28 @@
+import Head from "next/head";
+import Link from "next/link";
+import React, {Component} from 'react'
+import WriteReview from '../components/WriteReview'
+import Router from 'next/router';
+
+
+export default function WriteReviewPage() {
+	
+  return (
+    <div>
+	  
+      <Head>
+        <title>Create a Review</title>
+      </Head>
+      
+      <WriteReview />
+    </div>
+  )
+}
+
+
+
+
+/*
 // import { Router } from "express";
 import Head from "next/head";
 import React from "react";
@@ -116,4 +141,4 @@ export async function getServerSideProps() {
       current_user: JSON.parse(JSON.stringify(current_user[0])),
     },
   };
-}
+} */

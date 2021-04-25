@@ -15,15 +15,15 @@ export async function findUser(email, coll) {
 // Token == ObjId
 export async function checkToken(token) {
   const { db } = await connectToDatabase();
-  console.log("CHECKING TOKEN");
-  console.log(token);
+  //console.log("CHECKING TOKEN");
+  //console.log(token);
   const obj_id = ObjectId(token);
-  console.log("TOKEN:", obj_id)
+  //console.log("TOKEN:", obj_id)
   const query = {
     "_id": obj_id,
   };
   const searchResult = await db.collection("user_sessions").findOne(query);
-  console.log(searchResult);
+  //console.log(searchResult);
   return searchResult;
 }
 

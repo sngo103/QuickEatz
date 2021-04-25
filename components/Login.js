@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
       localStorage.setItem("quickeatz_email", this.state.email);
       localStorage.setItem("quickeatz", true);
 	  	//New stuff
-	  jsCookie.set(this.state.email, pass.token)
+	 // jsCookie.set(this.state.email, pass.token)
 	  this.setState({success: true});
       Router.push("/dashboard");
 	  

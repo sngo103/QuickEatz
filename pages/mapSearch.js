@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../util/mongodb";
 import React from "react";
-import { useRouter } from 'next/router';
+import Router  from 'next/router';
 import {GoogleMap, Marker, InfoWindow, useLoadScript, } from "@react-google-maps/api";
 
 const { GOOGLE_MAPS_API_KEY } = process.env;
@@ -143,6 +143,7 @@ export default function mApp({current_vendor, vendors, customers}){
 							console.log(data);
 							address_parts = data.results[0].formatted_address;
 							setSelected({
+						owner_id: single_vendor._id,
 						owner: single_vendor.business_name,
 						lat: single_vendor.current_location.coordinates[0],
 						lng: single_vendor.current_location.coordinates[1],
@@ -164,7 +165,12 @@ export default function mApp({current_vendor, vendors, customers}){
 				<p> Lat: {selected.lat} </p>
 				<p> Lon: {selected.lng} </p>
 				<p> Address: {selected.actualaddress} </p> 
-				<button onClick={() => console.log("Power Pizza")}> {selected.buttontext} </button>
+				<button onClick={() => 
+					Router.push({
+						pathname: "/viewVendorSingle",
+						query: {vendor_id: selected.owner_id},
+					})
+				}> {selected.buttontext} </button>
 			</div> 
 			</InfoWindow>) : null} //ternary
 										
