@@ -5,6 +5,7 @@ export class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      cuisine: ""
     };
   }
 

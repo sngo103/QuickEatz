@@ -1,3 +1,4 @@
+/*
 import Head from 'next/head'
 
 export default function FirstPost() {
@@ -17,7 +18,7 @@ export default function VenderProfile() {
 	return (
 		<>
 			<Head>
-				
+
 				<title>Edit Vendor Profile</title>
 
 				<div class=topnav>
@@ -32,7 +33,7 @@ export default function VenderProfile() {
 
 		<body>
 		<section>
-				
+
 			<div className=toppage>
 			<h1>Vendor Profile</h1>
 			</div>
@@ -65,3 +66,4 @@ export default function VenderProfile() {
 
 	)
 }
+*/
