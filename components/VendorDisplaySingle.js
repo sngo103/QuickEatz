@@ -7,7 +7,6 @@ import Router from 'next/router';
 export class VendorDisplaySingle extends React.Component {
   constructor(props) {
     super(props);
-	console.log("THERE");
 	this.state = {
 		vendor_id: "",
 		vendor_name: "Empty",

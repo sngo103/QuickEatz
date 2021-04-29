@@ -20,14 +20,14 @@ export async function checkToken(token) {
   const obj_id = ObjectId(token);
   //console.log("TOKEN:", obj_id)
   const query = {
-    "_id": obj_id,
+    _id: obj_id,
   };
   const searchResult = await db.collection("user_sessions").findOne(query);
   //console.log(searchResult);
   return searchResult;
 }
 
-export async function addNewToken(email) {
+export async function addNewToken(email, type) {
   const { db } = await connectToDatabase();
   // Delete session in db if one exists:
   await db.collection("user_sessions").findOneAndDelete({ email: email });
@@ -35,14 +35,16 @@ export async function addNewToken(email) {
     email: email,
     created_at: Date.now(),
     is_deleted: false,
+    account_type: type,
   };
   const newToken = await db
     .collection("user_sessions")
     .insertOne(sessionDoc)
-.then(result => {console.log(result.insertedId); return result.insertedId})
+    .then((result) => {
+      console.log(result.insertedId);
+      return result.insertedId;
+    })
     .catch((err) => console.log("Error:", err));
-	console.log("HHHHHHH");
-	console.log(newToken);
   return newToken;
 }
 

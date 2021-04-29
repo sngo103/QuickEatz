@@ -1,40 +1,34 @@
-import React, { useContext } from "react";
+import React from "react";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 
 import Router from "next/router";
-import jsCookie from "js-cookie";
-import { logout, checkLogin } from "../lib/loginFunctions";
+import { logout } from "../lib/loginFunctions";
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    //console.log(props);
     this.state = {
       openMenu: false,
       account: "customer",
       isUpToDate: false,
+      isLoggedIn: false,
+      isLoading: true,
     };
-    this.handleLogin = this.handleLogin.bind(this); //JUST FOLLOWING THE PATTERN -MYLES
     this.handleLogout = this.handleLogout.bind(this);
     this.clickMenu = this.clickMenu.bind(this);
-    //console.log(this.state);
   }
 
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
-    //console.log(storedEmail);
-    //console.log(storedToken);
-    const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
         email: storedEmail,
       };
-      //console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -46,19 +40,15 @@ class NavBar extends React.Component {
         .then((json) => {
           if (json.success) {
             console.log("Token verified!");
-            //console.log(json.newToken); I STOPPED THE USE OF A NEW TOKEN IN VERIFYSHALLOW
-            //localStorage.setItem("quickeatz_token", json.newToken);
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
               isLoading: false,
-              isUpToDate: false,
             });
           } else {
             this.setState({
               isLoggedIn: false,
               isLoading: false,
-              isUpToDate: false,
             });
           }
         });
@@ -67,26 +57,21 @@ class NavBar extends React.Component {
       this.setState({
         isLoggedIn: false,
         isLoading: true,
-        isUpToDate: false,
       });
     }
   }
 
   componentDidUpdate() {
-    //To get the navbar to change on load
-    //When updating the page, check if we're logged in. THis is more frequent than componentDidMount
+    // To get the navbar to change on load
+    // When updating the page, check if we're logged in. THis is more frequent than componentDidMount
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
-    //console.log(storedEmail);
-    //console.log(storedToken);
-    const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
         email: storedEmail,
       };
-      //console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -99,66 +84,15 @@ class NavBar extends React.Component {
           if (json.success && !this.state.isLoggedIn) {
             //Prevent loop. ASSUMES LOG OUT WORKS. If logged out when actually logged in, update.
             console.log("Token verified!");
-            //console.log(json.newToken); I STOPPED THE USE OF A NEW TOKEN IN VERIFYSHALLOW
-            //localStorage.setItem("quickeatz_token", json.newToken);
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
               isLoading: false,
-              isUpToDate: false, // ? How is this used?
               openMenu: false,
             });
           }
         });
     }
-    /* OUT OF DATE
-	console.log("Checking if NavBar needs an update. State:");
-	console.log(this.state);
-	if(!this.state.isUpToDate){
-		console.log("Updating Navbar...");
-		this.setState({isUpToDate: true});
-	}
-	else{
-		console.log("Navbar is up to date.");
-	} */
-  }
-
-  static async getInitialProps({ req }) {
-    console.log(req);
-    const initProps = {};
-    if (req && req.headers) {
-      const cookies = req.headers.cookie;
-      if (typeof cookies === "string") {
-        const cookiesJSON = jsHttpCookie.parse(cookies);
-        initProps.token = cookiesJSON.token;
-      }
-    }
-    return initProps;
-  }
-
-  async handleLogin() {
-    console.log("ME NEXT");
-    await checkLogin(
-      this.state.email,
-      this.state.password,
-      this.state.account_type
-    );
-
-    this.setState({
-      isLoggedIn: true,
-      isLoading: false,
-    });
-    /* this.setState((prevState) => {
-      let openMenu_val = { ...prevState.openMenu };
-      let account_val = { ...prevState.account };
-      loggedIn_val = true;
-      return {
-        openMenu: openMenu_val,
-        account: account_val,
-        loggedIn: loggedIn_val,
-      };
-    }); */
-    //Router.reload();
   }
 
   async handleLogout() {
@@ -169,23 +103,8 @@ class NavBar extends React.Component {
     this.setState({
       isLoggedIn: false,
       isLoading: false,
-      isUpToDate: false,
     });
     Router.push("/");
-
-    /*this.setState((prevState) => {
-      let openMenu_val = { ...prevState.openMenu };
-      let account_val = { ...prevState.account };
-      loggedIn_val = true;
-      return {
-        openMenu: openMenu_val,
-        account: account_val,
-        loggedIn: loggedIn_val,
-      };
-    }); */
-
-    //Router.reload();
-    //signOut();
   }
 
   clickMenu() {
@@ -237,16 +156,6 @@ class NavBar extends React.Component {
                 />
               </button>
             </div>
-            {/*
-        Dropdown menu, show/hide based on menu state.
-        Entering: "transition ease-out duration-100"
-          From: "transform opacity-0 scale-95"
-          To: "transform opacity-100 scale-100"
-        Leaving: "transition ease-in duration-75"
-          From: "transform opacity-100 scale-100"
-          To: "transform opacity-0 scale-95"
-        */}
-
             {this.state.openMenu && (
               <div className="container" ref={this.container}>
                 <div

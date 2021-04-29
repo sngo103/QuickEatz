@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function Home() {
 
   return (
-    <div className="container mx-auto px-6 text-center">
+    <div className="container mx-auto p-6 text-center">
       <div className="mx-auto text-center">
         <Image
           src="/images/quickeatzlogo.png" // Route of the image file
