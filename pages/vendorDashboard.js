@@ -1,3 +1,4 @@
+/*
 import Head from 'next/head'
 
 export default function FirstPost() {
@@ -27,7 +28,7 @@ export default function VendorDashboard() {
   				<a href=#dashboard>Dashboard</a>
   				<input type=text placeholder=Search...></input>
 		</div>
-				
+
 			</Head>
 
 
@@ -38,7 +39,7 @@ export default function VendorDashboard() {
 			<h1>Vendor Dashboard</h1>
 			</div>
 
-	
+
 	<div className=midpage>
 	<header> Dashboard</header>
 	</div>
@@ -52,7 +53,7 @@ export default function VendorDashboard() {
 	<button class=button button1>
 	<h3> Edit Profile</h3>
 	</button>
-	
+
 
 	<button class=button button2>
 	<h4> Filter </h4>
@@ -64,3 +65,4 @@ export default function VendorDashboard() {
 
 	)
 }
+*/

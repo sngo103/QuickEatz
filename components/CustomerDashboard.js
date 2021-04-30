@@ -1,11 +1,18 @@
 import React from "react";
 import styles from "../styles/CustomerDashboard.module.css"
+// import api from "./"
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cuisine: ""
+      cuisine: "",
+      name: "",
+      openMap: false, // get rid of this, will prob have to set up map 
+      // must set up map to show vendors too perhaps
+      userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
+      found: false,
+      apiData: []
     };
   }
 
@@ -98,6 +105,73 @@ export class CustomerDashboard extends React.Component {
       );
     }
   }
+
+  /////////////////////////////////
+  // 1. Should use getCDQuery API and pass in search params based off o
+  // 2. Get results and push into table and format them with css
+  // 3. On new search clear table and repeat 1 and 2
+
+  handleCusineSearchClick = async () => {
+    // clear previous search results: clear table 
+    let numberQuery = this.state.number;
+    let linkToAPI = 'http://numbersapi.com/' + numberQuery;
+
+    try {
+        let response = await axios.get(linkToAPI);
+        this.setState({ apiData: response.data, found: true });
+        console.log(response.data)
+    } catch (error) {
+        if (error.response) {
+            /*
+             * The request was made and the server responded with a
+             * status code that falls out of the range of 2xx
+             */
+            console.log(error.response.data); //Not Found
+            console.log(error.response.status); //404
+            this.setState({ found: false });
+        }
+
+    }
+}
+
+handleNameSearchClick = async () => {
+  // clear previous search results: clear table 
+  let numberQuery = this.state.number;
+  let linkToAPI = 'http://numbersapi.com/' + numberQuery;
+
+  try {
+      let response = await axios.get(linkToAPI);
+      this.setState({ apiData: response.data, found: true });
+      console.log(response.data)
+  } catch (error) {
+      if (error.response) {
+          /*
+           * The request was made and the server responded with a
+           * status code that falls out of the range of 2xx
+           */
+          console.log(error.response.data); //Not Found
+          console.log(error.response.status); //404
+          this.setState({ found: false });
+      }
+
+  }
+}
+
+  makeTable = () => {
+    let currData = this.state.apiData;
+    let foundMatch = this.state.found;
+    let table = [];
+    //found is false when we get 404 error
+    if (!foundMatch) {
+        table.push(<tr key={-1}><td>No Results</td></tr>);
+        return table;
+    } else {
+        table.push(currData);
+        return table;
+    }
+}
+
+/////////////////////////////////
 
     render() {
       return (
@@ -225,8 +299,14 @@ export class CustomerDashboard extends React.Component {
                 <div className="px-4 py-6 sm:px-0">
                   <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
                     
-                    {}
-                    
+                    {/*
+                      <Head>
+		                    <title>{vendor.business_name}</title>
+                      </Head>
+                      <h1>{vendor.business_name}</h1>
+	                    <h2>{vendor.first_name} {vendor.last_name}</h2>
+	                    <br />
+                    */}
                   </div>
                 </div>
 
