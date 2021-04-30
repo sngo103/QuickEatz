@@ -213,7 +213,9 @@ export class CustomerDashboard extends React.Component {
     // for new query?
     // is it neede to be cleared ? or does new table request making fix it?
     return table;
-  }    
+  }
+  
+  //getStaticProps()
 
 
 /////////////////////////////////
@@ -344,14 +346,8 @@ export class CustomerDashboard extends React.Component {
                 <div className="px-4 py-6 sm:px-0">
                   <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
                     
-                    {/*
-                      <Head>
-		                    <title>{vendor.business_name}</title>
-                      </Head>
-                      <h1>{vendor.business_name}</h1>
-	                    <h2>{vendor.first_name} {vendor.last_name}</h2>
-	                    <br />
-                    */}
+                    { this.makeVendors() }
+                    
                   </div>
                 </div>
 

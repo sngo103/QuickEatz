@@ -1,6 +1,11 @@
 import { connectToDatabase } from "../../util/mongodb";
 const ObjectId = require('mongodb').ObjectID;
 
+// SHOULD TKAE 2 PARMATERS:
+// 1. USER LOCATION  2. TYPE: Name or Cuisine Type (For now)
+
+// SORT BY LOC FIRST: User loc - vendor loc <= certain distance
+
 
 export default async function handler(req, res) {
     const { db } = await connectToDatabase();
