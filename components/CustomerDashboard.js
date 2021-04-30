@@ -8,7 +8,7 @@ export class CustomerDashboard extends React.Component {
     this.state = {
       cuisine: "",
       name: "",
-      openMap: false, // get rid of this, will prob have to set up map 
+      openMap: false, // get rid of this eventually, will prob have to set up map 
       // must set up map to show vendors too perhaps
       userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
       found: false,
@@ -111,6 +111,33 @@ export class CustomerDashboard extends React.Component {
   // 2. Get results and push into table and format them with css
   // 3. On new search clear table and repeat 1 and 2
 
+
+  // TESTING IF DATA CAN BE SHOWN ON DAHSBOARD FUNC
+  handleTestSearchClick = async () => {
+    // clear previous search results: clear table 
+    let numberQuery = this.state.number;
+    let linkToAPI = 'http://numbersapi.com/' + numberQuery;
+
+    try {
+        let response = await axios.get(linkToAPI);
+        this.setState({ apiData: response.data, found: true });
+        console.log(response.data)
+    } catch (error) {
+        if (error.response) {
+            /*
+             * The request was made and the server responded with a
+             * status code that falls out of the range of 2xx
+             */
+            console.log(error.response.data); //Not Found
+            console.log(error.response.status); //404
+            this.setState({ found: false });
+        }
+    }
+}
+/////////////////////////////////////////
+
+
+
   handleCusineSearchClick = async () => {
     // clear previous search results: clear table 
     let numberQuery = this.state.number;
@@ -134,17 +161,17 @@ export class CustomerDashboard extends React.Component {
     }
 }
 
-handleNameSearchClick = async () => {
-  // clear previous search results: clear table 
-  let numberQuery = this.state.number;
-  let linkToAPI = 'http://numbersapi.com/' + numberQuery;
+  handleNameSearchClick = async () => {
+    // clear previous search results: clear table 
+    let numberQuery = this.state.number;
+    let linkToAPI = 'http://numbersapi.com/' + numberQuery;
 
-  try {
+    try {
       let response = await axios.get(linkToAPI);
       this.setState({ apiData: response.data, found: true });
       console.log(response.data)
-  } catch (error) {
-      if (error.response) {
+    } catch (error) {
+        if (error.response) {
           /*
            * The request was made and the server responded with a
            * status code that falls out of the range of 2xx
@@ -157,7 +184,7 @@ handleNameSearchClick = async () => {
   }
 }
 
-  makeTable = () => {
+  makeVendors = () => { //(apiData, fpund) ? i guess do this if using oth files state
     let currData = this.state.apiData;
     let foundMatch = this.state.found;
     let table = [];
@@ -166,10 +193,28 @@ handleNameSearchClick = async () => {
         table.push(<tr key={-1}><td>No Results</td></tr>);
         return table;
     } else {
-        table.push(currData);
-        return table;
-    }
-}
+        currData.forEach(vendor => {
+          let business_name = vendor.business_name;
+          let cuisine = vendor.cuisine;
+          let average_rating = vendor.average_rating;
+          // let first_name = vendor.first_name;
+          // let last_name = vendor.last_name;
+          table.push(
+          <tr>
+            <td> {business_name} </td>
+            <td> {cuisine} </td>
+            <td> {average_rating} </td>
+            <br />
+          </tr>
+          );
+        });
+      }
+    this.setState({found: false }); // IS this needed in order to reset found state 
+    // for new query?
+    // is it neede to be cleared ? or does new table request making fix it?
+    return table;
+  }    
+
 
 /////////////////////////////////
 
