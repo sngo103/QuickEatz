@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/CustomerDashboard.module.css"
-// import api from "./"
+//import { connectToDatabase } from "../util/mongodb";
+//import "../pages/api/getCDQuery.js"
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export class CustomerDashboard extends React.Component {
       openMap: false, // get rid of this eventually, will prob have to set up map 
       // must set up map to show vendors too perhaps
       userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
-      found: false,
+      // found: false, //dont need this as utils/mongodb does conect establish?
       apiData: []
     };
   }
@@ -194,18 +195,19 @@ export class CustomerDashboard extends React.Component {
         return table;
     } else {
         currData.forEach(vendor => {
+          let id = vendor.id; 
           let business_name = vendor.business_name;
           let cuisine = vendor.cuisine;
           let average_rating = vendor.average_rating;
           // let first_name = vendor.first_name;
           // let last_name = vendor.last_name;
-          table.push(
-          <tr>
-            <td> {business_name} </td>
-            <td> {cuisine} </td>
-            <td> {average_rating} </td>
-            <br />
-          </tr>
+            table.push(
+            <tr key={id}>
+              <td> {business_name} </td>
+              <td> {cuisine} </td>
+              <td> {average_rating} </td>
+              <br />
+            </tr>
           );
         });
       }
