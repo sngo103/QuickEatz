@@ -99,12 +99,7 @@ export function formatNewVendor(userInput) {
       type: "Point",
       coordinates: [userInput.yCor, userInput.xCor],
     },
-    hours: [
-      {
-        open: userInput.open_hours,
-        close: userInput.closed_hours,
-      },
-    ],
+    hours: userInput.hours,
     cuisine: userInput.cuisine,
     menu: userInput.menu,
     is_open: false,
