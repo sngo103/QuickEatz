@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "../styles/CustomerDashboard.module.css"
-//import { connectToDatabase } from "../util/mongodb";
-//import "../pages/api/getCDQuery.js"
+// import {Link} from "react-router-dom"
+// import { connectToDatabase } from "../util/mongodb";
+// import "../pages/api/getCDQuery.js"
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {

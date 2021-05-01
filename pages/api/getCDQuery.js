@@ -1,5 +1,6 @@
 import { connectToDatabase } from "../../util/mongodb";
 // import dashboard from "../../components/CustomerDashboard.js"
+
 const ObjectId = require('mongodb').ObjectID;
 
 // SHOULD TKAE 2 PARMATERS:
@@ -7,6 +8,17 @@ const ObjectId = require('mongodb').ObjectID;
 
 // SORT BY LOC FIRST: User loc - vendor loc <= certain distance
 
+/*
+export default async (req, res) => {
+    const { db } = await connectToDatabase();
+
+    const { method } = req;
+
+    switch (method) {
+        case ''
+    }
+}
+*/
 
 export default async function handler(req, res) {
     const { db } = await connectToDatabase();
@@ -18,16 +30,19 @@ export default async function handler(req, res) {
 
     const user_search_param = { "_id": user_id_param };
 
-    const response = await db.collection("vendors").findOne(user_search_param);
+    //const response = await db.collection("vendors").findOne(user_search_param);
+    const response = await db.collection("vendors").find(user_search_param).limit(10).toArray();
     console.log(response);
 
     res.json(response);
 
     return response;
 
-    /*
-    const data = await db.collection("vendors").find({}).limit(2).toArray();
-    console.log(data);
-    res.json(data);
-    */
+
 }
+
+/*
+   const data = await db.collection("vendors").find({}).limit(2).toArray();
+   console.log(data);
+   res.json(data);
+*/
