@@ -1,8 +1,24 @@
 import React from "react";
 import styles from "../styles/CustomerDashboard.module.css"
-// import {Link} from "react-router-dom"
 // import { connectToDatabase } from "../util/mongodb";
-// import "../pages/api/getCDQuery.js"
+// import { apiRoute } from "../pages/api/getUserName.js"
+//import 
+
+/*
+export async function getServerSideProps(context)
+{
+  const {db} = await connectToDatabase();
+  const data = db.collection("vendors").find().sort({_id: 1}).limit(5).toArray();
+  const vendors = data.map(vendor => {
+      return {
+        id: vendor._id,
+        name: vendor.business_name,
+        cuisine: vendor.cuisine,
+        rating: vendor.average_rating
+        }
+  })
+}
+*/
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {
@@ -10,6 +26,7 @@ export class CustomerDashboard extends React.Component {
     this.state = {
       cuisine: "",
       name: "",
+      found: false,
       openMap: false, // get rid of this eventually, will prob have to set up map 
       // must set up map to show vendors too perhaps
       userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
@@ -58,6 +75,52 @@ export class CustomerDashboard extends React.Component {
         isLoading: true,
       });
     }
+  }
+
+  getServerSideProps() {
+      /*const storedToken = localStorage.getItem("quickeatz_token");
+      const storedEmail = localStorage.getItem("quickeatz_email")
+      const storedState = localStorage.getItem("quickeatz")
+      if (storedState) {
+        const data = {
+          token: storedToken,
+          email: storedEmail
+        };
+        */
+
+        /*
+        fetch("/api/getCDQuery", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((json) => {
+            if (json.success) {
+              console.log("Token verified!")
+              localStorage.setItem("quickeatz_token", json.newToken)
+              localStorage.setItem("quickeatz", true)
+              this.setState({
+                isLoggedIn: true,
+                isLoading: false,
+              });
+            } else {
+              this.setState({
+                isLoggedIn: false,
+                isLoading: false,
+              });
+            }
+          });
+      } else {
+        console.log("Token not found!")
+        this.setState({
+          isLoggedIn: false,
+          isLoading: true,
+        });
+      }
+      */
   }
 
   render() {
@@ -196,7 +259,7 @@ export class CustomerDashboard extends React.Component {
         return table;
     } else {
         currData.forEach(vendor => {
-          let id = vendor.id; 
+          let id = vendor._id; 
           let business_name = vendor.business_name;
           let cuisine = vendor.cuisine;
           let average_rating = vendor.average_rating;
@@ -219,6 +282,7 @@ export class CustomerDashboard extends React.Component {
   }
   
   //getStaticProps()
+
 
 
 /////////////////////////////////
@@ -349,7 +413,13 @@ export class CustomerDashboard extends React.Component {
                 <div className="px-4 py-6 sm:px-0">
                   <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
                     
+
                     { this.makeVendors() }
+
+                    {/*vendors.map(vendor => {
+                    <li>{vendor.business_name}</li>
+                    })*/}
+                    
                     
                   </div>
                 </div>
@@ -364,3 +434,24 @@ export class CustomerDashboard extends React.Component {
   };
 
 export default CustomerDashboard;
+
+/*
+export default async function getServerSideProps(context) {
+  const { db } = await connectToDatabase();
+
+  const data = req.query;
+
+  const user_id_str = data._id;
+  const user_id_param = new ObjectId(user_id_str);
+
+  const user_search_param = { "_id": user_id_param };
+
+  //const response = await db.collection("vendors").findOne(user_search_param);
+  const response = await db.collection("vendors").find(user_search_param).limit(10).toArray();
+  console.log(response);
+
+  res.json(response);
+
+  return response;
+}
+*/
