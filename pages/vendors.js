@@ -1,19 +1,18 @@
-import { getSortedVendorsData } from '../lib/vendors'
+import { getSortedVendorsData } from "../lib/vendors";
 
 export async function getStaticProps() {
-  const allVendorsData = getSortedVendorsData()
+  const allVendorsData = getSortedVendorsData();
   return {
     props: {
-      allVendorsData
-    }
-  }
+      allVendorsData,
+    },
+  };
 }
 
 export default function Vendors({ allVendorsData }) {
   return (
     <div>
-      {/*<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>*/}
-      < section >
+      <section>
         <h2>Blog</h2>
         <ul>
           {allVendorsData.map(({ id, date, title }) => (
@@ -28,5 +27,5 @@ export default function Vendors({ allVendorsData }) {
         </ul>
       </section>
     </div>
-  )
+  );
 }

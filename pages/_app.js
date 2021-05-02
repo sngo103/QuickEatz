@@ -1,35 +1,9 @@
 import "../styles/globals.css";
 import ExtendedNavBar from "../components/ExtendedNavBar.js";
-import UserContext from "../components/UserContext";
 import App from "next/app";
-import Router from "next/router";
 import React from "react";
 
 export default class MyApp extends App {
-  state = {
-    email: "TEST",
-  };
-  componentDidMount = () => {
-    const email = localStorage.getItem("quickeatz_email");
-    if (email) {
-      this.setState({ email });
-      Router.push("/dashboard");
-    } else {
-      Router.push("/"); //TOO ABRUPT MAYBE
-    }
-  };
-
-  signIn = (email_in) => {
-    this.setState({ email_in });
-  };
-
-  signOut = () => {
-    this.setState({
-      email: null,
-    });
-    Router.push("/");
-  };
-
   render() {
     const { Component, pageProps } = this.props;
     return (
@@ -42,20 +16,10 @@ export default class MyApp extends App {
         </style>
 
         <main>
-          <UserContext.Provider
-            value={{
-              email: this.state.user,
-              signIn: this.signIn,
-              signOut: this.signOut,
-            }}
-          >
-            <ExtendedNavBar {...pageProps} />
-            <Component {...pageProps} />
-          </UserContext.Provider>
+          <ExtendedNavBar {...pageProps} />
+          <Component {...pageProps} />
         </main>
       </>
     );
   }
 }
-
-//export default App;

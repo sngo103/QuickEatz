@@ -28,17 +28,6 @@ export default async function handler(req, res){
 	})
 	.limit(1)
     .toArray();
-  /*
-  const search_param = { "_id": id_param };
-  console.log(search_param);
-  
-  
-  const to_update = { $set: {"current_location.coordinates": [parseFloat(data.latitude), parseFloat(data.longitude)]}};
-  console.log(to_update);
-  
-	const response = await db.collection("vendors").updateOne(search_param, to_update);
-  
-  */
   res.json(nearby_vendors); 
   
 }

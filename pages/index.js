@@ -1,9 +1,7 @@
-import Head from 'next/head'
 import Image from "next/image";
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Home() {
-
   return (
     <div className="container mx-auto p-6 text-center">
       <div className="mx-auto text-center">
@@ -13,10 +11,12 @@ export default function Home() {
           width={300} // Desired size with correct aspect ratio
           alt="QuickEatz Logo"
         />
-        <h1 className="title text-6xl font-bungee">QuickEatz</h1><br />
-        <p className="description">Who's hungry?</p><br />
+        <h1 className="title text-6xl font-bungee">QuickEatz</h1>
+        <br />
+        <p className="description">Who's hungry?</p>
+        <br />
         <Link href="/login">
-          <span >
+          <span>
             <button
               type="button"
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -36,7 +36,7 @@ export default function Home() {
                 />
               </svg>
               Login &rarr;
-              </button>
+            </button>
           </span>
         </Link>
         <br />
@@ -57,7 +57,7 @@ export default function Home() {
                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
               </svg>
               Create Account &rarr;
-              </button>
+            </button>
           </span>
         </Link>
         <br />
@@ -77,14 +77,12 @@ export default function Home() {
                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
               </svg>
               See Trending &rarr;
-              </button>
+            </button>
           </span>
         </Link>
         <br />
       </div>
-      <footer>
-        Footer here.
-      </footer>
+      <footer>Footer here.</footer>
     </div>
   );
 }
