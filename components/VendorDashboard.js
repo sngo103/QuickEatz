@@ -1,11 +1,11 @@
 import React from "react";
-import jsCookie from "js-cookie";
-import Image from 'next/image'
 
 export class VendorDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoggedIn: false,
+      isLoading: true,
     };
   }
 
@@ -13,9 +13,6 @@ export class VendorDashboard extends React.Component {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
-	console.log(storedEmail);
-	console.log(storedToken);
-	const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
@@ -33,8 +30,6 @@ export class VendorDashboard extends React.Component {
         .then(json => {
           if (json.success) {
             console.log("Token verified!");
-			      //console.log(json.newToken); I STOPPED THE USE OF A NEW TOKEN IN VERIFYSHALLOW
-            //localStorage.setItem("quickeatz_token", json.newToken);
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -55,19 +50,6 @@ export class VendorDashboard extends React.Component {
       });
     }
   }
-	
-	static async getInitialProps({req}){
-		console.log(req);
-		const initProps = {};
-		if(req && req.headers){
-			const cookies = req.headers.cookie;
-			if(typeof(cookies) === 'string'){
-				const cookiesJSON = jsHttpCookie.parse(cookies);
-				initProps.token = cookiesJSON.token;
-			}
-		}
-		return initProps;
-	}
 
   render() {
     if (this.state.isLoading) {
@@ -88,7 +70,6 @@ export class VendorDashboard extends React.Component {
               <div className="px-4 py-6 sm:px-0">
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
               </div>
-              {/* /End replace */}
             </div>
           </main>
         </div>
@@ -109,7 +90,6 @@ export class VendorDashboard extends React.Component {
               <div className="px-4 py-6 sm:px-0">
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
               </div>
-              {/* /End replace */}
             </div>
           </main>
         </div>

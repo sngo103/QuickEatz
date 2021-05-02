@@ -87,7 +87,7 @@ export default class ViewCustomerProfile extends React.Component {
         </div>
       );
     } else {
-      return (<Unauthorized />)
+      return <Unauthorized />;
     }
   }
 }

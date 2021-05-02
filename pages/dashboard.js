@@ -1,22 +1,14 @@
-import React from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
-// import CustomerDashboard from '../components/CustomerDashboard.js'
-import VendorDashboard from '../components/vendorDashboard.js'
-// import jsHttpCookie from 'cookie';
+import Head from "next/head";
+import Dashboard from "../components/Dashboard.js";
+import React from "react";
 
-
-
-export default function DashboardPage({initProps}) {
-	console.log(initProps);
+export default function DashboardPage() {
   return (
     <div>
-	  
       <Head>
         <title>Dashboard</title>
       </Head>
-      {/* <CustomerDashboard /> */}
-      <VendorDashboard />
+      <Dashboard />
     </div>
-  )
+  );
 }

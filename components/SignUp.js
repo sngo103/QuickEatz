@@ -1,118 +1,77 @@
-// import Link from 'next/link'
 import React from "react";
 import Image from "next/image";
-import styles from "../styles/SignUp.module.css"
+import CustomerSignUp from "./CustomerSignUp"
+import VendorSignUp from "./VendorSignUp"
 
 class SignUp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            account: ""
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChosen = this.handleChosen.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      account_type: "customer",
+      customer_class: "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600",
+      vendor_class: "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600",
     };
 
-    handleChosen() {
-        const target = event.target;
-        this.setState({ account: target.value });
-    }
+    this.handleCustomerSelect = this.handleCustomerSelect.bind(this)
+    this.handleVendorSelect = this.handleVendorSelect.bind(this)    
+  }
 
-    handleChange(event) {
-        const target = event.target;
-        if (target.type === "text") {
-            this.setState({ email: target.value });
-        } else if (target.type === "password") {
-            this.setState({ password: target.value });
-        }
-    }
+  handleCustomerSelect(event) {
+    event.preventDefault()
+    this.setState({
+      account_type: "customer",
+      customer_class: "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 bg-yellow-400 outline-none ring-2 ring-offset-2 ring-yellow-600",
+      vendor_class: "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400",
+    })
+  }
 
-    handleSubmit(event) {
-        alert("A name was submitted: " + this.state.email + " and " + this.state.password);
-        event.preventDefault();
-    }
+  handleVendorSelect(event) {
+    event.preventDefault()
+    this.setState({
+      account_type: "vendor",
+      vendor_class: "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 bg-yellow-400 outline-none ring-2 ring-offset-2 ring-yellow-600",
+      customer_class: "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400",
+    })
+  }
 
-    handleChosen(event) {
-        event.preventDefault();
+  render() {
+    return (
+      <div>
+        <div className="container inline-block p-6 text-center font-pridi text-lg">
+          <Image
+            src="/images/quickeatzlogo.png" // Route of the image file
+            height={150} // Desired size with correct aspect ratio
+            width={150} // Desired size with correct aspect ratio
+            alt="QuickEatz Logo"
+          />
+          <h1 className="title text-6xl font-bungee">QuickEatz</h1>
+          <h1 className="title mt-2 mb-4 text-2xl font-bold font-bungee">
+            Create Account
+          </h1>
 
-
-    }
-
-    /*
-    <Image
-                                src="/images/quickeatzlogo.png" // Route of the image file
-                                height={150} // Desired size with correct aspect ratio
-                                width={150} // Desired size with correct aspect ratio
-                                alt="QuickEatz Logo"
-                            />
-    */
-
-    render() {
-        return (
-            <div>
-                <div className="container mx-auto px-6 text-center">
-                    <div className="mx-auto text-center">
-                        <section className={styles.topPage}>
-
-
-                            <h1 className={styles.logotext}>QuickEatz</h1>
-
-
-                            <h1 className={styles.title}>Create Account</h1>
-
-                        </section>
-                    </div>
-                </div>
-                <section className={styles.midPage}>
-                    <h1 className={styles.message}>Please Select a Vendor or Customer Account </h1>
-                </section>
-
-                <section className={styles.bottomPage}>
-                    <select className={styles.dropdown} value={this.state.account} onChange={this.handleChosen}>
-                        <option value="Customer">Customer</option>
-                        <option value="Vendor">Vendor</option>
-                    </select>
-
-                    <br />
-                    <br />
-
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
-                            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black">Email</h> &emsp; &emsp; &emsp; &ensp;
-                            <input className={styles.textbox} type="text"
-                                value={this.state.email}
-                                onChange={this.handleChange}
-                            />
-                        </label>
-
-                        <br />
-                        <br />
-
-                        <label>
-                            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black"> Password</h> &emsp; &emsp;
-                            <input className={styles.textbox} type="password"
-                                value={this.state.password}
-                                onChange={this.handleChange}
-                            />
-                        </label>
-
-                        <br />
-                        <br />
-
-                        <input className="bg-white border-2 border-black rounded-md hover:text-white hover:bg-gray-700 px-3 py-1.5"
-                            type="submit" value="Submit" />
-                    </form>
-                </section>
-
-            </div >
-        );
-    }
-
-};
+          <div class="flex items-center justify-center">
+            <div class="w-1/2">
+              What kind of account would you like to create? <br />
+              <button
+                onClick={this.handleCustomerSelect}
+                class={this.state.customer_class}
+              >
+                Customer
+              </button>
+              <button
+                onClick={this.handleVendorSelect}
+                class={this.state.vendor_class}
+              >
+                Vendor
+              </button>
+            </div>
+          </div>
+            {this.state.account_type === "vendor" ? <VendorSignUp /> : <CustomerSignUp />}
+          <br />
+        </div>
+      </div>
+    );
+  }
+}
 
 export default SignUp;
-
-

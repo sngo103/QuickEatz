@@ -1,12 +1,13 @@
 import React from "react";
-import NavBar from "../components/NavBar";
-import jsCookie from "js-cookie";
-import styles from "../styles/CustomerDashboard.module.css"
+import styles from "../styles/CustomerDashboard.module.css";
 
 export class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoggedIn: false,
+      isLoading: true,
+      account_type: "customer"
     };
   }
 
@@ -14,15 +15,11 @@ export class CustomerDashboard extends React.Component {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
-	console.log(storedEmail);
-	console.log(storedToken);
-	const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
-        email: storedEmail
+        email: storedEmail,
       };
-	  console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -30,16 +27,15 @@ export class CustomerDashboard extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           if (json.success) {
             console.log("Token verified!");
-			      //console.log(json.newToken); I STOPPED THE USE OF A NEW TOKEN IN VERIFYSHALLOW
-            //localStorage.setItem("quickeatz_token", json.newToken);
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
               isLoading: false,
+              account_type: json.account_type
             });
           } else {
             this.setState({
@@ -49,27 +45,14 @@ export class CustomerDashboard extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!")
+      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,
       });
     }
   }
-	
-	static async getInitialProps({req}){
-		console.log(req);
-		const initProps = {};
-		if(req && req.headers){
-			const cookies = req.headers.cookie;
-			if(typeof(cookies) === 'string'){
-				const cookiesJSON = jsHttpCookie.parse(cookies);
-				initProps.token = cookiesJSON.token;
-			}
-		}
-		return initProps;
-	}
-	
+
   render() {
     if (this.state.isLoading) {
       return <div> Loading... </div>;
@@ -118,6 +101,40 @@ export class CustomerDashboard extends React.Component {
     }
   }
 
+  render() {
+    return (
+      <div>
+        <section className="h-50 bg-mintcream">
+          <header className="bg-white shadow text-center">
+            <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+              <h1 className={styles.title}>Dashboard </h1>
+            </div>
+          </header>
+        </section>
+
+        <section className={styles.midPage}>
+          <h className={styles.message}>Search For Vendors Nearby!</h>
+          <br />
+          <br />
+          <h className={styles.secondmessage}>Select Search Criteria</h>
+        </section>
+
+        <section className={styles.bottomPage}>
+          <br />
+          <br />
+
+          <form onSubmit={this.handleNearestSubmit} className="">
+            <button
+              className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+              type="submit"
+            >
+              Nearest Me
+            </button>
+          </form>
+        </section>
+      </div>
+    );
+  }
   //   render() {
   //     return (
   //       <div>
@@ -140,7 +157,6 @@ export class CustomerDashboard extends React.Component {
   //         </h>
   //         </section>
 
-
   //         <section className={styles.bottomPage}>
   //           <br />
   //           <br />
@@ -152,7 +168,7 @@ export class CustomerDashboard extends React.Component {
   //             >
   //               Nearest Me
   //           </button>
-              
+
   //           </form>
 
   //           <br />
@@ -164,13 +180,13 @@ export class CustomerDashboard extends React.Component {
   //             >
   //               Trending
   //           </button>
-              
+
   //         </form>
 
   //         <br />
 
   //           <form onSubmit={this.handlePricesSubmit} className="" >
-            
+
   //             <button
   //               className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
   //               type="submit"
@@ -210,8 +226,8 @@ export class CustomerDashboard extends React.Component {
   //           <form onSubmit={this.handleCuisineSubmit}>
   //             <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search Vendor Truck By Name:</h>
   //             &emsp; &emsp;
-  
-  //           <input className={styles.textbox} type="text" 
+
+  //           <input className={styles.textbox} type="text"
   //               value={this.state.queryText}
   //               onChange={this.handleChange}
   //             />
@@ -219,7 +235,6 @@ export class CustomerDashboard extends React.Component {
   //             &emsp; &emsp;
   //           <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
   //           </form>
-
 
   //           {
   //             this.state.openMap && (
@@ -243,9 +258,9 @@ export class CustomerDashboard extends React.Component {
 
   //               <div className="px-4 py-6 sm:px-0">
   //                 <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
-                    
+
   //                   {}
-                    
+
   //                 </div>
   //               </div>
 
@@ -256,6 +271,6 @@ export class CustomerDashboard extends React.Component {
   //       </div>
   //     );
   //   }
-  };
+}
 
 export default CustomerDashboard;
