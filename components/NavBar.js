@@ -99,6 +99,7 @@ class NavBar extends React.Component {
     await logout(this.state.email);
     localStorage.removeItem("quickeatz_token");
     localStorage.removeItem("quickeatz_email");
+	localStorage.removeItem("quickeatz_type");
     localStorage.setItem("quickeatz", false);
     this.setState({
       isLoggedIn: false,

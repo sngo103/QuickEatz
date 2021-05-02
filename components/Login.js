@@ -16,6 +16,8 @@ class LoginForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+	this.toggleCustomerLogin = this.toggleCustomerLogin.bind(this);
+	this.toggleVendorLogin = this.toggleVendorLogin.bind(this);
   }
 
   handleChange(event) {
@@ -42,12 +44,23 @@ class LoginForm extends React.Component {
       localStorage.setItem("quickeatz_token", newToken);
       localStorage.setItem("quickeatz_email", this.state.email);
       localStorage.setItem("quickeatz", true);
+	  localStorage.setItem("quickeatz_type", this.state.account_type);
       //New stuff
       this.setState({ success: true });
       Router.push("/dashboard");
     } else {
       this.setState({ incorrect: true });
     }
+  }
+  
+  toggleCustomerLogin(){
+	  console.log("Switching to customer!");
+	  this.setState({account_type: "customer"});
+  }
+  
+  toggleVendorLogin(){
+	  console.log("Switching to vendor!");
+	  this.setState({account_type: "vendor"});
   }
 
   render() {

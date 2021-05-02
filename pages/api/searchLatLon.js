@@ -10,7 +10,7 @@ export default async function handler(req, res){
 	const customer_lat = parseFloat(data.latitude);
 	const customer_lng = parseFloat(data.longitude);
 	
-	
+	const limiter = parseInt(data.limit);
 
     const nearby_vendors = await db
     .collection("vendors")
@@ -26,7 +26,7 @@ export default async function handler(req, res){
 			}
 		}
 	})
-	.limit(1)
+	.limit(limiter)
     .toArray();
   res.json(nearby_vendors); 
   
