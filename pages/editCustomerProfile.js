@@ -1,13 +1,13 @@
-import Head from 'next/head'
-import CustomerProfile from '../components/CustomerProfile.js'
+import Head from "next/head";
+import EditCustomerProfile from "../components/EditCustomerProfile.js";
 
 export default function editCustomerProfile() {
-    return (
-        <div>
-            <Head>
-                <title>editCustomerProfile</title>
-            </Head>
-            <CustomerProfile />
-        </div>
-    )
+  return (
+    <div>
+      <Head>
+        <title>Edit Customer Profile</title>
+      </Head>
+      <EditCustomerProfile />
+    </div>
+  );
 }
