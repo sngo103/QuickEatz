@@ -1,8 +1,4 @@
 import React from "react";
-import styles from "../styles/CustomerDashboard.module.css"
-// import Router from 'next/router';
-// import { data } from "autoprefixer";
-
 
 export class VendorDashboard extends React.Component {
 	constructor(props) {
