@@ -2,6 +2,27 @@ import { connectToDatabase } from "../../util/mongodb";
 
 const ObjectId = require('mongodb').ObjectID;
 
+export default async function handler(req, res) {
+    const { db } = await connectToDatabase();
+
+    const data = req.query;
+    console.log(data);
+
+    const vendor_cuisine_str = data.cuisine;
+    const vendor_cuisine_param = new ObjectId(vendor_cuisine_str);
+
+    const vendor_search_param = { "cuisine": vendor_cuisine_param };
+
+    const response = await db.collection("vendors").findOne(vendor_search_param);//.limit(10).toArray();
+    // no array for testing purposes for now
+    //console.log(response);
+
+    res.json(response);
+
+    //return response;
+}
+
+
 /*
 export default async function handler(req, res) {
     const { db } = await connectToDatabase();
@@ -35,21 +56,3 @@ export default async function handler(req, res) {
     //return response;
 }
 */
-export default async function handler(req, res) {
-    const { db } = await connectToDatabase();
-
-    const data = req.query;
-    console.log(data);
-
-    const vendor_cuisine_str = data.cuisine;
-    const vendor_cuisine_param = new ObjectId(vendor_cuisine_str);
-
-    const vendor_search_param = { "cuisine": vendor_cuisine_param };
-
-    const response = await db.collection("vendors").find(vendor_search_param).limit(10).toArray();
-    //console.log(response);
-
-    res.json(response);
-
-    //return response;
-}

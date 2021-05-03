@@ -22,13 +22,18 @@ export async function getServerSideProps(context)
 export class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      vendor_id: 0,
+    this.state = {  
+      vendor_id: "",
       vendor_cuisine: "",
       vendor_name: "",
-
+      
       cuisine: "", // search param
       name: "" // search param
+
+      /*
+      vendors : { 
+      }
+      */
 
       //found: false,
 
@@ -44,14 +49,15 @@ export class CustomerDashboard extends React.Component {
   }
 
   componentDidMount() {
-    if(this.state._id == "")
+    if(this.state.cuisine != "")
     {
-      const vendor_id = Router.query._id;
-      console.log("Vendor Here");
-      console.log(vendor_id);
-      console.log(typeof vendor_id);
+      const cuisine = Router.query.cuisine;
+      console.log("Vendor Here")
+      console.log(cuisine);
+      console.log(typeof cuisine);
       // will make to get multiple vendors later
-      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get Vendor's data
+      // const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get cuisine 
+      fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
           this.setState({
@@ -60,10 +66,64 @@ export class CustomerDashboard extends React.Component {
             vendor_cuisine: json.cuisine
           })
         }))
-      // const geocod = fetch(`/api/revGeoCode?_id=${_id}`) //try to get geocode later
+    }
+    else if(this.state.name != "")
+    {
+      const name = Router.query.name;
+      console.log("Vendor Here")
+      console.log(name);
+      console.log(typeof name);
+      // will make it get multiple vendors later
+      fetch(`/api/getVendorByName?_id=${name}`) // get matching name
+        .then((data) => data.json())
+        .then((json => {
+          this.setState({
+            vendor_id: json._id,
+            vendor_name: json.business_name,
+            vendor_cuisine: json.cuisine
+          })
+        }))
     }
   }
-  
+
+  componentDidUpdate() {
+    if(this.state.cuisine != "")
+    {
+      const cuisine = Router.query.cuisine;
+      console.log("Vendor Here")
+      console.log(cuisine);
+      console.log(typeof cuisine);
+      // will make to get multiple vendors later
+      // const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get cuisine 
+      fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
+        .then((data) => data.json())
+        .then((json => {
+          this.setState({
+            vendor_id: json._id,
+            vendor_name: json.business_name,
+            vendor_cuisine: json.cuisine
+          })
+        }))
+    }
+    else if(this.state.name != "")
+    {
+      const name = Router.query.name;
+      console.log("Vendor Here")
+      console.log(name);
+      console.log(typeof name);
+      // will make it get multiple vendors later
+      fetch(`/api/getVendorByName?_id=${name}`) // get matching name
+        .then((data) => data.json())
+        .then((json => {
+          this.setState({
+            vendor_id: json._id,
+            vendor_name: json.business_name,
+            vendor_cuisine: json.cuisine
+          })
+        }))
+    }
+  }
+
   /*
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
@@ -192,7 +252,7 @@ export class CustomerDashboard extends React.Component {
 
 
   handleCuisineChange = (e) => {
-    //e.preventDefault();
+    e.preventDefault();
     const target = e.target;
     this.setState({cuisine: target.value});
   }
@@ -289,6 +349,7 @@ export class CustomerDashboard extends React.Component {
 
 
           <section className={styles.bottomPage}>
+            
             <br />
             <br />
             <br />
@@ -309,7 +370,7 @@ export class CustomerDashboard extends React.Component {
             <br />
 
             <form onSubmit={this.handleCuisineSearch}>
-              <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search By Cuisine Type:</h>
+              <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Search By Cuisine Type:</h>
               &emsp; &emsp;
             <select className={styles.dropdown}
                 value={this.state.cuisine}
@@ -511,3 +572,5 @@ export async function componentDidMount(props) {
               </button>
 </form>
 */
+
+// const geocod = fetch(`/api/revGeoCode?_id=${_id}`) //try to get geocode later
