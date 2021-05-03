@@ -1,27 +1,29 @@
 import React from "react";
-import Head from "next/head";
-import Link from "next/link";
 import Router from "next/router";
+import ViewCustomerProfile from "./ViewCustomerProfile";
+import ViewVendorProfile from "./ViewVendorProfile";
 
-export default class ViewVendorProfile extends React.Component {
+export default class ViewProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoggedIn: false,
       isLoading: true,
+      account_type: "",
     };
   }
 
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedType = localStorage.getItem("quickeatz_type");
     const storedState = localStorage.getItem("quickeatz");
     if (storedState) {
       const data = {
         token: storedToken,
-        email: storedEmail
+        email: storedEmail,
       };
-	  console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -29,51 +31,40 @@ export default class ViewVendorProfile extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           if (json.success) {
             console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
               isLoading: false,
+              account_type: storedType
             });
           } else {
             this.setState({
               isLoggedIn: false,
               isLoading: false,
             });
-            Router.push("/login")
+            Router.push("/login");
           }
         });
-    } else {
-      console.log("Token not found!")
-      this.setState({
-        isLoggedIn: false,
-        isLoading: true,
-      });
-      Router.push("/login")
+      } else {
+        console.log("Token not found!");
+        this.setState({
+          isLoggedIn: false,
+          isLoading: true,
+        });
+        Router.push("/login");
+      }
     }
-  }
-
-  render() {
-    if (this.state.isLoggedIn) {
-      return (
-        <div>
-          <Head>
-            <title>My Profile</title>
-          </Head>
-          <div className="container p-5 text-center">
-            <h1 className="text-3xl">View My Vendor Profile</h1>
-            <br />
-            <div className="inline bg-white text-black px-5 py-3 rounded-md text-sm font-medium border-4 hover:border-black w-1/4">
-              <Link href="/">Return to Home</Link>
-            </div>
-          </div>
-        </div>
-      );
+    
+    render() {
+      console.log("ACCOUNT:", this.state.account_type);
+      if (this.state.account_type === "vendor") {
+      return <ViewVendorProfile />;
     } else {
-      return null
+      return <ViewCustomerProfile />;
     }
   }
 }

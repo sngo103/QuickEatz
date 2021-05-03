@@ -1,28 +1,27 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import jsCookie from "js-cookie";
-import Unauthorized from "./Unauthorized";
+import Router from "next/router";
 
 export default class ViewCustomerProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isLoggedIn: false,
+      isLoading: true,
+    };
   }
 
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
-    console.log(storedEmail);
-    console.log(storedToken);
-    const cookie_val = jsCookie.get();
     if (storedState) {
       const data = {
         token: storedToken,
-        email: storedEmail,
+        email: storedEmail
       };
-      console.log(JSON.stringify(data));
+	  console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -30,12 +29,10 @@ export default class ViewCustomerProfile extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then((res) => res.json())
-        .then((json) => {
+        .then(res => res.json())
+        .then(json => {
           if (json.success) {
             console.log("Token verified!");
-            //console.log(json.newToken); I STOPPED THE USE OF A NEW TOKEN IN VERIFYSHALLOW
-            //localStorage.setItem("quickeatz_token", json.newToken);
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -46,28 +43,17 @@ export default class ViewCustomerProfile extends React.Component {
               isLoggedIn: false,
               isLoading: false,
             });
+            Router.push("/login")
           }
         });
     } else {
-      console.log("Token not found!");
+      console.log("Token not found!")
       this.setState({
         isLoggedIn: false,
         isLoading: true,
       });
+      Router.push("/login")
     }
-  }
-
-  static async getInitialProps({ req }) {
-    console.log(req);
-    const initProps = {};
-    if (req && req.headers) {
-      const cookies = req.headers.cookie;
-      if (typeof cookies === "string") {
-        const cookiesJSON = jsHttpCookie.parse(cookies);
-        initProps.token = cookiesJSON.token;
-      }
-    }
-    return initProps;
   }
 
   render() {
@@ -87,7 +73,7 @@ export default class ViewCustomerProfile extends React.Component {
         </div>
       );
     } else {
-      return <Unauthorized />;
+      return null
     }
   }
 }

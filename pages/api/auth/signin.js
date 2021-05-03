@@ -6,7 +6,6 @@ import { compareSync } from "bcrypt";
 export default async (req, res) => {
   // Request body should have username, password, and account_type
   
-
   
   if (req.method === "POST") {
     let collection;

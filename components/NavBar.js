@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
-
 import Router from "next/router";
 import { logout } from "../lib/loginFunctions";
 
@@ -99,6 +98,7 @@ class NavBar extends React.Component {
     await logout(this.state.email);
     localStorage.removeItem("quickeatz_token");
     localStorage.removeItem("quickeatz_email");
+	localStorage.removeItem("quickeatz_type");
     localStorage.setItem("quickeatz", false);
     this.setState({
       isLoggedIn: false,
@@ -164,9 +164,9 @@ class NavBar extends React.Component {
                   aria-orientation="vertical"
                   aria-labelledby="user-menu"
                 >
-                  <Link href="/viewProfile">
+                  <Link href="/profile">
                     <a
-                      href="/viewProfile"
+                      href="/profile"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
@@ -223,7 +223,7 @@ class NavBar extends React.Component {
               <div className="flex items-center">
                 <div className="flex-shrink-0 text-white font-bungee text-2xl">
                   {" "}
-                  <Link href="/">QuickEatz</Link>{" "}
+                  <Link href={this.state.isLoggedIn ? "/dashboard" : "/"}>QuickEatz</Link>{" "}
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">

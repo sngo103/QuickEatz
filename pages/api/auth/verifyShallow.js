@@ -5,7 +5,6 @@ export default async (req, res) => {
   // Request body should have email and token
   if (req.method === "POST") {
     const response = await checkToken(req.body.token);
-    console.log("RESPO SE:", response)
     if (_.isEmpty(response)) {
       res.status(401).json({
         error: "No active session for this user.",
