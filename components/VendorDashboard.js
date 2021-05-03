@@ -48,6 +48,7 @@ export class VendorDashboard extends React.Component {
         isLoggedIn: false,
         isLoading: true,
       });
+      Router.push("/login")
     }
   }
 

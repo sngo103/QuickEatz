@@ -12,12 +12,52 @@ class LoginForm extends React.Component {
       account_type: "customer",
       incorrect: false,
       success: false, 
+      isLoggedIn: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleCustomerLogin = this.toggleCustomerLogin.bind(this);
     this.toggleVendorLogin = this.toggleVendorLogin.bind(this);
+  }
+
+  componentDidMount() {
+    const storedToken = localStorage.getItem("quickeatz_token");
+    const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedState = localStorage.getItem("quickeatz");
+    if (storedToken && storedEmail && storedState) {
+      const data = {
+        token: storedToken,
+        email: storedEmail
+      };
+      fetch("/api/auth/verifyShallow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            console.log("Token verified!");
+            localStorage.setItem("quickeatz", true);
+            this.setState({
+              isLoggedIn: true,
+            });
+            Router.push("/dashboard")
+          } else {
+            this.setState({
+              isLoggedIn: false,
+            });
+          }
+        });
+    } else {
+      console.log("Token not found!")
+      this.setState({
+        isLoggedIn: false,
+      })
+    }
   }
 
   handleChange(event) {
