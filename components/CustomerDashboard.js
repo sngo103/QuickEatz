@@ -43,13 +43,13 @@ export class CustomerDashboard extends React.Component {
       name: "" // search param
     };
     this.handleNameSearch = this.handleNameSearch.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCuisineSearch = this.handleCuisineSearch.bind(this);
     this.handleCuisineChange = this.handleCuisineChange.bind(this);
   }
 
   componentDidMount() {
     if (this.state.cuisine != "") {
-      Router.push("/CustomerDashboard");
       const cuisine = this.state.cuisine;//Router.query.cuisine;
       console.log("Vendor Here")
       console.log(cuisine);
@@ -132,7 +132,6 @@ export class CustomerDashboard extends React.Component {
     this.setState({ cuisine: target.value });
   }
 
-
   handleCuisineSearch = async (e) => {
     e.preventDefault();
     const target = e.target;
@@ -145,6 +144,11 @@ export class CustomerDashboard extends React.Component {
     this.setState({ name: target.value });
   }
 
+  handleNameChange = async (e) => {
+    e.preventDefault();
+    const target = e.target;
+    this.setState({ name: target.value });
+  }
   render() {
     return (
       <div>
@@ -212,13 +216,13 @@ export class CustomerDashboard extends React.Component {
           <br />
           <br />
 
-          <form onSubmit={this.handleCuisineSubmit}>
+          <form onSubmit={this.handleNameSubmit}>
             <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search Vendor Truck By Name:</h>
             &emsp; &emsp;
 
           <input className={styles.textbox} type="text"
-              value={this.state.queryText}
-              onChange={this.handleChange}
+              value={this.state.name}
+              onChange={this.handleNameChange}
             />
 
             &emsp; &emsp;
