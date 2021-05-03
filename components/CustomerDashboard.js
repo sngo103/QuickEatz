@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/CustomerDashboard.module.css"
-import Router from 'next/router';
+// import Router from 'next/router';
 // import { data } from "autoprefixer";
 
 /*
@@ -56,9 +56,8 @@ export class CustomerDashboard extends React.Component {
       console.log(typeof cuisine);
       // will make to get multiple vendors later
 
-      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`, {
-        //body: JSON.stringify(cuisine)
-      }) // get matching cuisine 
+      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`)
+        // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
           this.setState({
