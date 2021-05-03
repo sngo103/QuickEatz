@@ -15,30 +15,36 @@ export async function findUser(email, coll) {
 // Token == ObjId
 export async function checkToken(token) {
   const { db } = await connectToDatabase();
+  //console.log("CHECKING TOKEN");
+  //console.log(token);
   const obj_id = ObjectId(token);
-  console.log("TOKEN:", obj_id)
+  //console.log("TOKEN:", obj_id)
   const query = {
     _id: obj_id,
   };
   const searchResult = await db.collection("user_sessions").findOne(query);
-  console.log(searchResult)
+  //console.log(searchResult);
   return searchResult;
 }
 
-export async function addNewToken(email) {
+export async function addNewToken(email, type) {
   const { db } = await connectToDatabase();
   // Delete session in db if one exists:
-  db.collection("user_sessions").findOneAndDelete({ email: email });
+  await db.collection("user_sessions").findOneAndDelete({ email: email });
   const sessionDoc = {
     email: email,
     created_at: Date.now(),
     is_deleted: false,
+    account_type: type,
   };
   const newToken = await db
     .collection("user_sessions")
     .insertOne(sessionDoc)
-    .then(result => result.insertedId)
-    .catch((err) => console.log("Error:", err))
+    .then((result) => {
+      console.log(result.insertedId);
+      return result.insertedId;
+    })
+    .catch((err) => console.log("Error:", err));
   return newToken;
 }
 
@@ -93,12 +99,7 @@ export function formatNewVendor(userInput) {
       type: "Point",
       coordinates: [userInput.yCor, userInput.xCor],
     },
-    hours: [
-      {
-        open: userInput.open_hours,
-        close: userInput.closed_hours,
-      },
-    ],
+    hours: userInput.hours,
     cuisine: userInput.cuisine,
     menu: userInput.menu,
     is_open: false,

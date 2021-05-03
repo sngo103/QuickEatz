@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import CustomerDashboard from '../components/CustomerDashboard.js'
+import Head from "next/head";
+import Dashboard from "../components/Dashboard.js";
+import React from "react";
 
 export default function DashboardPage() {
   return (
@@ -8,7 +8,7 @@ export default function DashboardPage() {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <CustomerDashboard />
+      <Dashboard />
     </div>
-  )
+  );
 }

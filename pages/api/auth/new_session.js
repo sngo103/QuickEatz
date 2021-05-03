@@ -5,7 +5,7 @@ import _ from "lodash";
 export default async (req, res) => {
   // Request body should have email
   if (req.method === "POST") {
-    const newToken = await addNewToken(req.body.email);
+    const newToken = await addNewToken(req.body.email, req.body.type);
     console.log("new_session token:", newToken);
     res.status(200).json({newToken:newToken});
   } else {
