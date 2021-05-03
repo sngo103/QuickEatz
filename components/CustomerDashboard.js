@@ -47,7 +47,7 @@ export class CustomerDashboard extends React.Component {
     if(this.state._id == "")
     {
       const vendor_id = Router.query._id;
-      console.log("Vendor Here")
+      console.log("Vendor Here");
       console.log(vendor_id);
       console.log(typeof vendor_id);
       // will make to get multiple vendors later
@@ -291,24 +291,20 @@ export class CustomerDashboard extends React.Component {
           <section className={styles.bottomPage}>
             <br />
             <br />
-
-
             <br />
-
            
             <button
                 className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
                 type="button"
                 onClick={(e) => {
                   e.preventDefault()
-                  window.href="/trending";
+                  window.location="/trending";
                 }}
               >
                 Trending
-            </button>
-              
-        
-
+            </button>      
+                           
+            <br/>
             <br />
             <br />
 
