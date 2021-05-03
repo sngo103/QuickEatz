@@ -49,13 +49,16 @@ export class CustomerDashboard extends React.Component {
 
   componentDidMount() {
     if (this.state.cuisine != "") {
+      Router.push("/CustomerDashboard");
       const cuisine = Router.query.cuisine;
       console.log("Vendor Here")
       console.log(cuisine);
       console.log(typeof cuisine);
       // will make to get multiple vendors later
 
-      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
+      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`, {
+        body: JSON.stringify(cuisine)
+      }) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
           this.setState({
