@@ -50,14 +50,14 @@ export class CustomerDashboard extends React.Component {
   componentDidMount() {
     if (this.state.cuisine != "") {
       Router.push("/CustomerDashboard");
-      const cuisine = Router.query.cuisine;
+      const cuisine = this.state.cuisine;//Router.query.cuisine;
       console.log("Vendor Here")
       console.log(cuisine);
       console.log(typeof cuisine);
       // will make to get multiple vendors later
 
       const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`, {
-        body: JSON.stringify(cuisine)
+        //body: JSON.stringify(cuisine)
       }) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
@@ -70,7 +70,7 @@ export class CustomerDashboard extends React.Component {
         .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
     }
     else if (this.state.name != "") {
-      const name = Router.query.name;
+      const name = this.state.name; //Router.query.name;
       console.log("Vendor Here")
       console.log(name);
       console.log(typeof name);
@@ -90,7 +90,7 @@ export class CustomerDashboard extends React.Component {
 
   componentDidUpdate() {
     if (this.state.cuisine != "") {
-      const cuisine = Router.query.cuisine;
+      const cuisine = this.state.cuisine;//Router.query.cuisine;
       console.log("Vendor Here")
       console.log(cuisine);
       console.log(typeof cuisine);
@@ -108,7 +108,7 @@ export class CustomerDashboard extends React.Component {
         .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
     }
     else if (this.state.name != "") {
-      const name = Router.query.name;
+      const name = this.state.name; //Router.query.name;
       console.log("Vendor Here")
       console.log(name);
       console.log(typeof name);
