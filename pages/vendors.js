@@ -1,20 +1,17 @@
-import Head from 'next/head'
-import Layout from '../components/layout'
-import { getSortedVendorsData } from '../lib/vendors'
+import { getSortedVendorsData } from "../lib/vendors";
 
 export async function getStaticProps() {
-  const allVendorsData = getSortedVendorsData()
+  const allVendorsData = getSortedVendorsData();
   return {
     props: {
-      allVendorsData
-    }
-  }
+      allVendorsData,
+    },
+  };
 }
 
-export default function Vendors({allVendorsData}) {
+export default function Vendors({ allVendorsData }) {
   return (
-    <Layout>
-      {/*<section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>*/}
+    <div>
       <section>
         <h2>Blog</h2>
         <ul>
@@ -29,6 +26,6 @@ export default function Vendors({allVendorsData}) {
           ))}
         </ul>
       </section>
-    </Layout>
-  )
+    </div>
+  );
 }

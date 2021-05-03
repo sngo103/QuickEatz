@@ -1,14 +1,16 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import Layout from '../components/layout'
+import Head from "next/head";
+import React from "react";
+import { NewReviewWrapper } from "../components/NewReviewWrapper";
+import WriteReview from "../components/WriteReview";
 
-export default function FirstPost() {
+export default function WriteReviewPage() {
   return (
-    <Layout>
+    <div>
       <Head>
-        <title>Create Review</title>
+        <title>Create a Review</title>
       </Head>
-      <h1>Write Review Page</h1>
-    </Layout>
-  )
+      <WriteReview />
+      {/* <NewReviewWrapper /> */}
+    </div>
+  );
 }
