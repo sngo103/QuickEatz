@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "../styles/CustomerDashboard.module.css"
-// import { connectToDatabase } from "../util/mongodb";
-// import { apiRoute } from "../pages/api/getUserName.js"
-//import 
+import Router from 'next/router';
+// import { data } from "autoprefixer";
 
 /*
 export async function getServerSideProps(context)
@@ -24,21 +23,52 @@ export class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cuisine: "",
-      name: "",
-      found: false,
-      openMap: false, // get rid of this eventually, will prob have to set up map 
+      vendor_id: 0,
+      vendor_cuisine: "",
+      vendor_name: "",
+
+      cuisine: "", // search param
+      name: "" // search param
+
+      //found: false,
+
+      // queryFlag: 0,
+      // openMap: false, // get rid of this eventually, will prob have to set up map 
       // must set up map to show vendors too perhaps
-      userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
+      // userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
       // found: false, //dont need this as utils/mongodb does conect establish?
-      apiData: []
+      // apiData: []
     };
+    //this.handleNameSearch = this.handleNameSearch.bind(this);
+    //this.handleCuisineSearch = this.handleCuisineSearch.bind(this);
   }
 
   componentDidMount() {
+    if(this.state._id == "")
+    {
+      const vendor_id = Router.query._id;
+      console.log("Vendor Here")
+      console.log(vendor_id);
+      console.log(typeof vendor_id);
+      // will make to get multiple vendors later
+      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get Vendor's data
+        .then((data) => data.json())
+        .then((json => {
+          this.setState({
+            vendor_id: json._id,
+            vendor_name: json.business_name,
+            vendor_cuisine: json.cuisine
+          })
+        }))
+      // const geocod = fetch(`/api/revGeoCode?_id=${_id}`) //try to get geocode later
+    }
+  }
+  
+  /*
+  componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
-    const storedEmail = localStorage.getItem("quickeatz_email")
-    const storedState = localStorage.getItem("quickeatz")
+    const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedState = localStorage.getItem("quickeatz");
     if (storedState) {
       const data = {
         token: storedToken,
@@ -76,53 +106,9 @@ export class CustomerDashboard extends React.Component {
       });
     }
   }
-
-  getServerSideProps() {
-      /*const storedToken = localStorage.getItem("quickeatz_token");
-      const storedEmail = localStorage.getItem("quickeatz_email")
-      const storedState = localStorage.getItem("quickeatz")
-      if (storedState) {
-        const data = {
-          token: storedToken,
-          email: storedEmail
-        };
-        */
-
-        /*
-        fetch("/api/getCDQuery", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((res) => res.json())
-          .then((json) => {
-            if (json.success) {
-              console.log("Token verified!")
-              localStorage.setItem("quickeatz_token", json.newToken)
-              localStorage.setItem("quickeatz", true)
-              this.setState({
-                isLoggedIn: true,
-                isLoading: false,
-              });
-            } else {
-              this.setState({
-                isLoggedIn: false,
-                isLoading: false,
-              });
-            }
-          });
-      } else {
-        console.log("Token not found!")
-        this.setState({
-          isLoggedIn: false,
-          isLoading: true,
-        });
-      }
-      */
-  }
-
+  */
+  
+  /*
   render() {
     if (this.state.isLoading) {
       return <div> Loading... </div>;
@@ -142,7 +128,9 @@ export class CustomerDashboard extends React.Component {
               <div className="px-4 py-6 sm:px-0">
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
               </div>
-              {/* /End replace */}
+              */
+              /* /End replace */
+              /*
             </div>
           </main>
         </div>
@@ -163,14 +151,16 @@ export class CustomerDashboard extends React.Component {
               <div className="px-4 py-6 sm:px-0">
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
               </div>
-              {/* /End replace */}
+              /* /End replace */
+              /*
             </div>
           </main>
         </div>
       );
     }
   }
-
+*/
+  
   /////////////////////////////////
   // 1. Should use getCDQuery API and pass in search params based off o
   // 2. Get results and push into table and format them with css
@@ -178,7 +168,8 @@ export class CustomerDashboard extends React.Component {
 
 
   // TESTING IF DATA CAN BE SHOWN ON DAHSBOARD FUNC
-  handleTestSearchClick = async () => {
+  handleTestSearch = async () => {
+    /*
     // clear previous search results: clear table 
     let numberQuery = this.state.number;
     let linkToAPI = 'http://numbersapi.com/' + numberQuery;
@@ -189,44 +180,29 @@ export class CustomerDashboard extends React.Component {
         console.log(response.data)
     } catch (error) {
         if (error.response) {
-            /*
-             * The request was made and the server responded with a
-             * status code that falls out of the range of 2xx
-             */
             console.log(error.response.data); //Not Found
             console.log(error.response.status); //404
             this.setState({ found: false });
         }
     }
+    */
+   this.setState("cusine: cuisine");
 }
 /////////////////////////////////////////
 
 
+  handleCuisineChange = (e) => {
+    //e.preventDefault();
+    const target = e.target;
+    this.setState({cuisine: target.value});
+  }
 
-  handleCusineSearchClick = async () => {
-    // clear previous search results: clear table 
-    let numberQuery = this.state.number;
-    let linkToAPI = 'http://numbersapi.com/' + numberQuery;
 
-    try {
-        let response = await axios.get(linkToAPI);
-        this.setState({ apiData: response.data, found: true });
-        console.log(response.data)
-    } catch (error) {
-        if (error.response) {
-            /*
-             * The request was made and the server responded with a
-             * status code that falls out of the range of 2xx
-             */
-            console.log(error.response.data); //Not Found
-            console.log(error.response.status); //404
-            this.setState({ found: false });
-        }
+  handleCusineSearch = async () => {
+    
+  }
 
-    }
-}
-
-  handleNameSearchClick = async () => {
+  handleNameSearch = async () => {
     // clear previous search results: clear table 
     let numberQuery = this.state.number;
     let linkToAPI = 'http://numbersapi.com/' + numberQuery;
@@ -249,6 +225,8 @@ export class CustomerDashboard extends React.Component {
   }
 }
 
+  // Can be used later insetad to print all vendors from data retreived perhaps
+  /*
   makeVendors = () => { //(apiData, fpund) ? i guess do this if using oth files state
     let currData = this.state.apiData;
     let foundMatch = this.state.found;
@@ -280,7 +258,7 @@ export class CustomerDashboard extends React.Component {
     // is it neede to be cleared ? or does new table request making fix it?
     return table;
   }
-  
+  */
   //getStaticProps()
 
 
@@ -314,45 +292,27 @@ export class CustomerDashboard extends React.Component {
             <br />
             <br />
 
-            <form onSubmit={this.handleNearestSubmit} className="">
-              <button
-                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                type="submit"
-              >
-                Nearest Me
-            </button>
-              
-            </form>
 
             <br />
 
-            <form onSubmit={this.handleTrendingSubmit} className="">
-              <button
+           
+            <button
                 className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                type="submit"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault()
+                  window.href="/trending";
+                }}
               >
                 Trending
             </button>
               
-          </form>
-
-          <br />
-
-            <form onSubmit={this.handlePricesSubmit} className="" >
-            
-              <button
-                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                type="submit"
-              >
-                Best Prices
-              </button>
-            </form>
+        
 
             <br />
             <br />
-            <br />
 
-            <form onSubmit={this.handleCuisineSubmit}>
+            <form onSubmit={this.handleCuisineSearch}>
               <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search By Cuisine Type:</h>
               &emsp; &emsp;
             <select className={styles.dropdown}
@@ -372,7 +332,6 @@ export class CustomerDashboard extends React.Component {
             <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
             </form>
 
-            <br />
             <br />
             <br />
 
@@ -413,8 +372,7 @@ export class CustomerDashboard extends React.Component {
                 <div className="px-4 py-6 sm:px-0">
                   <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
                     
-
-                    { this.makeVendors() }
+                    { this.props.vendors }
 
                     {/*vendors.map(vendor => {
                     <li>{vendor.business_name}</li>
@@ -431,27 +389,129 @@ export class CustomerDashboard extends React.Component {
         </div>
       );
     }
-  };
+  
+    /*
+    componentDidMount() {
+      if(this.state._id == "")
+      {
+        const _id = Router.query._id;
+        console.log("Vendor Here")
+        console.log(_id);
+        console.log(typeof _id);
+        // will make to get multiple vendors later
+        const vendor = fetch(`/api/getCDQuery?_id=${_id}`) // get Vendor id
+          .then((data) => data.json())
+          .then((json => {
+            this.setState({
+              _id: json._id,
+              name: json.business_name,
+              cuisine: json.cuisine
+            })
+          }))
+      }
+    }
+    */
+};
 
 export default CustomerDashboard;
 
 /*
-export default async function getServerSideProps(context) {
-  const { db } = await connectToDatabase();
+export async function componentDidMount(props) {
+    componentDidMount() {
 
-  const data = req.query;
+      let flag = props.queryFlag; 
+      let params = {
+        cuisine: "",
+        name: "",
+        flag: 0
+      }
 
-  const user_id_str = data._id;
-  const user_id_param = new ObjectId(user_id_str);
+      // move the switch statemnt to getCDQuery later?
+      switch(flag)
+      {
+        case 0 : // 0 = cusisne search
+          params = {
+            cusine: props.cusine,
+            name: "",
+            queryFlag: props.queryFlag
+          }
+          break;
 
-  const user_search_param = { "_id": user_id_param };
+        case 1: // 1 = name search
+          params = {
+            cusine: "",
+            name: props.name,
+            queryFlag: props.queryFlag
+          }
+          break;
+      }  
+        
+    
+      fetch("/api/getCDQuery", {
+        method: "GET",
+        // headers: {
+        //  "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.success) {
+            
+            console.log("Token verified!")
+            localStorage.setItem("quickeatz_token", json.newToken)
+            localStorage.setItem("quickeatz", true)
+            this.setState({
+              isLoggedIn: true,
+              isLoading: false,
+            });
+            
+           //data = await res.json();
+           return {
+            props: { data }
+          }
+         } else {
+           this.setState({
+             isLoggedIn: false,
+             isLoading: false,
+           });
+         }
+       });
+    
+   /*else {
+     console.log("Token not found!")
+     this.setState({
+       isLoggedIn: false,
+       isLoading: true,
+     });
+   }
+   vendors = ""; // for now
+   return vendors;
+ }
+*/
 
-  //const response = await db.collection("vendors").findOne(user_search_param);
-  const response = await db.collection("vendors").find(user_search_param).limit(10).toArray();
-  console.log(response);
+// Nearest Me front end
+/*
+<form onSubmit={this.handleNearestSubmit} className="">
+              <button
+                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                type="submit"
+              >
+                Nearest Me
+            </button>
+              
+</form>
+*/
 
-  res.json(response);
-
-  return response;
-}
+// Best Proces Front End
+/*
+<form onSubmit={this.handlePricesSubmit} className="" >
+            
+              <button
+                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                type="submit"
+              >
+                Best Prices
+              </button>
+</form>
 */
