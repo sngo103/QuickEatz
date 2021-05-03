@@ -136,7 +136,7 @@ export class CustomerDashboard extends React.Component {
     this.setState({ cuisine: target.value });
   }
 
-  handleNameSearch = async () => {
+  handleNameSearch = async (e) => {
     e.preventDefault();
     const target = e.target;
     this.setState({ name: target.value });

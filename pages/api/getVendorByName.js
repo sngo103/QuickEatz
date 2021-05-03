@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const data = req.query;
     console.log(data);
 
-    const vendor_name_str = data.name;
+    const vendor_name_str = data.business_name;
     const vendor_name_param = new ObjectId(vendor_name_str);
 
     const vendor_search_param = { "cuisine": vendor_name_param };
