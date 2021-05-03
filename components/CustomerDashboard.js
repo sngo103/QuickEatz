@@ -17,47 +17,45 @@ export async function getServerSideProps(context)
         }
   })
 }
-*/
-
-export class CustomerDashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {  
-      vendor_id: "",
-      vendor_cuisine: "",
-      vendor_name: "",
-      
-      cuisine: "", // search param
-      name: "" // search param
-
-      /*
       vendors : { 
       }
       */
 
-      //found: false,
+//found: false,
 
-      // queryFlag: 0,
-      // openMap: false, // get rid of this eventually, will prob have to set up map 
-      // must set up map to show vendors too perhaps
-      // userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
-      // found: false, //dont need this as utils/mongodb does conect establish?
-      // apiData: []
+// queryFlag: 0,
+// openMap: false, // get rid of this eventually, will prob have to set up map 
+// must set up map to show vendors too perhaps
+// userLocation: "0.0, 0.0", // lat long, get form geolocation api ?
+// found: false, //dont need this as utils/mongodb does conect establish?
+// apiData: []
+
+
+export class CustomerDashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      vendor_id: "",
+      vendor_cuisine: "",
+      vendor_name: "",
+
+      cuisine: "", // search param
+      name: "" // search param
     };
-    //this.handleNameSearch = this.handleNameSearch.bind(this);
-    //this.handleCuisineSearch = this.handleCuisineSearch.bind(this);
+    this.handleNameSearch = this.handleNameSearch.bind(this);
+    this.handleCuisineSearch = this.handleCuisineSearch.bind(this);
+    this.handleCuisineChange = this.handleCuisineChange.bind(this);
   }
 
   componentDidMount() {
-    if(this.state.cuisine != "")
-    {
+    if (this.state.cuisine != "") {
       const cuisine = Router.query.cuisine;
       console.log("Vendor Here")
       console.log(cuisine);
       console.log(typeof cuisine);
       // will make to get multiple vendors later
-      // const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get cuisine 
-      fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
+
+      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
           this.setState({
@@ -66,15 +64,15 @@ export class CustomerDashboard extends React.Component {
             vendor_cuisine: json.cuisine
           })
         }))
+        .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
     }
-    else if(this.state.name != "")
-    {
+    else if (this.state.name != "") {
       const name = Router.query.name;
       console.log("Vendor Here")
       console.log(name);
       console.log(typeof name);
       // will make it get multiple vendors later
-      fetch(`/api/getVendorByName?_id=${name}`) // get matching name
+      const vendor = fetch(`/api/getVendorByName?_id=${name}`) // get matching name
         .then((data) => data.json())
         .then((json => {
           this.setState({
@@ -83,19 +81,19 @@ export class CustomerDashboard extends React.Component {
             vendor_cuisine: json.cuisine
           })
         }))
+        .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
     }
   }
 
   componentDidUpdate() {
-    if(this.state.cuisine != "")
-    {
+    if (this.state.cuisine != "") {
       const cuisine = Router.query.cuisine;
       console.log("Vendor Here")
       console.log(cuisine);
       console.log(typeof cuisine);
       // will make to get multiple vendors later
       // const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get cuisine 
-      fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
+      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
           this.setState({
@@ -104,15 +102,15 @@ export class CustomerDashboard extends React.Component {
             vendor_cuisine: json.cuisine
           })
         }))
+        .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
     }
-    else if(this.state.name != "")
-    {
+    else if (this.state.name != "") {
       const name = Router.query.name;
       console.log("Vendor Here")
       console.log(name);
       console.log(typeof name);
       // will make it get multiple vendors later
-      fetch(`/api/getVendorByName?_id=${name}`) // get matching name
+      const vendor = fetch(`/api/getVendorByName?_id=${name}`) // get matching name
         .then((data) => data.json())
         .then((json => {
           this.setState({
@@ -121,7 +119,148 @@ export class CustomerDashboard extends React.Component {
             vendor_cuisine: json.cuisine
           })
         }))
+        .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
     }
+  }
+
+  handleCuisineChange = (e) => {
+    e.preventDefault();
+    const target = e.target;
+    this.setState({ cuisine: target.value });
+  }
+
+
+  handleCuisineSearch = async (e) => {
+    e.preventDefault();
+    const target = e.target;
+    this.setState({ cuisine: target.value });
+  }
+
+  handleNameSearch = async () => {
+    e.preventDefault();
+    const target = e.target;
+    this.setState({ name: target.value });
+  }
+
+  render() {
+    return (
+      <div>
+        <section className="h-50 bg-mintcream">
+          <header className="bg-white shadow text-center">
+            <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+              <h1 className={styles.title}>Dashboard</h1>
+            </div>
+          </header>
+        </section>
+
+        <section className={styles.midPage}>
+          <h className={styles.message}>
+            Search For Vendors Nearby!
+        </h>
+          <br />
+          <br />
+          <h className={styles.secondmessage}>
+            Select Search Criteria
+        </h>
+        </section>
+
+
+        <section className={styles.bottomPage}>
+
+          <br />
+          <br />
+          <br />
+
+          <button
+            className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault()
+              window.location = "/trending";
+            }}
+          >
+            Trending
+          </button>
+
+          <br />
+          <br />
+          <br />
+
+          <form onSubmit={this.handleCuisineSearch}>
+            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Search By Cuisine Type:</h>
+            &emsp; &emsp;
+          <select className={styles.dropdown}
+              value={this.state.cuisine}
+              onChange={this.handleCuisineChange}
+            >
+              <option value="Italian">Italian</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Halal">Halal</option>
+              <option value="Mexican">Mexican</option>
+              <option value="American">American</option>
+              <option value="Spanish">Spanish</option>
+              <option value="Greek">Greek</option>
+              <option value="Dessert">Dessert</option>
+            </select>
+            &emsp; &emsp;
+          <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
+          </form>
+
+          <br />
+          <br />
+
+          <form onSubmit={this.handleCuisineSubmit}>
+            <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search Vendor Truck By Name:</h>
+            &emsp; &emsp;
+
+          <input className={styles.textbox} type="text"
+              value={this.state.queryText}
+              onChange={this.handleChange}
+            />
+
+            &emsp; &emsp;
+          <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
+          </form>
+
+
+          {
+            this.state.openMap && (
+              <div>
+                <main>
+                  <div className="max-w-2xl mx-auto py-20 sm:px-6 lg:px-8">
+
+                    <div className="px-4 py-6 sm:px-0">
+                      <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96"></div>
+                    </div>
+
+                  </div>
+                </main>
+
+              </div>
+            )
+          }
+
+          <main>
+            <div className="max-w-7xl mx-auto py-20 sm:px-6 lg:px-8">
+
+              <div className="px-4 py-6 sm:px-0">
+                <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
+
+                  ID: {this.state.vendor_id}
+                  <br />
+                  Name: {this.state.vendor_business_name}
+                  <br />
+                  Cuisine: {this.state.vendor_cuisine}
+                  <br />
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </section>
+      </div>
+    );
   }
 
   /*
@@ -167,7 +306,7 @@ export class CustomerDashboard extends React.Component {
     }
   }
   */
-  
+
   /*
   render() {
     if (this.state.isLoading) {
@@ -189,101 +328,42 @@ export class CustomerDashboard extends React.Component {
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
               </div>
               */
-              /* /End replace */
-              /*
-            </div>
-          </main>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <header className="bg-white shadow">
-            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold text-gray-900">
-                Customer Dashboard
-              </h1>
-            </div>
-          </header>
-          <main>
-            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-              Not logged in.
-              <div className="px-4 py-6 sm:px-0">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
-              </div>
-              /* /End replace */
-              /*
-            </div>
-          </main>
-        </div>
-      );
-    }
-  }
+  /* /End replace */
+  /*
+</div>
+</main>
+</div>
+);
+} else {
+return (
+<div>
+<header className="bg-white shadow">
+<div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+  <h1 className="text-3xl font-bold text-gray-900">
+    Customer Dashboard
+  </h1>
+</div>
+</header>
+<main>
+<div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  Not logged in.
+  <div className="px-4 py-6 sm:px-0">
+    <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+  </div>
+  /* /End replace */
+  /*
+</div>
+</main>
+</div>
+);
+}
+}
 */
-  
+
   /////////////////////////////////
   // 1. Should use getCDQuery API and pass in search params based off o
   // 2. Get results and push into table and format them with css
   // 3. On new search clear table and repeat 1 and 2
-
-
-  // TESTING IF DATA CAN BE SHOWN ON DAHSBOARD FUNC
-  handleTestSearch = async () => {
-    /*
-    // clear previous search results: clear table 
-    let numberQuery = this.state.number;
-    let linkToAPI = 'http://numbersapi.com/' + numberQuery;
-
-    try {
-        let response = await axios.get(linkToAPI);
-        this.setState({ apiData: response.data, found: true });
-        console.log(response.data)
-    } catch (error) {
-        if (error.response) {
-            console.log(error.response.data); //Not Found
-            console.log(error.response.status); //404
-            this.setState({ found: false });
-        }
-    }
-    */
-   this.setState("cusine: cuisine");
-}
-/////////////////////////////////////////
-
-
-  handleCuisineChange = (e) => {
-    e.preventDefault();
-    const target = e.target;
-    this.setState({cuisine: target.value});
-  }
-
-
-  handleCusineSearch = async () => {
-    
-  }
-
-  handleNameSearch = async () => {
-    // clear previous search results: clear table 
-    let numberQuery = this.state.number;
-    let linkToAPI = 'http://numbersapi.com/' + numberQuery;
-
-    try {
-      let response = await axios.get(linkToAPI);
-      this.setState({ apiData: response.data, found: true });
-      console.log(response.data)
-    } catch (error) {
-        if (error.response) {
-          /*
-           * The request was made and the server responded with a
-           * status code that falls out of the range of 2xx
-           */
-          console.log(error.response.data); //Not Found
-          console.log(error.response.status); //404
-          this.setState({ found: false });
-      }
-
-  }
-}
 
   // Can be used later insetad to print all vendors from data retreived perhaps
   /*
@@ -323,151 +403,31 @@ export class CustomerDashboard extends React.Component {
 
 
 
-/////////////////////////////////
-
-    render() {
-      return (
-        <div>
-          <section className="h-50 bg-mintcream">
-            <header className="bg-white shadow text-center">
-              <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-                <h1 className={styles.title}>Dashboard</h1>
-              </div>
-            </header>
-          </section>
-
-          <section className={styles.midPage}>
-            <h className={styles.message}>
-              Search For Vendors Nearby!
-          </h>
-            <br />
-            <br />
-            <h className={styles.secondmessage}>
-              Select Search Criteria
-          </h>
-          </section>
+  /////////////////////////////////
 
 
-          <section className={styles.bottomPage}>
-            
-            <br />
-            <br />
-            <br />
-           
-            <button
-                className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault()
-                  window.location="/trending";
-                }}
-              >
-                Trending
-            </button>      
-                           
-            <br/>
-            <br />
-            <br />
 
-            <form onSubmit={this.handleCuisineSearch}>
-              <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Search By Cuisine Type:</h>
-              &emsp; &emsp;
-            <select className={styles.dropdown}
-                value={this.state.cuisine}
-                onChange={this.handleCuisineChange}
-              >
-                <option value="Italian">Italian</option>
-                <option value="Chinese">Chinese</option>
-                <option value="Halal">Halal</option>
-                <option value="Mexican">Mexican</option>
-                <option value="American">American</option>
-                <option value="Spanish">Spanish</option>
-                <option value="Greek">Greek</option>
-                <option value="Dessert">Dessert</option>
-              </select>
-              &emsp; &emsp;
-            <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
-            </form>
-
-            <br />
-            <br />
-
-            <form onSubmit={this.handleCuisineSubmit}>
-              <h className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black ">Or Search Vendor Truck By Name:</h>
-              &emsp; &emsp;
-  
-            <input className={styles.textbox} type="text" 
-                value={this.state.queryText}
-                onChange={this.handleChange}
-              />
-
-              &emsp; &emsp;
-            <input className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" type="submit" value="Submit" />
-            </form>
-
-
-            {
-              this.state.openMap && (
-                <div>
-                  <main>
-                    <div className="max-w-2xl mx-auto py-20 sm:px-6 lg:px-8">
-
-                      <div className="px-4 py-6 sm:px-0">
-                        <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96"></div>
-                      </div>
-
-                    </div>
-                  </main>
-
-                </div>
-              )
-            }
-
-            <main>
-              <div className="max-w-7xl mx-auto py-20 sm:px-6 lg:px-8">
-
-                <div className="px-4 py-6 sm:px-0">
-                  <div className="bg-white border-4 border-solid border-gray-300 rounded-lg h-96">
-                    
-                    { this.props.vendors }
-
-                    {/*vendors.map(vendor => {
-                    <li>{vendor.business_name}</li>
-                    })*/}
-                    
-                    
-                  </div>
-                </div>
-
-              </div>
-            </main>
-
-          </section>
-        </div>
-      );
+  /*
+  componentDidMount() {
+    if(this.state._id == "")
+    {
+      const _id = Router.query._id;
+      console.log("Vendor Here")
+      console.log(_id);
+      console.log(typeof _id);
+      // will make to get multiple vendors later
+      const vendor = fetch(`/api/getCDQuery?_id=${_id}`) // get Vendor id
+        .then((data) => data.json())
+        .then((json => {
+          this.setState({
+            _id: json._id,
+            name: json.business_name,
+            cuisine: json.cuisine
+          })
+        }))
     }
-  
-    /*
-    componentDidMount() {
-      if(this.state._id == "")
-      {
-        const _id = Router.query._id;
-        console.log("Vendor Here")
-        console.log(_id);
-        console.log(typeof _id);
-        // will make to get multiple vendors later
-        const vendor = fetch(`/api/getCDQuery?_id=${_id}`) // get Vendor id
-          .then((data) => data.json())
-          .then((json => {
-            this.setState({
-              _id: json._id,
-              name: json.business_name,
-              cuisine: json.cuisine
-            })
-          }))
-      }
-    }
-    */
+  }
+  */
 };
 
 export default CustomerDashboard;
@@ -476,7 +436,7 @@ export default CustomerDashboard;
 export async function componentDidMount(props) {
     componentDidMount() {
 
-      let flag = props.queryFlag; 
+      let flag = props.queryFlag;
       let params = {
         cuisine: "",
         name: "",
@@ -501,9 +461,9 @@ export async function componentDidMount(props) {
             queryFlag: props.queryFlag
           }
           break;
-      }  
-        
-    
+      }
+
+
       fetch("/api/getCDQuery", {
         method: "GET",
         // headers: {
@@ -514,7 +474,7 @@ export async function componentDidMount(props) {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            
+
             console.log("Token verified!")
             localStorage.setItem("quickeatz_token", json.newToken)
             localStorage.setItem("quickeatz", true)
@@ -522,7 +482,7 @@ export async function componentDidMount(props) {
               isLoggedIn: true,
               isLoading: false,
             });
-            
+
            //data = await res.json();
            return {
             props: { data }
@@ -534,7 +494,7 @@ export async function componentDidMount(props) {
            });
          }
        });
-    
+
    /*else {
      console.log("Token not found!")
      this.setState({
@@ -556,14 +516,14 @@ export async function componentDidMount(props) {
               >
                 Nearest Me
             </button>
-              
+
 </form>
 */
 
 // Best Proces Front End
 /*
 <form onSubmit={this.handlePricesSubmit} className="" >
-            
+
               <button
                 className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white"
                 type="submit"
