@@ -1,6 +1,6 @@
 import React from "react";
 
-export class VendorDashboard extends React.Component {
+export default class VendorDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,7 @@ export class VendorDashboard extends React.Component {
         token: storedToken,
         email: storedEmail
       };
-	  console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
