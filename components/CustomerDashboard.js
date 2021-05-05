@@ -37,10 +37,11 @@ export default class CustomerDashboard extends React.Component {
     this.state = {
       isLoggedIn: false,
       isLoading: true,
-      vendor_id: "",
-      vendor_cuisine: "",
-      vendor_name: "",
-
+      vendors: { // Array of vendors returned
+        vendor_id: "",
+        vendor_cuisine: "",
+        vendor_name: ""
+      },
       cuisine: "", // search param
       name: "" // search param
     };
@@ -99,8 +100,8 @@ export default class CustomerDashboard extends React.Component {
       console.log(cuisine);
       console.log(typeof cuisine);
       // will make to get multiple vendors later
-      // const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get cuisine 
-      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine 
+      // const vendor = fetch(`/api/getVendorsByCuisine?_id=${vendor_id}`) // get cuisine 
+      const vendor = fetch(`/api/getVendorsByCuisine?cuisine=${cuisine}`) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
           this.setState({
@@ -117,7 +118,7 @@ export default class CustomerDashboard extends React.Component {
       console.log(name);
       console.log(typeof name);
       // will make it get multiple vendors later
-      const vendor = fetch(`/api/getVendorByName?_id=${name}`) // get matching name
+      const vendor = fetch(`/api/getVendorByName?business_name=${name}`) // get matching name
         .then((data) => data.json())
         .then((json => {
           this.setState({
@@ -141,12 +142,31 @@ export default class CustomerDashboard extends React.Component {
     e.preventDefault();
     const target = e.target;
     this.setState({ cuisine: target.value });
+    // Make array results
+    fetch(`/api/getVendorsByCuisine?cuisine=${this.state.cuisine}`) // get matching cuisine 
+      .then((data) => data.json())
+      .then((json => {
+        this.setState({
+          vendor_id: json._id,
+          vendor_name: json.business_name,
+          vendor_cuisine: json.cuisine
+        });
+      }));
   }
 
   handleNameSearch = async (e) => {
     e.preventDefault();
     const target = e.target;
     this.setState({ name: target.value });
+    fetch(`/api/getVendorsByCuisine?business_name=${this.state.name}`) // get matching business name
+      .then((data) => data.json())
+      .then((json => {
+        this.setState({
+          vendor_id: json._id,
+          vendor_name: json.business_name,
+          vendor_cuisine: json.cuisine
+        });
+      }));
   }
 
   handleNameChange = async (e) => {
@@ -271,7 +291,7 @@ export default class CustomerDashboard extends React.Component {
           </main>
 
         </section>
-      </div>
+      </div >
     );
   }
 
@@ -283,7 +303,7 @@ export default class CustomerDashboard extends React.Component {
       console.log(typeof cuisine);
       // will make to get multiple vendors later
       // const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get cuisine
-      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`) // get matching cuisine
+      const vendor = await fetch(`/api/getVendorsByCuisine?cuisine=${cuisine}`) // get matching cuisine
         .then((data) => data.json())
         .then((json) => {
           this.setState({
@@ -299,7 +319,8 @@ export default class CustomerDashboard extends React.Component {
       console.log(name);
       console.log(typeof name);
       // will make it get multiple vendors later
-      const vendor = fetch(`/api/getVendorByName?_id=${name}`) // get matching name
+      // const vendor = await fetch(`/api/getVendorByName?_id=${name}`) // get matching name
+      const vendor = await fetch(`/api/getVendorByName?buisness_name=${name}`) // get matching name
         .then((data) => data.json())
         .then((json) => {
           this.setState({
