@@ -35,9 +35,14 @@ export default class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoggedIn: false,
+      isLoading: true,
       vendor_id: "",
       vendor_cuisine: "",
       vendor_name: "",
+
+      cuisine: "", // search param
+      name: "" // search param
     };
     this.handleNameSearch = this.handleNameSearch.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
