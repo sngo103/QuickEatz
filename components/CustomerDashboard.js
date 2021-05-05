@@ -51,41 +51,44 @@ export default class CustomerDashboard extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.cuisine != "") {
-      const cuisine = this.state.cuisine;//Router.query.cuisine;
-      console.log("Vendor Here")
-      console.log(cuisine);
-      console.log(typeof cuisine);
-      // will make to get multiple vendors later
-
-      const vendor = fetch(`/api/getVendorsByCuisine?_id=${cuisine}`)
-        // get matching cuisine 
-        .then((data) => data.json())
-        .then((json => {
-          this.setState({
-            vendor_id: json._id,
-            vendor_name: json.business_name,
-            vendor_cuisine: json.cuisine
-          })
-        }))
-        .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
-    }
-    else if (this.state.name != "") {
-      const name = this.state.name; //Router.query.name;
-      console.log("Vendor Here")
-      console.log(name);
-      console.log(typeof name);
-      // will make it get multiple vendors later
-      const vendor = fetch(`/api/getVendorByName?_id=${name}`) // get matching name
-        .then((data) => data.json())
-        .then((json => {
-          this.setState({
-            vendor_id: json._id,
-            vendor_name: json.business_name,
-            vendor_cuisine: json.cuisine
-          })
-        }))
-        .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
+    const storedToken = localStorage.getItem("quickeatz_token");
+    const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedState = localStorage.getItem("quickeatz");
+    if (storedState) {
+      const data = {
+        token: storedToken,
+        email: storedEmail
+      };
+      fetch("/api/auth/verifyShallow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.success) {
+            console.log("Token verified!")
+            localStorage.setItem("quickeatz_token", json.newToken)
+            localStorage.setItem("quickeatz", true)
+            this.setState({
+              isLoggedIn: true,
+              isLoading: false,
+            });
+          } else {
+            this.setState({
+              isLoggedIn: false,
+              isLoading: false,
+            });
+          }
+        });
+    } else {
+      console.log("Token not found!")
+      this.setState({
+        isLoggedIn: false,
+        isLoading: true,
+      });
     }
   }
 
@@ -127,7 +130,8 @@ export default class CustomerDashboard extends React.Component {
     }
   }
 
-  handleCuisineChange = (e) => {
+  //handleCuisineChange = async (e) => {
+  handleCuisineChange = async (e) => {
     e.preventDefault();
     const target = e.target;
     this.setState({ cuisine: target.value });
