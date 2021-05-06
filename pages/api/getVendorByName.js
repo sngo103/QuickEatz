@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     const vendor_search_param = { "cuisine": vendor_name_param };
 
-    const response = await db.collection("vendors").findOne(vendor_search_param);//.limit(10).toArray();
+    const response = await db.collection("vendors").findOne(vendor_search_param).limit(10).toArray();
     // no array for testing purposes for now
     //console.log(response);
 
