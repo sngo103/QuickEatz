@@ -3,19 +3,6 @@ import styles from "../styles/CustomerDashboard.module.css"
 // import Router from 'next/router';
 
 /*
-function PrintAllVendors(props)
-{
-  if (!props.warn) {
-    return null;
-  }
-
-  for(i = 0; i < props.vendor_amount; i++)
-  {
-    
-  }
-}
-*/
-
 // Not an efficent way to get all ids, names, and cuisines to print them as making more arrays but will do for now 
 function ListVendors(props) {
   // Build an array of items
@@ -34,6 +21,25 @@ function ListVendors(props) {
     );
   }
 }
+*/
+
+// Not an efficent way to get all ids, names, and cuisines to print them as making more arrays but will do for now 
+function ListVendors(props) {
+  return (
+    <div>
+      {props.vendor_ids.map((vendor_id, index) => (
+        <Item key={index} item={vendor_id} />
+      ))}
+      {props.vendor_names.map((vendor_name, index) => (
+        <Item key={index} item={vendor_name} />
+      ))}
+      {props.vendor_cuisines.map((vendor_cuisine, index) => (
+        <Item key={index} item={vendor_cuisine} />
+      ))}
+    </div>
+  );
+}
+
 
 export default class CustomerDashboard extends React.Component {
   constructor(props) {
