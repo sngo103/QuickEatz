@@ -26,17 +26,22 @@ function ListVendors(props) {
 // Not an efficent way to get all ids, names, and cuisines to print them as making more arrays but will do for now 
 function ListVendors(props) {
   return (
-    <div>
+    <div className="">
       {props.vendor_ids.map((vendor_id, index) => (
         <Item key={index} item={vendor_id} />
       ))}
+      <br />
       {props.vendor_names.map((vendor_name, index) => (
         <Item key={index} item={vendor_name} />
       ))}
+      <br />
       {props.vendor_cuisines.map((vendor_cuisine, index) => (
         <Item key={index} item={vendor_cuisine} />
       ))}
+      <br />
+      <br />
     </div>
+
   );
 }
 
@@ -205,6 +210,7 @@ export default class CustomerDashboard extends React.Component {
           vendor_ids: _ids,
           vendor_cuisines: cuisines_,
           vendor_names: vendor_names_,
+          // vendor locations 
           vendor_amount = (prevState) => {
             this.setState({ vendor_amount: prevState.vendor_amount + 1 })
           }
@@ -240,6 +246,7 @@ export default class CustomerDashboard extends React.Component {
           vendor_ids: _ids,
           vendor_cuisines: cuisines_,
           vendor_names: vendor_names_,
+          // vendor locations 
           vendor_amount = (prevState) => {
             this.setState({ vendor_amount: prevState.vendor_amount + 1 })
           }
@@ -368,8 +375,6 @@ export default class CustomerDashboard extends React.Component {
                     */}
 
                   {/*
-
-
                       { this.state.vendor_ids[0] }
                       < br />
                       { this.state.vendor_cuisines[0] }
@@ -378,7 +383,9 @@ export default class CustomerDashboard extends React.Component {
                       < br />
                       <br />
 
-                    */}
+                  */}
+
+                  <ListVendors /> {props}
 
                 </div>
               </div>
