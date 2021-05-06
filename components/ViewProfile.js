@@ -3,6 +3,9 @@ import Router from "next/router";
 import ViewCustomerProfile from "./ViewCustomerProfile";
 import ViewVendorProfile from "./ViewVendorProfile";
 
+import EditCustomerProfile from "./EditCustomerProfile";
+import EditVendorProfile from "./EditVendorProfile";
+
 export default class ViewProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -62,9 +65,11 @@ export default class ViewProfile extends React.Component {
     render() {
       console.log("ACCOUNT:", this.state.account_type);
       if (this.state.account_type === "vendor") {
-      return <ViewVendorProfile />;
-    } else {
-      return <ViewCustomerProfile />;
-    }
+        return <ViewVendorProfile />;
+        // return <EditVendorProfile />;
+      } else {
+        return <ViewCustomerProfile />;
+        // return <EditCustomerProfile />;
+      }
   }
 }

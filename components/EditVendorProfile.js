@@ -1,8 +1,8 @@
 import React from "react";
-import styles from '../styles/CustomerProfile.module.css'
+import styles from "../styles/CustomerProfile.module.css";
 
 export default class EditVendorProfile extends React.Component {
-     constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       isLoggedIn: false,
@@ -10,14 +10,14 @@ export default class EditVendorProfile extends React.Component {
     };
   }
 
-   componentDidMount() {
+  componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
     if (storedState) {
       const data = {
         token: storedToken,
-        email: storedEmail
+        email: storedEmail,
       };
       console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
@@ -27,8 +27,8 @@ export default class EditVendorProfile extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           if (json.success) {
             console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
@@ -44,12 +44,12 @@ export default class EditVendorProfile extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!")
+      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,
       });
-      Router.push("/login")
+      Router.push("/login");
     }
   }
 
@@ -72,38 +72,36 @@ export default class EditVendorProfile extends React.Component {
             vendor_rating: json.average_rating,
             vendor_lastname: json.last_name,
             vendor_review_ids: json.reviews,
-          }),
-            console.log("I helped!"),
-            console.log(json),
+          });
+          console.log("I helped!");
+          console.log(json);
         });
     }
   }
 
-    render() {
-        return (
-            <div>
-                <section className={styles.topPage}>
-                    <h2 className={styles.title}>Edit Vendor Profile</h2>
-                </section>
+  render() {
+    return (
+      <div>
+        <section className={styles.topPage}>
+          <h2 className={styles.title}>Edit Vendor Profile</h2>
+        </section>
 
-                <section className={styles.midPage}>
-                    <h2> What would you like to edit today?</h2>
-                </section >
+        <section className={styles.midPage}>
+          <h2> What would you like to edit today?</h2>
+        </section>
 
-                <section className={styles.bottomPage}>
-                    <br /><br />
-                    <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" >
-                        Settings
-                        </button>
-
-                    &ensp; &ensp;
-
-                    <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white" >
-                        Apply
-                    </button>
-                </section>
-
-            </div >
-        )
-    }
+        <section className={styles.bottomPage}>
+          <br />
+          <br />
+          <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white">
+            Settings
+          </button>
+          &ensp; &ensp;
+          <button className="bg-gray-900 text-white px-5 py-3 rounded-md text-sm font-medium border-4 border-black hover:border-white">
+            Apply
+          </button>
+        </section>
+      </div>
+    );
+  }
 }
