@@ -122,21 +122,21 @@ export default class CustomerDashboard extends React.Component {
       console.log("Vendor Here")
       console.log(cuisine);
       console.log(typeof cuisine);
-      let _ids = [...this.state.vendor_ids];
-      let vendor_names_ = [...this.state.vendor_names];
+      let ids_ = [...this.state.vendor_ids];
+      let names_ = [...this.state.vendor_names];
       let cuisines_ = [...this.state.vendor_cuisines];
       // will make to get multiple vendors later
       // const vendor = fetch(`/api/getVendorsByCuisine?_id=${vendor_id}`) // get cuisine 
       const vendor = await fetch(`/api/getVendorsByCuisine?cuisine=${cuisine}`) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
-          _ids.push(json._id); //need to push value: json._id?
-          vendor_names.push(json.business_name);
+          ids_.push(json._id); //need to push value: json._id?
+          names_.push(json.business_name);
           cuisines_.push(vendor_cuisines);
           this.setState({
-            vendor_ids: _ids,
+            vendor_ids: ids_,
             vendor_cuisines: cuisines_,
-            vendor_names: vendor_names_,
+            vendor_names: names_,
             vendor_amount = (prevState) => {
               this.setState({ vendor_amount: prevState.vendor_amount + 1 })
             }
@@ -151,20 +151,20 @@ export default class CustomerDashboard extends React.Component {
       console.log("Vendor Here")
       console.log(name);
       console.log(typeof name);
-      let _ids = [...this.state.vendor_ids];
-      let vendor_names_ = [...this.state.vendor_names];
+      let ids_ = [...this.state.vendor_ids];
+      let names_ = [...this.state.vendor_names];
       let cuisines_ = [...this.state.vendor_cuisines];
       // will make it get multiple vendors later
       const vendor = await fetch(`/api/getVendorByName?business_name=${name}`) // get matching name
         .then((data) => data.json())
         .then((json => {
-          _ids.push(json._id); //need to push value: json._id?
-          vendor_names.push(json.business_name);
+          ids_.push(json._id); //need to push value: json._id?
+          names_.push(json.business_name);
           cuisines_.push(vendor_cuisines);
           this.setState({
-            vendor_ids: _ids,
+            vendor_ids: ids_,
             vendor_cuisines: cuisines_,
-            vendor_names: vendor_names_,
+            vendor_names: names_,
             vendor_amount = (prevState) => {
               this.setState({ vendor_amount: prevState.vendor_amount + 1 })
             }
@@ -175,16 +175,23 @@ export default class CustomerDashboard extends React.Component {
     }
   }
 
-  //handleCuisineChange = async (e) => {
+
   handleCuisineChange = async (e) => {
     e.preventDefault();
     const target = e.target;
     this.setState({ cuisine: target.value });
   }
 
+
+  handleNameChange = async (e) => {
+    e.preventDefault();
+    const target = e.target;
+    this.setState({ name: target.value });
+  }
+
+
   handleCuisineSearch = async (e) => {
     e.preventDefault();
-    // clean state arrays 
     // clean state arrays 
     this.setState(
       { vendor_amount: 0 },
@@ -196,20 +203,20 @@ export default class CustomerDashboard extends React.Component {
     const target = e.target;
     this.setState({ cuisine: target.value });
 
-    let _ids = [...this.state.vendor_ids];
-    let vendor_names_ = [...this.state.vendor_names];
+    let ids_ = [...this.state.vendor_ids];
+    let names_ = [...this.state.vendor_names];
     let cuisines_ = [...this.state.vendor_cuisines];
     // Make array results
     await fetch(`/api/getVendorsByCuisine?cuisine=${this.state.cuisine}`) // get matching cuisine 
       .then((data) => data.json())
       .then((json => {
-        _ids.push(json._id); //need to push value: json._id?
-        vendor_names.push(json.business_name);
+        ids_.push(json._id); //need to push value: json._id?
+        names_.push(json.business_name);
         cuisines_.push(vendor_cuisines);
         this.setState({
-          vendor_ids: _ids,
+          vendor_ids: ids_,
           vendor_cuisines: cuisines_,
-          vendor_names: vendor_names_,
+          vendor_names: names_,
           // vendor locations 
           vendor_amount = (prevState) => {
             this.setState({ vendor_amount: prevState.vendor_amount + 1 })
@@ -233,19 +240,19 @@ export default class CustomerDashboard extends React.Component {
     const target = e.target;
     this.setState({ name: target.value });
 
-    let _ids = [...this.state.vendor_ids];
-    let vendor_names_ = [...this.state.vendor_names];
+    let ids_ = [...this.state.vendor_ids];
+    let names_ = [...this.state.vendor_names];
     let cuisines_ = [...this.state.vendor_cuisines];
     await fetch(`/api/getVendorsByCuisine?business_name=${this.state.name}`) // get matching business name
       .then((data) => data.json())
       .then((json => {
-        _ids.push(json._id); //need to push value: json._id?
-        vendor_names.push(json.business_name);
+        ids_.push(json._id); //need to push value: json._id?
+        names_.push(json.business_name);
         cuisines_.push(vendor_cuisines);
         this.setState({
-          vendor_ids: _ids,
+          vendor_ids: ids_,
           vendor_cuisines: cuisines_,
-          vendor_names: vendor_names_,
+          vendor_names: names_,
           // vendor locations 
           vendor_amount = (prevState) => {
             this.setState({ vendor_amount: prevState.vendor_amount + 1 })
@@ -256,11 +263,6 @@ export default class CustomerDashboard extends React.Component {
   }
 
 
-  handleNameChange = async (e) => {
-    e.preventDefault();
-    const target = e.target;
-    this.setState({ name: target.value });
-  }
   render() {
     return (
       <div>
