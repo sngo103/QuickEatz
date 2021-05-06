@@ -1,5 +1,8 @@
 import React from "react";
 import Router from "next/router";
+import MapContainerNearbyVendorPin from "./MapContainerNearbyVendorPin"
+import MapContainerVendorPin from "./MapContainerVendorPin"
+import MapContainerVendorPinInitial from "./MapContainerVendorPinInitial"
 
 class VendorSignUp extends React.Component {
   constructor(props) {
@@ -8,10 +11,19 @@ class VendorSignUp extends React.Component {
       usernameInvalid: false,
       currentPass: "",
       passMatch: true,
+      item_name: "",
+      item_price: 0.00,
+      item_desc: "",
+      menu: [],
+      menuDisplay: [],
+      hours: [],
+      hoursDisplay: [],
     };
     this.checkUsername = this.checkUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.checkPass = this.checkPass.bind(this);
+    this.handleMenuSubmit = this.handleMenuSubmit.bind(this);
+    this.handleMenuChange = this.handleMenuChange.bind(this);
   }
 
   async handleSubmit(event) {
@@ -74,6 +86,46 @@ class VendorSignUp extends React.Component {
           this.setState({ usernameInvalid: true });
         }
       });
+  }
+
+  handleMenuChange(event){
+    event.preventDefault()
+    if(event.target.name === "item_name"){
+      this.setState({ item_name: event.target.value })
+    } else if(event.target.name === "item_price"){
+      let price = event.target.value
+      console.log("price:", typeof(price))
+      this.setState({ item_price: parseFloat(event.target.value) })
+    } else if(event.target.name === "item_desc"){
+      this.setState({ item_desc: event.target.value })
+    }
+  }
+
+  handleMenuSubmit(event){
+    event.preventDefault()
+    const new_item = {
+      food_name: this.state.item_name,
+      desc: this.state.item_desc,
+      price: (this.state.item_price).toFixed(2),
+      in_stock: true,
+    }
+    const newMenu = this.state.menu
+    newMenu.push(new_item)
+    let newMenuDisplay = this.state.menuDisplay
+    let new_xml = <div className="border-b-2 font-normal col-span-1">{this.state.item_name}</div>
+    newMenuDisplay.push(new_xml)
+    new_xml = <div className="border-b-2 pl-3 font-normal col-span-1">{(this.state.item_price).toFixed(2)}</div>
+    newMenuDisplay.push(new_xml)
+    new_xml = <div className="border-b-2 font-normal col-span-4">{this.state.item_desc}</div>
+    newMenuDisplay.push(new_xml)
+    
+    this.setState({
+      item_name: "",
+      item_price: 0,
+      item_desc: "",
+      menu: newMenu,
+      menuDisplay: newMenuDisplay
+    })
   }
 
   handlePass(event) {
@@ -167,24 +219,80 @@ class VendorSignUp extends React.Component {
                 className="w-2/4 m-2 px-2 border rounded-md"
               />
               <br />
-              <div className="flex justify-left items-center">
+              <div className="font-normal border-2 p-2">
+              <div className="flex justify-left items-center font-bold">
                 *Hours
-                <textarea
-                  name="hours"
-                  form="vendorSignUp"
-                  required
-                  className="w-3/4 m-2 px-2 border rounded-md"
-                />
               </div>
-              {/* <div className="flex justify-left items-center">
+              <div className="grid grid-cols-6 text-sm border p-1">
+              <div className="col-span-2 font-bold">Day</div><div className="col-span-4 font-bold">Hours</div>
+              <div className="col-span-2">Monday</div>
+              <div className="col-span-2">
+              Opens: <input name="mon-start" type="time" required />
+              </div>
+              <div className="col-span-2">
+              Closes: <input name="mon-end" type="time" required />
+              </div>
+              <div className="col-span-2">Tuesday</div>
+              <div className="col-span-2">
+              Opens: <input name="tues-start" type="time" required />
+              </div>
+              <div className="col-span-2">
+              Closes: <input name="tues-end" type="time" required />
+              </div>
+              <div className="col-span-2">Wednesday</div>
+              <div className="col-span-2">
+              Opens: <input name="wed-start" type="time" required />
+              </div>
+              <div className="col-span-2">
+              Closes: <input name="wed-end" type="time" required />
+              </div>
+              <div className="col-span-2">Thursday</div>
+              <div className="col-span-2">
+              Opens: <input name="thurs-start" type="time" required />
+              </div>
+              <div className="col-span-2">
+              Closes: <input name="thurs-end" type="time" required />
+              </div>
+              <div className="col-span-2">Friday</div>
+              <div className="col-span-2">
+              Opens: <input name="fri-start" type="time" required />
+              </div>
+              <div className="col-span-2">
+              Closes: <input name="fri-end" type="time" required />
+              </div>
+              <div className="col-span-2">Saturday</div>
+              <div className="col-span-2">
+              Opens: <input name="sat-start" type="time" required />
+              </div>
+              <div className="col-span-2">
+              Closes: <input name="sat-end" type="time" required />
+              </div>
+              <div className="col-span-2">Sunday</div>
+              <div className="col-span-2">
+              Opens: <input name="fri-start" type="time" required />
+              </div>
+              <div className="col-span-2">
+              Closes: <input name="fri-end" type="time" required />
+              </div>
+              </div>
+              </div>
+              <div className="border-2 p-2">
+              <div className="flex justify-left items-center">
                 *Menu
-                <textarea
-                  name="menu"
-                  required
-                  form="vendorSignUp"
-                  className="w-3/4 m-2 px-2 border rounded-md"
-                />
-              </div> */}
+              </div>
+              <div className="grid grid-cols-6 text-sm border p-1">
+                <div className="col-span-1">Name</div><div className="col-span-1">Price</div><div className="col-span-4">Description</div>
+              {this.state.menuDisplay.map((cell) => cell)}
+              </div>
+              <div className="text-sm">
+              Name: <input name="item_name" value={this.state.item_name} onChange={this.handleMenuChange} type="text" className="m-2 px-2 border rounded-md" required />
+              Price: $<input name="item_price" value={this.state.item_price} type="number" min="0" step=".01" onChange={this.handleMenuChange} className="m-2 px-2 border rounded-md" required />
+              <div className="flex justify-left items-center">
+                Description: <textarea name="item_desc" value={this.state.item_desc} onChange={this.handleMenuChange} className="min-w-min w- m-2 px-2 border rounded-md" />
+              </div>
+              <button className="px-1 bg-gray-100 hover:bg-gray-300" onClick={this.handleMenuSubmit}>Add Menu Item</button>
+              </div>
+              </div>
               *Username
               <input
                 name="username"
