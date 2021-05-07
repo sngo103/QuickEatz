@@ -369,7 +369,6 @@ export default class CustomerDashboard extends React.Component {
 
                   */}
 
-                  <ListVendors props={this.props.state} />
 
                 </div>
               </div>
