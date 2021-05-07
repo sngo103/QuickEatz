@@ -116,10 +116,11 @@ export default class CustomerDashboard extends React.Component {
   componentDidUpdate() {
     // clean vendors array
     this.setState({
-      vendors: [{ id: "", name: "", cuisine: "", location: { type: "Point", coordinates: [] }, }]
+      vendors: [{ id: "", name: "", cuisine: "", location: { type: "Point", coordinates: [] }, }],
+      vendor_amount: 0
     });
     if (this.state.cuisine != "") {
-      const cuisine = this.state.cuisine;//Router.query.cuisine;
+      const cuisine = this.state.cuisine;
       console.log("Vendor Here")
       console.log(cuisine);
       console.log(typeof cuisine);
@@ -151,7 +152,7 @@ export default class CustomerDashboard extends React.Component {
     }
 
     else if (this.state.name != "") {
-      const name = this.state.name; //Router.query.name;
+      const name = this.state.name;
       console.log("Vendor Here")
       console.log(name);
       console.log(typeof name);
@@ -191,30 +192,27 @@ export default class CustomerDashboard extends React.Component {
     e.preventDefault();
     // clean state arrays 
     this.setState({
-      vendors: [{ id: "", name: "", cuisine: "", location: { type: "Point", coordinates: [] }, }]
+      vendors: [{ id: "", name: "", cuisine: "", location: { type: "Point", coordinates: [] }, }],
+      vendor_amount: 0
     });
     const target = e.target;
     this.setState({ cuisine: target.value });
 
-    let ids_ = [...this.state.vendor_ids];
-    let names_ = [...this.state.vendor_names];
-    let cuisines_ = [...this.state.vendor_cuisines];
-    // Make array results
-    await fetch(`/api/getVendorsByCuisine?cuisine=${this.state.cuisine}`) // get matching cuisine 
+    const cuisine = this.state.cuisine;
+    console.log("Vendor Here")
+    console.log(cuisine);
+    console.log(typeof cuisine);
+    await fetch(`/api/getVendorsByCuisine?cuisine=${cuisine}`) // get matching cuisine 
       .then((data) => data.json())
       .then((json => {
-        ids_.push(json._id); //need to push value: json._id?
-        names_.push(json.business_name);
-        cuisines_.push(vendor_cuisines);
         this.setState({
-          vendor_ids: ids_,
-          vendor_cuisines: cuisines_,
-          vendor_names: names_,
-          // vendor locations 
+          ...this.state,
+          vendors: [...this.state.vendors, { id: json._id, name: json.business_name, cuisine: json.cuisine, location: json.current_location }],
           vendor_amount = (prevState) => {
             this.setState({ vendor_amount: prevState.vendor_amount + 1 })
           }
         })
+        console.log(json);
       }))
       .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
   }
@@ -224,32 +222,27 @@ export default class CustomerDashboard extends React.Component {
     e.preventDefault();
     // clean state arrays 
     this.setState({
-      vendors: [{ id: "", name: "", cuisine: "", location: { type: "Point", coordinates: [] }, }]
+      vendors: [{ id: "", name: "", cuisine: "", location: { type: "Point", coordinates: [] }, }],
+      vendor_amount: 0
     });
     const target = e.target;
     this.setState({ name: target.value });
 
-    let ids_ = [...this.state.vendor_ids];
-    let names_ = [...this.state.vendor_names];
-    let cuisines_ = [...this.state.vendor_cuisines];
-    await fetch(`/api/getVendorsByCuisine?business_name=${this.state.name}`) // get matching business name
+    await fetch(`/api/getVendorByName?business_name=${name}`) // get matching name
       .then((data) => data.json())
       .then((json => {
-        ids_.push(json._id); //need to push value: json._id?
-        names_.push(json.business_name);
-        cuisines_.push(vendor_cuisines);
         this.setState({
-          vendor_ids: ids_,
-          vendor_cuisines: cuisines_,
-          vendor_names: names_,
-          // vendor locations 
+          ...this.state,
+          vendors: [...this.state.vendors, { id: json._id, name: json.business_name, cuisine: json.cuisine, location: json.current_location }],
           vendor_amount = (prevState) => {
             this.setState({ vendor_amount: prevState.vendor_amount + 1 })
           }
         })
+        console.log(json);
       }))
       .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
   }
+
 
 
   render() {
