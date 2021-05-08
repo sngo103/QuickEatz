@@ -1,8 +1,8 @@
 import React from "react";
 import Router from "next/router";
-import MapContainerNearbyVendorPin from "./MapContainerNearbyVendorPin"
-import MapContainerVendorPin from "./MapContainerVendorPin"
-import MapContainerVendorPinInitial from "./MapContainerVendorPinInitial"
+import MapContainerNearbyVendorPin from "./MapContainerNearbyVendorPin";
+import MapContainerVendorPin from "./MapContainerVendorPin";
+import MapContainerVendorPinInitial from "./MapContainerVendorPinInitial";
 
 class VendorSignUp extends React.Component {
   constructor(props) {
@@ -12,44 +12,90 @@ class VendorSignUp extends React.Component {
       currentPass: "",
       passMatch: true,
       item_name: "",
-      item_price: 0.00,
+      item_price: 0.0,
       item_desc: "",
       menu: [],
       menuDisplay: [],
-      hours: [],
-      hoursDisplay: [],
     };
     this.checkUsername = this.checkUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.checkPass = this.checkPass.bind(this);
     this.handleMenuSubmit = this.handleMenuSubmit.bind(this);
     this.handleMenuChange = this.handleMenuChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  formatHours(hoursArr) {
+    let retStr = "";
+    console.log(hoursArr);
+    console.log(typeof hoursArr);
+    for (const element in hoursArr) {
+      retStr += element.day + " " + element.start + " - " + element.end + "\n";
+    }
+    return retStr;
   }
 
   async handleSubmit(event) {
     event.preventDefault();
+    console.log("TARGET VALS:", event.target);
+    let hoursStr = "";
+    hoursStr +=
+      "Monday: " +
+      event.target.monStart.value +
+      " - " +
+      event.target.monEnd.value +
+      "\n";
+    hoursStr +=
+      "Tuesday: " +
+      event.target.tuesStart.value +
+      " - " +
+      event.target.tuesEnd.value +
+      "\n";
+    hoursStr +=
+      "Wednesday: " +
+      event.target.wedStart.value +
+      " - " +
+      event.target.wedEnd.value +
+      "\n";
+    hoursStr +=
+      "Thursday: " +
+      event.target.thursStart.value +
+      " - " +
+      event.target.thursEnd.value +
+      "\n";
+    hoursStr +=
+      "Friday: " +
+      event.target.friStart.value +
+      " - " +
+      event.target.friEnd.value +
+      "\n";
+    hoursStr +=
+      "Saturday: " +
+      event.target.satStart.value +
+      " - " +
+      event.target.satEnd.value +
+      "\n";
+    hoursStr +=
+      "Sunday: " +
+      event.target.sunStart.value +
+      " - " +
+      event.target.sunEnd.value +
+      "\n";
     const data = {
-      username: "thelemonadestand",
-      password: "lemonadeisthebest",
-      first_name: "Fruit5",
-      last_name: "Lemon",
-      email: "fruit50@lemons.com",
-      business_name: "Lulu's Lemonade Stand",
-      phone_number: "7185550101",
-      website: "lululemonade.com",
+      username: event.target.username.value,
+      password: event.target.password.value,
+      first_name: event.target.first_name.value,
+      last_name: event.target.last_name.value,
+      email: event.target.email.value,
+      business_name: event.target.business_name.value,
+      phone_number: event.target.phone.value || "N/A",
+      website: event.target.website.value || "N/A",
       xCor: 40.85088985991754,
       yCor: -73.97110926821726,
-      hours: "monfri 10am-8pm",
-      cuisine: "American",
-      menu: [
-        {
-          food_name: "Froggy Apple Crumple Thumpkin",
-          desc: "It's kinda like a quische. Maybe a casserole?",
-          price: 19.99,
-          in_stock: true,
-        },
-      ],
-      is_open: false,
+      hours: hoursStr,
+      cuisine: event.target.cuisine.value,
+      menu: this.state.menu,
+      is_open: true,
     };
     await fetch("/api/users/vendors/new_vendor", {
       method: "POST",
@@ -57,14 +103,14 @@ class VendorSignUp extends React.Component {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username: event.target.value }),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((json) => {
         if (json.success) {
-          this.setState({ usernameInvalid: false });
+          console.log("Success!");
         } else {
-          this.setState({ usernameInvalid: true });
+          console.log("Failed");
         }
       });
   }
@@ -88,44 +134,56 @@ class VendorSignUp extends React.Component {
       });
   }
 
-  handleMenuChange(event){
-    event.preventDefault()
-    if(event.target.name === "item_name"){
-      this.setState({ item_name: event.target.value })
-    } else if(event.target.name === "item_price"){
-      let price = event.target.value
-      console.log("price:", typeof(price))
-      this.setState({ item_price: parseFloat(event.target.value) })
-    } else if(event.target.name === "item_desc"){
-      this.setState({ item_desc: event.target.value })
+  handleMenuChange(event) {
+    event.preventDefault();
+    if (event.target.name === "item_name") {
+      this.setState({ item_name: event.target.value });
+    } else if (event.target.name === "item_price") {
+      let price = event.target.value;
+      console.log("price:", typeof price);
+      this.setState({ item_price: parseFloat(event.target.value) });
+    } else if (event.target.name === "item_desc") {
+      this.setState({ item_desc: event.target.value });
     }
   }
 
-  handleMenuSubmit(event){
-    event.preventDefault()
+  handleMenuSubmit(event) {
+    event.preventDefault();
     const new_item = {
       food_name: this.state.item_name,
       desc: this.state.item_desc,
-      price: (this.state.item_price).toFixed(2),
+      price: this.state.item_price.toFixed(2),
       in_stock: true,
-    }
-    const newMenu = this.state.menu
-    newMenu.push(new_item)
-    let newMenuDisplay = this.state.menuDisplay
-    let new_xml = <div className="border-b-2 font-normal col-span-1">{this.state.item_name}</div>
-    newMenuDisplay.push(new_xml)
-    new_xml = <div className="border-b-2 pl-3 font-normal col-span-1">{(this.state.item_price).toFixed(2)}</div>
-    newMenuDisplay.push(new_xml)
-    new_xml = <div className="border-b-2 font-normal col-span-4">{this.state.item_desc}</div>
-    newMenuDisplay.push(new_xml)
-    
+    };
+    const newMenu = this.state.menu;
+    newMenu.push(new_item);
+    let newMenuDisplay = this.state.menuDisplay;
+    let new_xml = (
+      <div className="border-b-2 font-normal col-span-1">
+        {this.state.item_name}
+      </div>
+    );
+    newMenuDisplay.push(new_xml);
+    new_xml = (
+      <div className="border-b-2 pl-3 font-normal col-span-1">
+        {this.state.item_price.toFixed(2)}
+      </div>
+    );
+    newMenuDisplay.push(new_xml);
+    new_xml = (
+      <div className="border-b-2 font-normal col-span-4">
+        {this.state.item_desc}
+      </div>
+    );
+    newMenuDisplay.push(new_xml);
+
     this.setState({
       item_name: "",
       item_price: 0,
       item_desc: "",
       menu: newMenu,
-      menuDisplay: newMenuDisplay
-    })
+      menuDisplay: newMenuDisplay,
+    });
   }
 
   handlePass(event) {
@@ -196,7 +254,7 @@ class VendorSignUp extends React.Component {
                 name="phone"
                 type="tel"
                 placeholder="123-456-7890"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 className="w-32 m-2 px-2 border rounded-md"
               />
               <div className="text-l font-normal pt-3 float-right">
@@ -220,78 +278,112 @@ class VendorSignUp extends React.Component {
               />
               <br />
               <div className="font-normal border-2 p-2">
-              <div className="flex justify-left items-center font-bold">
-                *Hours
-              </div>
-              <div className="grid grid-cols-6 text-sm border p-1">
-              <div className="col-span-2 font-bold">Day</div><div className="col-span-4 font-bold">Hours</div>
-              <div className="col-span-2">Monday</div>
-              <div className="col-span-2">
-              Opens: <input name="mon-start" type="time" required />
-              </div>
-              <div className="col-span-2">
-              Closes: <input name="mon-end" type="time" required />
-              </div>
-              <div className="col-span-2">Tuesday</div>
-              <div className="col-span-2">
-              Opens: <input name="tues-start" type="time" required />
-              </div>
-              <div className="col-span-2">
-              Closes: <input name="tues-end" type="time" required />
-              </div>
-              <div className="col-span-2">Wednesday</div>
-              <div className="col-span-2">
-              Opens: <input name="wed-start" type="time" required />
-              </div>
-              <div className="col-span-2">
-              Closes: <input name="wed-end" type="time" required />
-              </div>
-              <div className="col-span-2">Thursday</div>
-              <div className="col-span-2">
-              Opens: <input name="thurs-start" type="time" required />
-              </div>
-              <div className="col-span-2">
-              Closes: <input name="thurs-end" type="time" required />
-              </div>
-              <div className="col-span-2">Friday</div>
-              <div className="col-span-2">
-              Opens: <input name="fri-start" type="time" required />
-              </div>
-              <div className="col-span-2">
-              Closes: <input name="fri-end" type="time" required />
-              </div>
-              <div className="col-span-2">Saturday</div>
-              <div className="col-span-2">
-              Opens: <input name="sat-start" type="time" required />
-              </div>
-              <div className="col-span-2">
-              Closes: <input name="sat-end" type="time" required />
-              </div>
-              <div className="col-span-2">Sunday</div>
-              <div className="col-span-2">
-              Opens: <input name="fri-start" type="time" required />
-              </div>
-              <div className="col-span-2">
-              Closes: <input name="fri-end" type="time" required />
-              </div>
-              </div>
+                <div className="flex justify-left items-center font-bold">
+                  *Hours
+                </div>
+                <div className="grid grid-cols-6 text-sm border p-1">
+                  <div className="col-span-2 font-bold">Day</div>
+                  <div className="col-span-4 font-bold">Hours</div>
+                  <div className="col-span-2">Monday</div>
+                  <div className="col-span-2">
+                    Opens:{" "}
+                    <input
+                      name="monStart"
+                      type="time"
+                      required
+                      onChange={(e) => console.log(typeof e.target.value)}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    Closes: <input name="monEnd" type="time" required />
+                  </div>
+                  <div className="col-span-2">Tuesday</div>
+                  <div className="col-span-2">
+                    Opens: <input name="tuesStart" type="time" required />
+                  </div>
+                  <div className="col-span-2">
+                    Closes: <input name="tuesEnd" type="time" required />
+                  </div>
+                  <div className="col-span-2">Wednesday</div>
+                  <div className="col-span-2">
+                    Opens: <input name="wedStart" type="time" required />
+                  </div>
+                  <div className="col-span-2">
+                    Closes: <input name="wedEnd" type="time" required />
+                  </div>
+                  <div className="col-span-2">Thursday</div>
+                  <div className="col-span-2">
+                    Opens: <input name="thursStart" type="time" required />
+                  </div>
+                  <div className="col-span-2">
+                    Closes: <input name="thursEnd" type="time" required />
+                  </div>
+                  <div className="col-span-2">Friday</div>
+                  <div className="col-span-2">
+                    Opens: <input name="friStart" type="time" required />
+                  </div>
+                  <div className="col-span-2">
+                    Closes: <input name="friEnd" type="time" required />
+                  </div>
+                  <div className="col-span-2">Saturday</div>
+                  <div className="col-span-2">
+                    Opens: <input name="satStart" type="time" required />
+                  </div>
+                  <div className="col-span-2">
+                    Closes: <input name="satEnd" type="time" required />
+                  </div>
+                  <div className="col-span-2">Sunday</div>
+                  <div className="col-span-2">
+                    Opens: <input name="sunStart" type="time" required />
+                  </div>
+                  <div className="col-span-2">
+                    Closes: <input name="sunEnd" type="time" required />
+                  </div>
+                </div>
               </div>
               <div className="border-2 p-2">
-              <div className="flex justify-left items-center">
-                *Menu
-              </div>
-              <div className="grid grid-cols-6 text-sm border p-1">
-                <div className="col-span-1">Name</div><div className="col-span-1">Price</div><div className="col-span-4">Description</div>
-              {this.state.menuDisplay.map((cell) => cell)}
-              </div>
-              <div className="text-sm">
-              Name: <input name="item_name" value={this.state.item_name} onChange={this.handleMenuChange} type="text" className="m-2 px-2 border rounded-md" required />
-              Price: $<input name="item_price" value={this.state.item_price} type="number" min="0" step=".01" onChange={this.handleMenuChange} className="m-2 px-2 border rounded-md" required />
-              <div className="flex justify-left items-center">
-                Description: <textarea name="item_desc" value={this.state.item_desc} onChange={this.handleMenuChange} className="min-w-min w- m-2 px-2 border rounded-md" />
-              </div>
-              <button className="px-1 bg-gray-100 hover:bg-gray-300" onClick={this.handleMenuSubmit}>Add Menu Item</button>
-              </div>
+                <div className="flex justify-left items-center">*Menu</div>
+                <div className="grid grid-cols-6 text-sm border p-1">
+                  <div className="col-span-1">Name</div>
+                  <div className="col-span-1">Price</div>
+                  <div className="col-span-4">Description</div>
+                  {this.state.menuDisplay.map((cell) => cell)}
+                </div>
+                <div className="text-sm">
+                  Name:{" "}
+                  <input
+                    name="item_name"
+                    value={this.state.item_name}
+                    onChange={this.handleMenuChange}
+                    type="text"
+                    className="m-2 px-2 border rounded-md"
+                  />
+                  Price: $
+                  <input
+                    name="item_price"
+                    value={this.state.item_price}
+                    type="number"
+                    min="0"
+                    step=".01"
+                    onChange={this.handleMenuChange}
+                    className="m-2 px-2 border rounded-md"
+                  />
+                  <div className="flex justify-left items-center">
+                    Description:{" "}
+                    <textarea
+                      name="item_desc"
+                      value={this.state.item_desc}
+                      onChange={this.handleMenuChange}
+                      className="min-w-min w- m-2 px-2 border rounded-md"
+                    />
+                  </div>
+                  <button
+                    className="px-1 bg-gray-100 hover:bg-gray-300"
+                    onClick={this.handleMenuSubmit}
+                  >
+                    Add Menu Item
+                  </button>
+                </div>
               </div>
               *Username
               <input
