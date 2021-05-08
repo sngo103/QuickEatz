@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from 'react-dom';
 import Router from "next/router";
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+
 /*
 import {
   GoogleMap,
@@ -12,6 +13,7 @@ import {
 } from "@react-google-maps/api";
 */
 export class MapContainerVendorPin extends React.Component {
+<<<<<<< HEAD
 	constructor(props) {
     super(props);
     this.state = {
@@ -89,3 +91,4 @@ export class MapContainerVendorPin extends React.Component {
 export default GoogleApiWrapper({
 	apiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4"
 })(MapContainerVendorPin)
+

@@ -179,3 +179,4 @@ export class MapContainerNearbyVendorPin extends React.Component {
 export default GoogleApiWrapper({
 	apiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4"
 })(MapContainerNearbyVendorPin)
+

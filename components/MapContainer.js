@@ -1,8 +1,14 @@
 import Head from "next/head";
 import React from "react";
+<<<<<<< HEAD
 import ReactDOM from 'react-dom';
 import Router from "next/router";
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+=======
+import ReactDOM from "react-dom";
+import Router from "next/router";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+>>>>>>> fb932409a885bdde83ebfba614df7407c82922c5
 /*
 import {
   GoogleMap,
@@ -54,22 +60,23 @@ export class MapContainer extends React.Component {
 		
 	}
 	*/
-	render(){
-		return(
-		<>
-			<Map google={this.props.google} 
-				 zoom={11}
-				 initialCenter = {{
-					lat: 40.7128,
-					lng: -74.006}}
-				 
-			>
-			
-			</Map>
-		</>
-		);
-	}
+
+  render() {
+    return (
+      <>
+        <Map
+          google={this.props.google}
+          zoom={11}
+          initialCenter={{
+            lat: 40.7128,
+            lng: -74.006,
+          }}
+        ></Map>
+      </>
+    );
+  }
 }
 export default GoogleApiWrapper({
-	apiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4"
-})(MapContainer)
+  apiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4",
+})(MapContainer);
+
