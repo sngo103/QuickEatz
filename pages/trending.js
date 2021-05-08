@@ -58,7 +58,7 @@ export async function getServerSideProps() {
     .collection("vendors")
     .find({})
     .sort({ average_rating: -1 })
-    .limit(10)
+    .limit(25)
     .toArray();
   console.log(top_vendors);
   return {
