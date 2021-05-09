@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import styles from '../styles/CustomerProfile.module.css';
 import MapContainerVendorPin from '../components/MapContainerVendorPin';
+import Router from "next/router";
 
 export default class EditVendorProfile extends React.Component {
 constructor(props) {
@@ -16,7 +17,9 @@ constructor(props) {
 	  vendor_cuisine: "",
 	  vendor_hours: "",
 	  vendor_phonenumber: "",
+	  vendor_menu: [],
 	  vendor_website: "",
+	  vendor_open: false,
       vendor_review_ids: [],
       vendor_review_list: [],
 	  isLoggedIn: false,
@@ -29,9 +32,14 @@ constructor(props) {
 	  vendor_new_hours: "",
 	  vendor_new_website: "",
 	  vendor_new_phonenumber: "",
+	  vendor_new_menuitem_name: "",
+	  vendor_new_menuitem_desc: "",
+	  vendor_new_menuitem_price: "0",
 	  showing_location: false,
+	  temp: false, //An idea! If I toggle this useless variable, I can call render whenever I want. Currently unused.
+	  
     };
-	
+	//Bind form/button functions to the instance
     this.handleChange = this.handleChange.bind(this);
     this.handleUserNameSubmit = this.handleUserNameSubmit.bind(this);
 	this.handleFirstNameSubmit = this.handleFirstNameSubmit.bind(this);
@@ -42,6 +50,9 @@ constructor(props) {
 	this.handleHoursSubmit = this.handleHoursSubmit.bind(this);
 	this.handlePhoneNumberSubmit = this.handlePhoneNumberSubmit.bind(this);
 	this.handleMapToggle = this.handleMapToggle.bind(this);
+	this.handleOpenBusiness = this.handleOpenBusiness.bind(this);
+	this.handleCloseBusiness = this.handleCloseBusiness.bind(this);
+	this.handleAddMenuItem = this.handleAddMenuItem.bind(this);
   }
 	
 	componentDidMount() { //DONT NEED ALL OF THIS, WILL SHAVE DOWN UNNEEDED STUFF
@@ -91,9 +102,11 @@ constructor(props) {
             vendor_lastname: json.last_name,
             vendor_review_ids: json.reviews,
 			vendor_hours: json.hours,
+			vendor_menu: json.menu,
 		    vendor_phonenumber: json.phone_number,
 		    vendor_website: json.website,
 			vendor_cuisine: json.cuisine,
+			vendor_open: json.is_open,
           }),
             console.log("I helped!"),
             console.log(json),
@@ -150,6 +163,15 @@ constructor(props) {
     }
 	else if (target.id === "upd_phonenumber") {
       this.setState({ vendor_new_phonenumber: target.value });
+    }
+	else if (target.id === "add_menu_name") {
+      this.setState({ vendor_new_menuitem_name: target.value });
+    }
+	else if (target.id === "add_menu_desc") {
+      this.setState({ vendor_new_menuitem_desc: target.value });
+    }
+	else if (target.id === "add_menu_price") {
+      this.setState({ vendor_new_menuitem_price: target.value });
     }
   }
   
@@ -295,6 +317,40 @@ constructor(props) {
 	  this.setState({
 		  showing_location: !this.state.showing_location,
 	  });
+  }
+  handleOpenBusiness(event){
+	  event.preventDefault();
+	  const user_email_str = this.state.vendor_email;
+	  const data = fetch(`/api/sendVendorOpen?email=${user_email_str}`);
+	  this.setState({
+		  vendor_open: true,
+	  });
+  }
+  handleCloseBusiness(event){
+	  event.preventDefault();
+	  const user_email_str = this.state.vendor_email;
+	  const data = fetch(`/api/sendVendorClose?email=${user_email_str}`);
+	  this.setState({
+		  vendor_open: false,
+	  });
+  }
+  handleAddMenuItem(event){
+	event.preventDefault();
+	const food_name = this.state.vendor_new_menuitem_name;
+	const desc = this.state.vendor_new_menuitem_desc;
+	const price = this.state.vendor_new_menuitem_price;
+	if(food_name != "" && desc != "" && price != ""){ //If the new text isn't blank
+		const user_email_str = this.state.vendor_email;
+		const data = fetch(`/api/sendVendorMenuItem?email=${user_email_str}&food_name=${food_name}&desc=${desc}&price=${price}`);
+		this.setState({ 
+			vendor_new_menuitem_desc: "",
+			vendor_new_menuitem_name: "",
+			vendor_new_menuitem_price: "0"});
+		Router.reload(); //FORCE A RELOAD TO UPDATE THE MENU, TEMPORARY SOLUTION UNTIL SOMETHING BETTER FOUND
+	}
+	else{
+		console.log("This is empty! Bad to submit!");
+	}
   }
     render() {
         return (
@@ -489,7 +545,77 @@ constructor(props) {
 						</button>
 					  </form>
 					  
-					  
+					  <form onSubmit={this.handleAddMenuItem}>
+						<br />
+						<label className="text-xl">
+						  Add menu item
+						</label>
+						<br />
+						
+						<textarea
+						  id="add_menu_name"
+						  placeholder="Menu Item Name"
+						  value={this.state.vendor_new_menuitem_name}
+						  onChange={this.handleChange}
+						  className="text-md w-1/4 h-10 border-2 border-black rounded-md p-1"
+						/>
+						<textarea
+						  id="add_menu_desc"
+						  placeholder="Menu Item Description"
+						  value={this.state.vendor_new_menuitem_desc}
+						  onChange={this.handleChange}
+						  className="text-md w-1/4 h-10 border-2 border-black rounded-md p-1"
+						/>
+						<p> Price (USD): </p>
+						<input 
+						id="add_menu_price"
+						type="number" step="0.01" min="0" 
+						onChange={this.handleChange} 
+						value={parseFloat(this.state.vendor_new_menuitem_price)} />
+						<br />
+						<button
+						  className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
+						  type="submit"
+						>
+						  Add menu item
+						</button>
+					  </form>
+					  <br />
+					  <div className="inline-block container border-8 m-10 border-black w-1/2">
+						<br />
+						<h2 className="text-3xl">Remove Menu Item</h2>
+						<br />
+							<ul>
+							  {this.state.vendor_menu.map((menu_item) => (
+								<li>
+								  <h2>
+									<strong>{menu_item.food_name}</strong>
+								  </h2>
+								  <h2>{menu_item.desc}</h2>
+								  <h2>
+									<strong>Price:</strong> {menu_item.price}$
+								  </h2>
+								  <button onClick={() => {
+									  fetch(`/api/removeVendorMenuItem?email=${this.state.vendor_email}&food_name=${menu_item.food_name}&desc=${menu_item.desc}&price=${menu_item.price}`);
+									 Router.reload(); //FORCE PAGE REFRESH TO UPDATE MENU, VERY TEMPORARY
+									}}>Remove {menu_item.food_name}?</button>
+								  <br />
+								</li>
+							  ))}
+							</ul>
+						</div>
+						<br />
+					  {this.state.vendor_open ? 
+						<button className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
+								onClick={this.handleCloseBusiness}>
+									Close Vendor
+						</button> :
+						<button className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
+								onClick={this.handleOpenBusiness}>
+									Open Vendor
+						</button>
+					  }
+					  <br />
 					  
 						<br />
 						<button className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
