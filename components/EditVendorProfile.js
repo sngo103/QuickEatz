@@ -2,7 +2,10 @@ import React from "react";
 import Link from "next/link";
 import styles from '../styles/CustomerProfile.module.css';
 import MapContainerVendorPin from '../components/MapContainerVendorPin';
+<<<<<<< HEAD
 import Router from "next/router";
+=======
+>>>>>>> c1a97cf6148d1f0b40c9e3405eaa3ade127fff21
 
 export default class EditVendorProfile extends React.Component {
 constructor(props) {
@@ -254,7 +257,6 @@ constructor(props) {
   handleCuisineSubmit(event) {
     event.preventDefault();
     const new_cuisine = this.state.vendor_new_cuisine;
-
 	if(new_cuisine != ""){ //If the new text isn't blank
 		const user_email_str = this.state.vendor_email;
 		const data = fetch(`/api/sendVendorCuisine?email=${user_email_str}&cuisine=${new_cuisine}`);
