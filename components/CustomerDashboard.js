@@ -1,51 +1,5 @@
 import React from "react";
 import styles from "../styles/CustomerDashboard.module.css"
-// import Router from 'next/router';
-
-/*
-// Not an efficent way to get all ids, names, and cuisines to print them as making more arrays but will do for now 
-function ListVendors(props) {
-  // Build an array of items
-  let id_array = [];
-  let name_array = [];
-  let cuisine_array = [];
-  for (let i = 0; i < props.vendor_amount; i++) {
-    id_array.push(
-      <Item key={i} item={props.vendor_ids[i]} />
-    );
-    name_array.push(
-      <Item key={i} item={props.vendor_names[i]} />
-    );
-    cuisine_array.push(
-      <Item key={i} item={props.cuisine_names[i]} />
-    );
-  }
-}
-*/
-
-/*
-// Not an efficent way to get all ids, names, and cuisines to print them as making more arrays but will do for now 
-function ListVendors(props) {
-  return (
-    <div className="">
-      {props.vendor_ids.map((vendor_id, index) => (
-        <Item key={index} item={vendor_id} />
-      ))}
-      <br />
-      {props.vendor_names.map((vendor_name, index) => (
-        <Item key={index} item={vendor_name} />
-      ))}
-      <br />
-      {props.vendor_cuisines.map((vendor_cuisine, index) => (
-        <Item key={index} item={vendor_cuisine} />
-      ))}
-      <br />
-      <br />
-    </div>
-
-  );
-}
-*/
 
 export default class CustomerDashboard extends React.Component {
   constructor(props) {
@@ -54,14 +8,7 @@ export default class CustomerDashboard extends React.Component {
       isLoggedIn: false,
       isLoading: true,
       vendors: [{ id: "", name: "", cuisine: "", location: { type: "Point", coordinates: [] }, }],
-      /*
-      vendor_ids: [],
-      vendor_cuisines: [],
-      vendor_names: [],
-      vendor_locations: [],
-      */
-      vendor_amount = 0, // amount of vendors used which will be used for above three arrays 
-      // nescessary?
+      vendor_amount: 0, 
       cuisine: "", // search param
       name: "" // search param
     };
@@ -130,7 +77,7 @@ export default class CustomerDashboard extends React.Component {
       // let location_ = [...this.state.vendors.location]; // valid ?
       // will make to get multiple vendors later
       // const vendor = fetch(`/api/getVendorsByCuisine?_id=${vendor_id}`) // get cuisine 
-      const vendor = await fetch(`/api/getVendorsByCuisine?cuisine=${cuisine}`) // get matching cuisine 
+      await fetch(`/api/getVendorsByCuisine?cuisine=${cuisine}`) // get matching cuisine 
         .then((data) => data.json())
         .then((json => {
           //ids_.push(json._id); //need to push value: json._id?
