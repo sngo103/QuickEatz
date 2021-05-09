@@ -8,8 +8,8 @@ export default function VendorPinInitialPage() {
 	
 	const setCoordinates = (coord_pair) => {
 		console.log(coord_pair);
-		setCoords({lat: coord_pair.latitude, lng: coord_pair.longitude}, console.log(coords));
-		console.log(coords);
+		//setCoords({lat: coord_pair.latitude, lng: coord_pair.longitude}, console.log(coords));
+		//console.log(coords);
 	}
 	
   return (

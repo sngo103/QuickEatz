@@ -51,6 +51,7 @@ export default class CustomerDashboard extends React.Component {
         isLoading: true,
       });
       Router.push("/login")
+	}
     if (this.state.cuisine != "") {
       const cuisine = this.state.cuisine;//Router.query.cuisine;
       console.log("Vendor Here")
@@ -86,7 +87,7 @@ export default class CustomerDashboard extends React.Component {
           })
         }))
         .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
-    }
+	}
   }
 
   componentDidUpdate() {

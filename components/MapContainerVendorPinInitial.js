@@ -13,11 +13,9 @@ import {
 } from "@react-google-maps/api";
 */
 export class MapContainerVendorPinInitial extends React.Component {
-<<<<<<< HEAD
 	constructor(props) {
     super(props);
     this.state = {
-      isVendor: false,
 	  vendorID: "",
 	  vendorName: "",
 	  marker: {
@@ -28,10 +26,7 @@ export class MapContainerVendorPinInitial extends React.Component {
   }
   
   componentDidMount(){
-	  const account_type = localStorage.getItem("quickeatz_type");
-	  const isVendorAccount = (account_type == "vendor");
-	  this.setState({isVendor: isVendorAccount});
-	  if(isVendorAccount){
+
 		  const account_email = localStorage.getItem("quickeatz_email"); //Get the logged in user's email
 		  const vendor = fetch(`/api/getVendorSingleEmail?email=${account_email}`) //Get the vendor's data
           .then((data) => data.json())
@@ -42,7 +37,7 @@ export class MapContainerVendorPinInitial extends React.Component {
 													  lng: json.current_location.coordinates[1]}}
 										});
 		  });
-	  }
+	  
 	}
 	
 	
@@ -63,13 +58,10 @@ export class MapContainerVendorPinInitial extends React.Component {
 	}
 	
 	render(){
-		if(this.state.isVendor == false){
-		  return (<p> You are not a vendor. How did you get here? </p>);
-		}
-		else {
+		
 			return(
 			<>
-				<h1>Set the location for {this.state.vendorName}.</h1>
+				<h1>Click to make a marker.</h1>
 				<Map google={this.props.google} 
 					 zoom={11}
 					 initialCenter = {{
@@ -82,7 +74,7 @@ export class MapContainerVendorPinInitial extends React.Component {
 				</Map>
 			</>
 			);
-		}
+		
 	}
 }
 export default GoogleApiWrapper({

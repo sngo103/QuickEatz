@@ -13,7 +13,6 @@ import {
 } from "@react-google-maps/api";
 */
 export class MapContainerVendorPin extends React.Component {
-<<<<<<< HEAD
 	constructor(props) {
     super(props);
     this.state = {
