@@ -70,7 +70,9 @@ export default class VendorDashboard extends React.Component {
               <div className="justify-center items-centerpx-4 sm:px-0">
                 <div className="p-2 mb-4 border-8 font-semibold border-yellow-500 rounded-lg">
                   Your vendor location is currently viewable to customers as
-                  <p className="inline-flex mx-2 border font-bold">(vendor_location_here)</p>
+                  <p className="inline-flex mx-2 border font-bold">
+                    (vendor_location_here)
+                  </p>
                 </div>
               </div>
               <div className="px-4 sm:px-0">
@@ -95,8 +97,13 @@ export default class VendorDashboard extends React.Component {
               <div className="text-3xl font-bold px-4 sm:px-0">
                 Latest Reviews By Customers
               </div>
+
               <div className="justify-center items-centerpx-4 py-6 sm:px-0">
-                <div className="text-center p-64 border-4 border-yellow-500 rounded-lg h-96"></div>
+                <div className="text-center border-4 border-yellow-500 rounded-lg h-96">
+                  <div class="float-right border-yellow-500 rounded-sm border-2 p-2 m-6 w-64 h-36">
+                    <p className="text-black font-bold">Current Rating</p>{" "}
+                  </div>
+                </div>
               </div>
             </div>
           </main>
