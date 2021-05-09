@@ -113,6 +113,10 @@ export default class ViewVendorProfile extends React.Component {
           <Head>
             <title>My Profile</title>
           </Head>
+		  <div className="inline bg-white text-black px-5 py-3 rounded-md text-sm font-medium border-4 hover:border-black w-1/4">
+              <Link href="/editVendorProfile">Edit my Profile</Link>
+            </div>
+			
           <div className="container p-5 text-center">
             <h1 className="text-3xl">View My Vendor Profile of {this.state.vendor_bname}</h1>
             <br />
