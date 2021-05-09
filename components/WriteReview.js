@@ -20,7 +20,7 @@ export class WriteReview extends React.Component {
 
   componentDidMount() {
     this.setState({
-      current_user: localStorage.getItem("quickeatz_email"), //ASSUMES THE TOKEN IS THE USER's ID
+      current_user: localStorage.getItem("quickeatz_email"), //ASSUMES THE TOKEN IS THE USER's email
       current_vendor_id: Router.query.vendor_id,
     });
     fetch(`/api/getVendorName?_id=${Router.query.vendor_id}`) //Get the business name of the reviewee for readability
@@ -35,7 +35,7 @@ export class WriteReview extends React.Component {
   componentDidUpdate() {
     if (this.state.current_user == "" || this.state.isLoggedIn != null) {
       this.setState({
-        current_user: localStorage.getItem("quickeatz_email"), //ASSUMES THE TOKEN IS THE USER's ID
+        current_user: localStorage.getItem("quickeatz_email"), //ASSUMES THE TOKEN IS THE USER's email
         current_vendor_id: Router.query.vendor_id,
       });
       if (this.state.current_user == "") {
