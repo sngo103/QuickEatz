@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import styles from '../styles/CustomerProfile.module.css';
+import styles from '../styles/Profile.module.css';
 import MapContainerVendorPin from '../components/MapContainerVendorPin';
 import Router from "next/router";
 

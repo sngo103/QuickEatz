@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import Link from "next/link";
-import styles from '../styles/CustomerProfile.module.css'
+import styles from '../styles/Profile.module.css'
 
 export default class EditCustomerProfile extends React.Component {
 	constructor(props) {
