@@ -2,10 +2,7 @@ import React from "react";
 import Link from "next/link";
 import styles from '../styles/CustomerProfile.module.css';
 import MapContainerVendorPin from '../components/MapContainerVendorPin';
-<<<<<<< HEAD
 import Router from "next/router";
-=======
->>>>>>> c1a97cf6148d1f0b40c9e3405eaa3ade127fff21
 
 export default class EditVendorProfile extends React.Component {
 constructor(props) {
