@@ -25,7 +25,7 @@ export class VendorDashboard extends React.Component {
 
 			const vendor = fetch(`/api/getVendorReviews=${vendor_id}`)
 				.then((data) => data.json())
-				.then((json => {
+				.then(((json) => {
 					this.setState({
 						vendor_id: json._id,
 						vendor_reviews: json.reviews
@@ -54,7 +54,6 @@ export class VendorDashboard extends React.Component {
 				.catch((error) => console.log(error)) //If there is some review that doesn't exist in the table
 		}
 	}
-}
 
 render() {
 	return (
@@ -68,14 +67,14 @@ render() {
 			</section>
 
 			<section className={styles.midPage}>
-				<h className={styles.message}>
+				<h3 className={styles.message}>
 					Search For Vendors Nearby!
-        </h>
+        		</h3>
 				<br />
 				<br />
-				<h className={styles.secondmessage}>
+				<h3 className={styles.secondmessage}>
 					Select Search Criteria
-        </h>
+        		</h3>
 			</section>
 
 
@@ -94,7 +93,7 @@ render() {
 					}}
 				>
 					Trending
-          </button>
+          		</button>
 
 				<br />
 				<br />
@@ -154,5 +153,5 @@ render() {
 
 			</section>
 		</div>
-	);
-};
+	)
+			}
