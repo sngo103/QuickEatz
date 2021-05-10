@@ -1,4 +1,4 @@
-# QuickEatz
+# QuickEatz Testing hello world
 #### Team Members: Rumman Al-Karim, Samantha Ngo, Myles Austin, Troy Daniello | CSCI 49900-03 | Spring 2021
 ---
 #### A web application exclusively for street food vendors and their customers, allowing customers to find the nearest street food and vendors to stay connected with their customers.
