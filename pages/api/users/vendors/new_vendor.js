@@ -18,14 +18,17 @@ export default async (req, res) => {
   if (req.method === "POST") {
     // If creating a new account...
     // First check if the user already exists:
-    const vendor = await findUser(_.get(req,'body.email'), "vendors");
+    const vendor = await findUser(_.get(req, "body.email"), "vendors");
     if (!_.isEmpty(vendor)) {
       // If user already exists, return error
-      res.status(400).json({ error: "User with this email already exists." });
+      res.status(400).json({
+        error: "User with this email already exists.",
+        success: false,
+      });
     } else {
       // If not, create a new user
-      const result = await addVendor(req.body)
-      res.status(200).json({ message: "New user created." });
+      const result = await addVendor(req.body);
+      res.status(200).json({ message: "New user created.", success: true });
     }
   }
 };
