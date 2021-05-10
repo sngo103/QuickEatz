@@ -61,7 +61,7 @@ export default function Home() {
           </span>
         </Link>
         <br />
-        <Link href="/vendors">
+        <Link href="/trending">
           <span className="hidden sm:block">
             <button
               type="button"
@@ -82,7 +82,7 @@ export default function Home() {
         </Link>
         <br />
       </div>
-      <footer>Footer here.</footer>
+      <footer>🍔 Made By the QuickEatz Team 🍜</footer>
     </div>
   );
 }

@@ -71,9 +71,6 @@ class LoginForm extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-
-    // console.log(this.state.email, this.state.password, this.state.account_type);
-
     const pass = await checkLogin(
       this.state.email,
       this.state.password,
@@ -245,7 +242,7 @@ class LoginForm extends React.Component {
         </h1>
 
         {this.state.incorrect ? (
-          <div> Username and/or password incorrect! </div>
+          <div className="pb-3"> Username and/or password incorrect! </div>
         ) : null}
 
         <div class="flex items-center justify-center">
