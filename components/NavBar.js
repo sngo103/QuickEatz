@@ -16,7 +16,8 @@ class NavBar extends React.Component {
       isLoading: true,
     };
     this.handleLogout = this.handleLogout.bind(this);
-    this.clickMenu = this.clickMenu.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   componentDidMount() {
@@ -107,9 +108,15 @@ class NavBar extends React.Component {
     Router.push("/");
   }
 
-  clickMenu() {
+  openMenu() {
     this.setState({
-      openMenu: !this.state.openMenu,
+      openMenu: true,
+    });
+  }
+
+  closeMenu() {
+    this.setState({
+      openMenu: false,
     });
   }
 
@@ -141,7 +148,7 @@ class NavBar extends React.Component {
             <div>
               <button
                 type="button"
-                onClick={this.clickMenu}
+                onMouseOver={this.openMenu}
                 className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 id="user-menu"
                 aria-expanded="false"
@@ -157,7 +164,7 @@ class NavBar extends React.Component {
               </button>
             </div>
             {this.state.openMenu && (
-              <div className="container" ref={this.container}>
+              <div className="container" ref={this.container} onMouseLeave={this.closeMenu}>
                 <div
                   className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"

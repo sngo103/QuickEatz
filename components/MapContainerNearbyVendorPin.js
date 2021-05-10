@@ -62,13 +62,15 @@ export class MapContainerNearbyVendorPin extends React.Component {
         <h1>Find nearby vendors</h1>
         <Map
           google={this.props.google}
+		  style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}
+		  containerStyle={{position: 'relative',  width: this.props.containerStyle.width, height: this.props.containerStyle.height}}
           zoom={11}
           initialCenter={{
             lat: 40.7128,
             lng: -74.006,
           }}
           onClick={this.onMapClick}
-		  style={{width: '45%', height: '50%', position: 'relative'}}
+		  style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}
         >
           {this.state.user_marker.position != null ? (
             <Marker
@@ -115,6 +117,7 @@ export class MapContainerNearbyVendorPin extends React.Component {
                 lng: single_vendor.current_location.coordinates[1],
               }}
               onClick={() => {
+
                 let geo_url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${single_vendor.current_location.coordinates[0]},${single_vendor.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`;
                 fetch(geo_url)
                   .then((response) => response.json())
@@ -139,7 +142,7 @@ export class MapContainerNearbyVendorPin extends React.Component {
             />
           ))}
 
-          {this.state.showing_info_box ? (
+          {this.state.showing_info_box && this.state.active_marker != null ? (
             <InfoWindowEX
               position={{
                 lat: this.state.active_marker.lat,

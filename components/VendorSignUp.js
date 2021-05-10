@@ -1,8 +1,5 @@
 import React from "react";
 import Router from "next/router";
-import MapContainerNearbyVendorPin from "./MapContainerNearbyVendorPin";
-import MapContainerVendorPin from "./MapContainerVendorPin";
-import MapContainerVendorPinInitial from "./MapContainerVendorPinInitial";
 
 class VendorSignUp extends React.Component {
   constructor(props) {
@@ -16,6 +13,7 @@ class VendorSignUp extends React.Component {
       item_desc: "",
       menu: [],
       menuDisplay: [],
+      error: false,
     };
     this.checkUsername = this.checkUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
@@ -108,7 +106,7 @@ class VendorSignUp extends React.Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.success) {
-          console.log("Success!");
+          Router.push("/login")
         } else {
           console.log("Failed");
         }
@@ -139,8 +137,6 @@ class VendorSignUp extends React.Component {
     if (event.target.name === "item_name") {
       this.setState({ item_name: event.target.value });
     } else if (event.target.name === "item_price") {
-      let price = event.target.value;
-      console.log("price:", typeof price);
       this.setState({ item_price: parseFloat(event.target.value) });
     } else if (event.target.name === "item_desc") {
       this.setState({ item_desc: event.target.value });
@@ -152,7 +148,7 @@ class VendorSignUp extends React.Component {
     const new_item = {
       food_name: this.state.item_name,
       desc: this.state.item_desc,
-      price: this.state.item_price.toFixed(2),
+      price: parseFloat(this.state.item_price.toFixed(2)),
       in_stock: true,
     };
     const newMenu = this.state.menu;

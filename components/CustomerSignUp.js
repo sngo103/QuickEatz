@@ -11,11 +11,36 @@ class CustomerSignUp extends React.Component {
     };
     this.checkUsername = this.checkUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.checkPass = this.checkPass.bind(this);
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
+    const data = {
+      username: event.target.username.value,
+      password: event.target.password.value,
+      first_name: event.target.first_name.value,
+      last_name: event.target.last_name.value,
+      email: event.target.email.value,
+    };
+    await fetch("/api/users/customers/new_customer", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json)
+        if (json.success) {
+          console.log("Success!");
+        } else {
+          console.log("Failed");
+        }
+      });
   }
 
   async checkUsername(event){

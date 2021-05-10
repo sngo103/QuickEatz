@@ -61,19 +61,17 @@ export class MapContainerVendorPinInitial extends React.Component {
   }
 
   render() {
-    if (this.state.isVendor == false) {
-      return <p> You are not a vendor. How did you get here? </p>;
-    } else {
+   
       return (
         <>
-          <h1>Set the location for {this.state.vendorName}.</h1>
+          <h1>Set the location.</h1>
           <Map
             google={this.props.google}
-            zoom={11}
-            initialCenter={{
-              lat: 40.7128,
-              lng: -74.006,
-            }}
+			style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}
+			containerStyle={{position: 'relative',  width: this.props.containerStyle.width, height: this.props.containerStyle.height}}
+            zoom={9}
+            initialCenter={this.props.initialCenter}
+			center={this.state.marker.position}
             onClick={this.onMapClick}
           >
             {
@@ -85,7 +83,7 @@ export class MapContainerVendorPinInitial extends React.Component {
           </Map>
         </>
       );
-    }
+    
   }
 }
 export default GoogleApiWrapper({
