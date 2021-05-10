@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Router from "next/router";
 import CustomerDashboard from "./CustomerDashboard.js";
-import VendorDashboard from "./vendorDashboard.js";
+import VendorDashboard from "./VendorDashboard.js";
 
 class Dashboard extends React.Component {
   constructor(props) {
