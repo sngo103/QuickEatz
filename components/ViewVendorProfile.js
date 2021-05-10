@@ -18,6 +18,7 @@ export default class ViewVendorProfile extends React.Component {
       vendor_review_ids: [],
       vendor_review_list: [],
 	  vendor_rating: "",
+	  vendor_open: false,
 	  isLoggedIn: false,
 	  isLoading: true,
     };
@@ -73,6 +74,7 @@ export default class ViewVendorProfile extends React.Component {
             vendor_lastname: json.last_name,
             vendor_review_ids: json.reviews,
 			vendor_rating: json.average_rating,
+			vendor_open: json.is_open,
           }),
             console.log("I helped!"),
             console.log(json),
@@ -136,6 +138,12 @@ export default class ViewVendorProfile extends React.Component {
 			</h2>
 			
 			<h2 className="font-bold">
+				<br />
+				{this.state.vendor_open ? "Currently Open For Business!" : "Currently Closed."} 
+			</h2>
+			
+			<h2 className="font-bold">
+				<br />
 				Cuisine: {this.state.vendor_cuisine}
 			</h2>
 			
