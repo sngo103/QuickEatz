@@ -12,6 +12,7 @@ export class WriteReview extends React.Component {
       current_vendor_id: "",
       review_text: "",
       review_rating: "1.0",
+      isLoggedIn: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,6 +20,47 @@ export class WriteReview extends React.Component {
   }
 
   componentDidMount() {
+    const storedToken = localStorage.getItem("quickeatz_token");
+    const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedState = localStorage.getItem("quickeatz");
+    if (storedToken && storedEmail && storedState) {
+      const data = {
+        token: storedToken,
+        email: storedEmail
+      };
+      fetch("/api/auth/verifyShallow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            console.log("Token verified!");
+            localStorage.setItem("quickeatz", true);
+            this.setState({
+              isLoggedIn: true,
+              isLoading: false,
+              account_type: json.account_type
+            });
+          } else {
+            this.setState({
+              isLoggedIn: false,
+              isLoading: true,
+            });
+            Router.push("/login")
+          }
+        });
+    } else {
+      console.log("Token not found!")
+      this.setState({
+        isLoggedIn: false,
+        isLoading: false
+      })
+      Router.push("/login")
+    }
     this.setState({
       current_user: localStorage.getItem("quickeatz_email"), //ASSUMES THE TOKEN IS THE USER's email
       current_vendor_id: Router.query.vendor_id,

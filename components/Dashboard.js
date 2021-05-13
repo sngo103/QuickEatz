@@ -45,6 +45,7 @@ class Dashboard extends React.Component {
               isLoggedIn: false,
               isLoading: true,
             });
+            Router.push("/login")
           }
         });
     } else {

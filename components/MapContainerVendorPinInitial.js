@@ -64,7 +64,6 @@ export class MapContainerVendorPinInitial extends React.Component {
    
       return (
         <>
-          <h1>Set the location.</h1>
           <Map
             google={this.props.google}
 			style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}

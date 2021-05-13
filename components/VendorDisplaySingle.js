@@ -6,6 +6,7 @@ export class VendorDisplaySingle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoggedIn: false,
       vendor_id: "",
       vendor_name: "Empty",
       vendor_menu: [],
@@ -19,6 +20,47 @@ export class VendorDisplaySingle extends React.Component {
   }
 
   componentDidMount() {
+    const storedToken = localStorage.getItem("quickeatz_token");
+    const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedState = localStorage.getItem("quickeatz");
+    if (storedToken && storedEmail && storedState) {
+      const data = {
+        token: storedToken,
+        email: storedEmail
+      };
+      fetch("/api/auth/verifyShallow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            console.log("Token verified!");
+            localStorage.setItem("quickeatz", true);
+            this.setState({
+              isLoggedIn: true,
+              isLoading: false,
+              account_type: json.account_type
+            });
+          } else {
+            this.setState({
+              isLoggedIn: false,
+              isLoading: true,
+            });
+            Router.push("/login")
+          }
+        });
+    } else {
+      console.log("Token not found!")
+      this.setState({
+        isLoggedIn: false,
+        isLoading: false
+      })
+      Router.push("/login")
+    }
     if (this.state.vendor_id == "") {
       //This MAY be bad practice, but it works and shouldnt cause any loops, unless you go to the page directly
       const vendor_id = Router.query.vendor_id;

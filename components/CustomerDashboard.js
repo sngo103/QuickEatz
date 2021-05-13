@@ -1,23 +1,23 @@
 import React from "react";
 import Router from "next/router";
 import MapContainerVendorPinInitial from "./MapContainerVendorPinInitial";
-import MapContainerNearbyVendorPin from "./MapContainerNearbyVendorPin"
+import MapContainerNearbyVendorPin from "./MapContainerNearbyVendorPin";
 
 export default class CustomerDashboard extends React.Component {
   constructor(props) {
     super(props);
-	this.state = {
-	  lat: null,
-	  lng: null,
+    this.state = {
+      lat: null,
+      lng: null,
       cust_id: "",
       cust_name: "Empty",
-	  cust_email: "",
+      cust_email: "",
       cust_firstname: "",
       cust_lastname: "",
       cust_review_ids: [],
       cust_review_list: [],
-	  isLoggedIn: false,
-	  isLoading: true,
+      isLoggedIn: false,
+      isLoading: true,
     };
   }
 
@@ -52,16 +52,17 @@ export default class CustomerDashboard extends React.Component {
               isLoggedIn: false,
               isLoading: false,
             });
+            Router.push("/login");
           }
         });
-		
-		const cust = fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`) //Get the customer's data
+
+      const cust = fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`) //Get the customer's data
         .then((data) => data.json())
         .then((json) => {
           this.setState({
             cust_id: json._id,
             cust_name: json.username,
-			cust_email: json.email,
+            cust_email: json.email,
             cust_firstname: json.first_name,
             cust_lastname: json.last_name,
             cust_review_ids: json.reviews,
@@ -86,7 +87,6 @@ export default class CustomerDashboard extends React.Component {
                   .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
             );
         });
-		
     } else {
       console.log("Token not found!");
       this.setState({
@@ -96,16 +96,15 @@ export default class CustomerDashboard extends React.Component {
       Router.push("/login");
     }
   }
-	
-	setCoordinates(coord_pair){
-		console.log(coord_pair);
-		this.setState({
-			lat: coord_pair.latitude,
-			lng: coord_pair.longitude,
-		});
-		//setCoords({lat: coord_pair.latitude, lng: coord_pair.longitude}, console.log(coords));
-		
-	}
+
+  setCoordinates(coord_pair) {
+    console.log(coord_pair);
+    this.setState({
+      lat: coord_pair.latitude,
+      lng: coord_pair.longitude,
+    });
+    //setCoords({lat: coord_pair.latitude, lng: coord_pair.longitude}, console.log(coords));
+  }
   render() {
     if (this.state.isLoading) {
       return <div> Loading... </div>;
@@ -120,49 +119,44 @@ export default class CustomerDashboard extends React.Component {
           <main>
             <div className="max-w-7xl mx-auto pt-6 sm:px-6 lg:px-8">
               <div className="px-4 sm:px-0">
-                <div className="border-2 p-2 font-semibold border-yellow-500 rounded-sm">
-                  <p>Set a pin at your location. Nearby vendors will be displayed, and more info can be found by clicking on them.</p>
-				  
+                <div className="border-2 p-2 font-semibold border-yellow-500 rounded-sm text-center">
+                  <p>
+                    Set a pin at your location. Nearby vendors will be
+                    displayed, and more info can be found by clicking on them.
+                  </p>
                 </div>
               </div>
-              <div className="justify-center items-centerpx-4 py-6 sm:px-0">
-			  
+              <div className="flex justify-center items-center px-4 py-6 sm:px-0">
                 <div className="border-2 mb-4 p-2 font-semibold border-dashed border-yellow-500 rounded-sm">
-                  
-				  <MapContainerNearbyVendorPin 
-					containerStyle={ { position: 'relative',  width: '100%', height: '100vh'} }
-					style={{height: "100vh", width: "90vw"}}/>
+                  <MapContainerNearbyVendorPin
+                    containerStyle={{
+                      position: "relative",
+                    }}
+                    style={{ height: "100vh", width: "70vw" }}
+                  />
                 </div>
               </div>
             </div>
             <hr />
             <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-              <div className="text-3xl font-bold px-4 sm:px-0">
-                My Reviews
-				
-              </div>
+              <div className="text-3xl font-bold px-4 sm:px-0">My Reviews</div>
               <div className="justify-center items-centerpx-4 py-6 sm:px-0">
-			  
                 <div className="text-center p-4 border-4 border-yellow-600 rounded-lg">
                   {this.state.cust_review_list.length == 0 && (
-				  <p>You haven't made any reviews.</p>
-				)}
-				<ul>
-				  {this.state.cust_review_list.map((review) => (
-					<li>
-					  <br />
-					  <h2>
-						<strong>
-						  {" "}
-						  Rated {review.rating} Stars at Vendor: {review.vendor_name} 
-						</strong>
-					  </h2>
-					  <p>{review.review_content}</p>
-					  <br />
-					  <hr />
-					</li>
-				  ))}
-				</ul>
+                    <p>You haven't made any reviews.</p>
+                  )}
+                  <ul>
+                    {this.state.cust_review_list.map((review) => (
+                      <li className="text-left border-double border-2 border-yellow-400 p-2">
+                        <p className="font-semibold text-xl">{review.vendor_name}</p>
+                        <p className="inline-block pr-2 font-semibold">Your Rating:  </p>
+                        {review.rating} Stars <br />
+                        <p className="inline-block pr-2 font-semibold">Your Review: </p>
+                        {review.review_content}
+                        <div className="float-right font-bold">{new Date(review.created_at).toLocaleDateString()} {new Date(review.created_at).toLocaleTimeString()}</div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>

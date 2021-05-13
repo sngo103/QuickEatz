@@ -59,7 +59,6 @@ export class MapContainerNearbyVendorPin extends React.Component {
   render() {
     return (
       <div className="inline-block">
-        <h1>Find nearby vendors</h1>
         <Map
           google={this.props.google}
 		  style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}

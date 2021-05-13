@@ -8,24 +8,24 @@ export default class VendorDashboard extends React.Component {
     this.state = {
       vendor_id: "",
       vendor_name: "Empty",
-	  vendor_bname: "",
-	  vendor_menu: [],
+      vendor_bname: "",
+      vendor_menu: [],
       vendor_cuisine: "Empty",
-	  vendor_email: "",
+      vendor_email: "",
       vendor_firstname: "",
       vendor_lastname: "",
       vendor_review_ids: [],
       vendor_review_list: [],
-	  vendor_rating: "",
-	  vendor_location: null,
-	  vendor_address: "",
-	  isLoggedIn: false,
-	  isLoading: true,
-	  lat: null,
-	  lng: null,
+      vendor_rating: "",
+      vendor_location: null,
+      vendor_address: "",
+      isLoggedIn: false,
+      isLoading: true,
+      lat: null,
+      lng: null,
     };
-	this.setCoordinates = this.setCoordinates.bind(this);
-	this.handleMapSubmit = this.handleMapSubmit.bind(this);
+    this.setCoordinates = this.setCoordinates.bind(this);
+    this.handleMapSubmit = this.handleMapSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -59,33 +59,36 @@ export default class VendorDashboard extends React.Component {
               isLoggedIn: false,
               isLoading: false,
             });
+            Router.push("/login");
           }
         });
-		const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
+      const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
         .then((data) => data.json())
         .then((json) => {
           this.setState({
             vendor_id: json._id,
             vendor_name: json.username,
-			vendor_menu: json.menu,
+            vendor_menu: json.menu,
             vendor_cuisine: json.cuisine,
-			vendor_bname: json.business_name,
-			vendor_email: json.email,
+            vendor_bname: json.business_name,
+            vendor_email: json.email,
             vendor_firstname: json.first_name,
             vendor_lastname: json.last_name,
             vendor_review_ids: json.reviews,
-			vendor_rating: json.average_rating,
-			vendor_location: json.current_location,
+            vendor_rating: json.average_rating,
+            vendor_location: json.current_location,
           }),
-            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${json.current_location.coordinates[0]},${json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    //address_parts = data.results[0].formatted_address;
-                    this.setState({
-                      vendor_address: data.results[0].formatted_address,
-                    });
-                  })
-                  .catch((err) => console.warn(err.message)),
+            fetch(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${json.current_location.coordinates[0]},${json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                //address_parts = data.results[0].formatted_address;
+                this.setState({
+                  vendor_address: data.results[0].formatted_address,
+                });
+              })
+              .catch((err) => console.warn(err.message)),
             console.log(json),
             json.reviews.forEach(
               (r_id) =>
@@ -116,116 +119,118 @@ export default class VendorDashboard extends React.Component {
       Router.push("/login");
     }
   }
-  componentDidUpdate(){ //Not needed
-	 
-	  if(this.state.vendor_location == null){
-	
-		  const storedToken = localStorage.getItem("quickeatz_token");
-    const storedEmail = localStorage.getItem("quickeatz_email");
-    const storedState = localStorage.getItem("quickeatz");
-    if (storedState) {
-      const data = {
-        token: storedToken,
-        email: storedEmail,
-      };
-      console.log(JSON.stringify(data));
-      fetch("/api/auth/verifyShallow", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          if (json.success) {
-            console.log("Token verified!");
-            localStorage.setItem("quickeatz", true);
+  componentDidUpdate() {
+    //Not needed
+
+    if (this.state.vendor_location == null) {
+      const storedToken = localStorage.getItem("quickeatz_token");
+      const storedEmail = localStorage.getItem("quickeatz_email");
+      const storedState = localStorage.getItem("quickeatz");
+      if (storedState) {
+        const data = {
+          token: storedToken,
+          email: storedEmail,
+        };
+        console.log(JSON.stringify(data));
+        fetch("/api/auth/verifyShallow", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((json) => {
+            if (json.success) {
+              console.log("Token verified!");
+              localStorage.setItem("quickeatz", true);
+              this.setState({
+                isLoggedIn: true,
+                isLoading: false,
+              });
+            } else {
+              this.setState({
+                isLoggedIn: false,
+                isLoading: false,
+              });
+              Router.push("/login");
+            }
+          });
+        const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
+          .then((data) => data.json())
+          .then((json) => {
             this.setState({
-              isLoggedIn: true,
-              isLoading: false,
-            });
-          } else {
-            this.setState({
-              isLoggedIn: false,
-              isLoading: false,
-            });
-          }
+              vendor_id: json._id,
+              vendor_name: json.username,
+              vendor_menu: json.menu,
+              vendor_cuisine: json.cuisine,
+              vendor_bname: json.business_name,
+              vendor_email: json.email,
+              vendor_firstname: json.first_name,
+              vendor_lastname: json.last_name,
+              vendor_review_ids: json.reviews,
+              vendor_rating: json.average_rating,
+              vendor_location: json.current_location,
+            }),
+              fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${json.current_location.coordinates[0]},${json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+              )
+                .then((response) => response.json())
+                .then((data) => {
+                  //address_parts = data.results[0].formatted_address;
+                  this.setState({
+                    vendor_address: data.results[0].formatted_address,
+                  });
+                })
+                .catch((err) => console.warn(err.message)),
+              console.log(json),
+              json.reviews.forEach(
+                (r_id) =>
+                  fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
+                    .then((r_data) => r_data.json())
+                    .then((r_json) => {
+                      fetch(`/api/getUserName?_id=${r_json.customer_id}`) //Get the customer name of the reviewer for readability
+                        .then((c_data) => c_data.json())
+                        .then((c_json) => {
+                          (r_json.customer_name = c_json.username),
+                            this.setState({
+                              vendor_review_list: [
+                                ...this.state.vendor_review_list,
+                                r_json,
+                              ],
+                            });
+                        }); //Get the name specifically
+                    })
+                    .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
+              );
+          });
+      } else {
+        console.log("Token not found!");
+        this.setState({
+          isLoggedIn: false,
+          isLoading: true,
         });
-		const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
-        .then((data) => data.json())
-        .then((json) => {
-          this.setState({
-            vendor_id: json._id,
-            vendor_name: json.username,
-			vendor_menu: json.menu,
-            vendor_cuisine: json.cuisine,
-			vendor_bname: json.business_name,
-			vendor_email: json.email,
-            vendor_firstname: json.first_name,
-            vendor_lastname: json.last_name,
-            vendor_review_ids: json.reviews,
-			vendor_rating: json.average_rating,
-			vendor_location: json.current_location,
-          }),
-            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${json.current_location.coordinates[0]},${json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    //address_parts = data.results[0].formatted_address;
-                    this.setState({
-                      vendor_address: data.results[0].formatted_address,
-                    });
-                  })
-                  .catch((err) => console.warn(err.message)),
-            console.log(json),
-            json.reviews.forEach(
-              (r_id) =>
-                fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
-                  .then((r_data) => r_data.json())
-                  .then((r_json) => {
-                    fetch(`/api/getUserName?_id=${r_json.customer_id}`) //Get the customer name of the reviewer for readability
-                      .then((c_data) => c_data.json())
-                      .then((c_json) => {
-                        (r_json.customer_name = c_json.username),
-                          this.setState({
-                            vendor_review_list: [
-                              ...this.state.vendor_review_list,
-                              r_json,
-                            ],
-                          });
-                      }); //Get the name specifically
-                  })
-                  .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
-            );
-        });
-    } else {
-      console.log("Token not found!");
-      this.setState({
-        isLoggedIn: false,
-        isLoading: true,
-      });
-      Router.push("/login");
+        Router.push("/login");
+      }
     }
-	  }
   }
-	setCoordinates(coord_pair){
-		console.log(coord_pair);
-		this.setState({
-			lat: coord_pair.latitude,
-			lng: coord_pair.longitude,
-		});
-	}
-	async handleMapSubmit(event){
-		if(this.state.lat != null && this.state.lng != null){
-			const id_str = this.state.vendor_id.toString();
-			await fetch(
-			`/api/sendLatLon?_id=${id_str}&latitude=${this.state.lat}&longitude=${this.state.lng}`
-			);
-		}
-		else{
-			console.log("ERROR! POSITION NOT SET");
-		}
-	}
+  setCoordinates(coord_pair) {
+    console.log(coord_pair);
+    this.setState({
+      lat: coord_pair.latitude,
+      lng: coord_pair.longitude,
+    });
+  }
+  async handleMapSubmit(event) {
+    if (this.state.lat != null && this.state.lng != null) {
+      const id_str = this.state.vendor_id.toString();
+      await fetch(
+        `/api/sendLatLon?_id=${id_str}&latitude=${this.state.lat}&longitude=${this.state.lng}`
+      );
+    } else {
+      console.log("ERROR! POSITION NOT SET");
+    }
+  }
   render() {
     if (this.state.isLoading) {
       return <div> Loading... </div>;
@@ -242,32 +247,58 @@ export default class VendorDashboard extends React.Component {
               <div className="justify-center items-centerpx-4 sm:px-0">
                 <div className="p-2 mb-4 border-8 font-semibold border-yellow-500 rounded-lg">
                   Your vendor location is currently viewable to customers as
-                  <p className="inline-flex mx-2 border font-bold">
-				   {this.state.vendor_address}
+                  <p className="inline-flex mx-2 px-2 border font-normal">
+                    {this.state.vendor_address}
                   </p>
-				  <p>Lat:  { this.state.vendor_location != null ? this.state.vendor_location.coordinates[0] : null}</p>
-				  <p>Lng:  { this.state.vendor_location != null ? this.state.vendor_location.coordinates[1] : null} </p>
+                  <p>
+                    Latitude:{" "}
+                    {this.state.vendor_location != null ? (
+                      <div className="inline-flex font-normal">
+                        {" "}
+                        {this.state.vendor_location.coordinates[0]}{" "}
+                      </div>
+                    ) : null}
+                  </p>
+                  <p>
+                    Longitude:{" "}
+                    {this.state.vendor_location != null ? (
+                      <div className="inline-flex font-normal">
+                        {" "}
+                        {this.state.vendor_location.coordinates[1]}{" "}
+                      </div>
+                    ) : null}{" "}
+                  </p>
                 </div>
               </div>
               <div className="px-4 sm:px-0">
-                <div className="border-2 mb-4 p-2 font-semibold border-dashed border-yellow-500 rounded-sm">
-                  <form onSubmit={this.handleMapSubmit}>
-                    Update my location:
-                    
-					<button
-						  className="justify-left bg-yellow-500 px-3 text-white rounded-md"
-						  type="submit"
-						>
-						  Update
-					</button>
-					<MapContainerVendorPinInitial 
-					onGPSChange={this.setCoordinates}
-					initialCenter ={{
-						lat: this.state.vendor_location != null ? this.state.vendor_location.coordinates[0] : 40.7128,
-						lng: this.state.vendor_location != null ? this.state.vendor_location.coordinates[1] : -74.006,
-					}}
-					containerStyle={ { position: 'relative',  width: '100%', height: '100%'} }
-					style={{height: "60vh", width: "80vw"}}/>
+                <div className="flex justify-center items-center border-2 mb-4 p-2 font-semibold border-dashed border-yellow-500 rounded-sm">
+                  <form className="text-center" onSubmit={this.handleMapSubmit}>
+                    <div className="p-2">
+                      Place a pin on the map to update your current location.{" "}
+                    </div>
+                    <button
+                      className="justify-left bg-yellow-500 mb-2 px-4 py-1 text-white rounded-md"
+                      type="submit"
+                    >
+                      Update
+                    </button>
+                    <MapContainerVendorPinInitial
+                      onGPSChange={this.setCoordinates}
+                      initialCenter={{
+                        lat:
+                          this.state.vendor_location != null
+                            ? this.state.vendor_location.coordinates[0]
+                            : 40.7128,
+                        lng:
+                          this.state.vendor_location != null
+                            ? this.state.vendor_location.coordinates[1]
+                            : -74.006,
+                      }}
+                      containerStyle={{
+                        position: "relative",
+                      }}
+                      style={{ height: "60vh", width: "70vw" }}
+                    />
                   </form>
                 </div>
               </div>
@@ -277,34 +308,41 @@ export default class VendorDashboard extends React.Component {
               <div className="text-3xl font-bold px-4 sm:px-0">
                 Latest Reviews By Customers
               </div>
-				
-              <div className="justify-center items-centerpx-4 py-6 sm:px-0">
-			  
-                <div className="text-center border-4 border-yellow-500 rounded-lg h-96">
-				<br />
-				{this.state.vendor_review_list.length == 0 && (
-				  <p>You haven't gotten any reviews.</p>
-				  
-				)}
-					<ul>
-					  {this.state.vendor_review_list.map((review) => (
-						<li>
-						  <br />
-						  <h2>
-							<strong>
-							  {" "}
-							  Vendor {review.vendor_name} Rated {review.rating} Stars{" "}
-							</strong>
-						  </h2>
-						  <p>{review.review_content}</p>
-						  <br />
-						  <hr />
-						</li>
-					  ))}
-					</ul>
-                  <div class="float-right border-yellow-500 rounded-sm border-2 p-2 m-6 w-64 h-36">
-                    <p className="text-black font-bold">Current Rating</p>{this.state.vendor_rating == -1 ? "Pending" : this.state.vendor_rating}
-                  </div>
+              <div class="items-center justify-center float-right border-yellow-500 rounded-sm border-2 p-2 m-6 w-64">
+                <p className="flex-1 text-center text-black font-bold">Current Average Rating</p>
+                <div className="text-center text-6xl font-bold">
+                {this.state.vendor_rating == -1
+                  ? "Pending"
+                  : this.state.vendor_rating}
+                </div>
+                <p className="flex-1 text-center text-black font-normal">From <strong>{this.state.vendor_review_list.length} </strong>Total Reviews</p>
+              </div>
+              <div className="flex flex-col justify-center items-centerpx-4 py-6 sm:px-0">
+                <div className="flex-1 text-center border-4 border-yellow-500 rounded-lg h-96">
+                  {this.state.vendor_review_list.length == 0 && (
+                    <p>You don't have any reviews yet.</p>
+                  )}
+                  <ul>
+                    {this.state.vendor_review_list.map((review) => (
+                      <li className="text-left border-double border-2 border-yellow-400 p-2 m-2">
+                        <p className="font-semibold text-xl">
+                          {review.vendor_name}
+                        </p>
+                        <p className="inline-block pr-2 font-semibold">
+                          Customer Rated:{" "}
+                        </p>
+                        {review.rating} Stars <br />
+                        <p className="inline-block pr-2 font-semibold">
+                          Customer Review:{" "}
+                        </p>
+                        {review.review_content}
+                        <div className="float-right font-bold">
+                          {new Date(review.created_at).toLocaleDateString()}{" "}
+                          {new Date(review.created_at).toLocaleTimeString()}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>

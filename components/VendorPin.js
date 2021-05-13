@@ -19,7 +19,7 @@ export class MapContainer extends React.Component {
 	componentDidUpdate(prevProps, prevState){
 		if(prevProps.google !== this.props.google){
 			this.loadMap();
-		}
+		   }
 	}
 	
 	loadMap(){
@@ -53,6 +53,7 @@ export class MapContainer extends React.Component {
 		
 	}
 }
+
 export GoogleAPIComponent({
 	apiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4"
 })(MapContainer)

@@ -50,6 +50,7 @@ class LoginForm extends React.Component {
             this.setState({
               isLoggedIn: false,
             });
+            Router.push("/login")
           }
         });
     } else {
@@ -57,6 +58,7 @@ class LoginForm extends React.Component {
       this.setState({
         isLoggedIn: false,
       })
+      Router.push("/login")
     }
   }
 
