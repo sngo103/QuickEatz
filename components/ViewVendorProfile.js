@@ -1,26 +1,17 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import Router from "next/router";
 
 export default class ViewVendorProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      vendor_id: "",
-      vendor_name: "Empty",
-	  vendor_bname: "",
-	  vendor_menu: [],
-      vendor_cuisine: "Empty",
-	  vendor_email: "",
-      vendor_firstname: "",
-      vendor_lastname: "",
-      vendor_review_ids: [],
-      vendor_review_list: [],
-	  vendor_rating: "",
-	  vendor_open: false,
-	  isLoggedIn: false,
-	  isLoading: true,
+      vendorObj: {},
+      isLoggedIn: false,
+      isLoading: true,
+      account_type: "",
     };
   }
 
@@ -31,9 +22,9 @@ export default class ViewVendorProfile extends React.Component {
     if (storedState) {
       const data = {
         token: storedToken,
-        email: storedEmail
+        email: storedEmail,
       };
-	  console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -41,8 +32,8 @@ export default class ViewVendorProfile extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           if (json.success) {
             console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
@@ -55,56 +46,27 @@ export default class ViewVendorProfile extends React.Component {
               isLoggedIn: false,
               isLoading: false,
             });
-            Router.push("/login")
+            Router.push("/login");
           }
         });
-		
-		//Get the vendor's information
-		const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
+
+      //Get the vendor's information
+      const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
         .then((data) => data.json())
         .then((json) => {
+          console.log("VENDOR JSON:", json);
           this.setState({
-            vendor_id: json._id,
-            vendor_name: json.username,
-			vendor_menu: json.menu,
-            vendor_cuisine: json.cuisine,
-			vendor_bname: json.business_name,
-			vendor_email: json.email,
-            vendor_firstname: json.first_name,
-            vendor_lastname: json.last_name,
-            vendor_review_ids: json.reviews,
-			vendor_rating: json.average_rating,
-			vendor_open: json.is_open,
-          }),
-            console.log("I helped!"),
-            console.log(json),
-            json.reviews.forEach(
-              (r_id) =>
-                fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
-                  .then((r_data) => r_data.json())
-                  .then((r_json) => {
-                    fetch(`/api/getUserName?_id=${r_json.customer_id}`) //Get the customer name of the reviewer for readability
-                      .then((c_data) => c_data.json())
-                      .then((c_json) => {
-                        (r_json.customer_name = c_json.username),
-                          this.setState({
-                            vendor_review_list: [
-                              ...this.state.vendor_review_list,
-                              r_json,
-                            ],
-                          });
-                      }); //Get the name specifically
-                  })
-                  .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
-            );
-        });
+            vendorObj: json,
+          });
+        })
+        .catch((error) => console.log(error));
     } else {
-      console.log("Token not found!")
+      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,
       });
-      Router.push("/login")
+      Router.push("/login");
     }
   }
 
@@ -115,92 +77,95 @@ export default class ViewVendorProfile extends React.Component {
           <Head>
             <title>My Profile</title>
           </Head>
-		  <div className="inline bg-white text-black px-5 py-3 rounded-md text-sm font-medium border-4 hover:border-black w-1/4">
-              <Link href="/editVendorProfile">Edit my Profile</Link>
+          <div className="p-5 text-center">
+            <h1 className="pb-1 text-3xl">My Profile</h1>
+            <Image src="/images/profileicon.jpg" width={220} height={200} />
+            <h2 className="font-normal text-xl">
+              Welcome, {this.state.vendorObj.first_name}{" "}
+              {this.state.vendorObj.last_name}
+            </h2>
+            <br />
+            <div className="grid grid-cols-9 gap-4 w-full border">
+              <div className="self-center col-span-6 p-2 border-black border-4 font-normal text-l">
+                <h1 className="text-3xl font-semibold">
+                  {this.state.vendorObj.business_name}
+                </h1>
+                <div className="font-semibold inline-block">Currently Rated: </div> {this.state.vendorObj.average_rating}
+                {" Stars "}
+                <br />
+                <div className="font-semibold inline-block">Cuisine: </div> {this.state.vendorObj.cuisine}
+                <br />
+                <div className="font-semibold inline-block">Hours: </div> {this.state.vendorObj.hours}
+                <br />
+                <div className="font-semibold inline-block">Public Status: </div> {this.state.vendorObj.is_open
+                  ? "Currently Open For Business! 😃"
+                  : "Currently Closed. 😢"}
+                <br />
+                <div className="font-semibold inline-block">Phone Number: </div> {this.state.vendorObj.phone_number}
+                <br />
+                <div className="font-semibold inline-block">Website: </div> {this.state.vendorObj.website}
+                <br />
+              </div>
+              <div className="col-span-3 border-4 border-double border-black p-2 pl-4 pr-4">
+                <h2 className="text-3xl pb-1">Menu</h2>
+                <hr />
+                <ul>
+                  {(this.state.vendorObj.menu || []).map((menu_item) => (
+                    <li className="pb-1">
+                      <h2>
+                        <strong>{menu_item.food_name}</strong>
+                        <br />
+                        {menu_item.desc} <br />
+                        <strong>Price:</strong> ${menu_item.price}
+                      </h2>
+                      <hr />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-			
-          <div className="container p-5 text-center">
-            <h1 className="text-3xl">View My Vendor Profile of {this.state.vendor_bname}</h1>
             <br />
-			
-			<h2 className="font-bold">
-				Welcome, {this.state.vendor_firstname}{" "}
-				{this.state.vendor_lastname}
-			</h2>
-			
-			<h2 className="font-bold">
-				A.K.A {this.state.vendor_name}{" at "}
-				{this.state.vendor_email}
-			</h2>
-			
-			<h2 className="font-bold">
-				Currently Rated: {this.state.vendor_rating}{" Stars "}
-			</h2>
-			
-			<h2 className="font-bold">
-				<br />
-				{this.state.vendor_open ? "Currently Open For Business!" : "Currently Closed."} 
-			</h2>
-			
-			<h2 className="font-bold">
-				<br />
-				Cuisine: {this.state.vendor_cuisine}
-			</h2>
-			
-			<div className="inline-block container border-8 m-10 border-black w-1/2">
-            <br />
-            <h2 className="text-3xl">Menu</h2>
-            <br />
-				<ul>
-				  {this.state.vendor_menu.map((menu_item) => (
-					<li>
-					  <h2>
-						<strong>{menu_item.food_name}</strong>
-					  </h2>
-					  <h2>{menu_item.desc}</h2>
-					  <h2>
-						<strong>Price:</strong> {menu_item.price}
-					  </h2>
-					  <br />
-					</li>
-				  ))}
-				</ul>
-			</div>
-			
-			<div> 
-				<h2 className="text-3xl">Your Reviews</h2>
-				<br />
-				{this.state.vendor_review_list.length == 0 && (
-				  <p>You haven't gotten any reviews.</p>
-				  
-				)}
-				<ul>
-				  {this.state.vendor_review_list.map((review) => (
-					<li>
-					  <br />
-					  <h2>
-						<strong>
-						  {" "}
-						  Vendor {review.vendor_name} Rated {review.rating} Stars{" "}
-						</strong>
-					  </h2>
-					  <p>{review.review_content}</p>
-					  <br />
-					  <hr />
-					</li>
-				  ))}
-				</ul>
-				<br />
-			  </div>
-            <div className="inline bg-white text-black px-5 py-3 rounded-md text-sm font-medium border-4 hover:border-black w-1/4">
-			
-              <Link href="/">Return to Home</Link>
+            <h2 className="p-2 border-red-600 border-4 font-normal text-xl">
+              <div className="pb-2 font-semibold">➖ Username ➖</div>
+              <div className="border border-yellow-500">
+                {this.state.vendorObj.username}
+              </div>
+              <div className="p-2 font-semibold">➖ Email ➖</div>
+              <div className="mb-3 py-1 border border-yellow-500">
+                {this.state.vendorObj.email}
+              </div>
+              {this.state.vendorObj.account_type === "vendor" && (
+                <>
+                  <div className="pb-2 font-semibold">➖ Account Type ➖</div>
+                  <div className="border border-yellow-500">Vendor</div>
+                </>
+              )}
+            </h2>
+            <div className="flex justify-center items-center">
+              <Link href="/editVendorProfile">
+                <a
+                  href="/editVendorProfile"
+                  className="mx-1 my-3 bg-white text-center text-black px-5 py-3 rounded-md text-sm font-medium border-4 border-red-700 hover:border-red-700 hover:bg-red-700 hover:text-white"
+                >
+                  Edit Profile
+                </a>
+              </Link>
+              <Link href="/">
+                <a
+                  className="mx-1 my-3 bg-white text-center text-black px-5 py-3 rounded-md text-sm font-medium border-4 border-yellow-500 hover:border-yellow-500 hover:bg-yellow-500 hover:text-white"
+                  href="/"
+                >
+                  Return Home
+                </a>
+              </Link>
             </div>
+            <hr />
+            <br /> <footer>🍔 Made By the QuickEatz Team 🍜</footer>
           </div>
         </div>
       );
     } else {
-      return null
+      return null;
     }
   }
 }

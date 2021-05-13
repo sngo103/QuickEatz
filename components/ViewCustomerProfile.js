@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import Router from "next/router";
 
 export default class ViewCustomerProfile extends React.Component {
@@ -16,12 +17,14 @@ export default class ViewCustomerProfile extends React.Component {
       cust_review_list: [],
       isLoggedIn: false,
       isLoading: true,
+      account_type: "",
     };
   }
 
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedType = localStorage.getItem("quickeatz_type");
     const storedState = localStorage.getItem("quickeatz");
     if (storedState) {
       const data = {
@@ -44,6 +47,7 @@ export default class ViewCustomerProfile extends React.Component {
             this.setState({
               isLoggedIn: true,
               isLoading: false,
+              account_type: storedType,
             });
           } else {
             this.setState({
@@ -55,7 +59,7 @@ export default class ViewCustomerProfile extends React.Component {
         });
 
       //Get the customer's information
-      const cust = fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`) //Get the customer's data
+      fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`) //Get the customer's data
         .then((data) => data.json())
         .then((json) => {
           this.setState({
@@ -106,49 +110,44 @@ export default class ViewCustomerProfile extends React.Component {
             <title>My Profile</title>
           </Head>
 
-          <div className="inline bg-white text-black px-5 py-3 rounded-md text-sm font-medium border-4 hover:border-black w-1/4">
-            <Link href="/editCustomerProfile">Edit my Profile</Link>
-          </div>
+          <div className="p-5 text-center">
+            <h1 className="text-3xl">My Profile</h1>
+            <Image src="/images/profileicon.jpg" width={220} height={200} />
 
-          <div className="container p-5 text-center">
-            <h1 className="text-3xl">View My Customer Profile</h1>
-            <br />
-
-            <h2 className="font-bold">
+            <h2 className="font-normal text-3xl">
               Welcome, {this.state.cust_firstname} {this.state.cust_lastname}
             </h2>
-
-            <h2 className="font-bold">
-              A.K.A {this.state.cust_name}
-              {" at "}
-              {this.state.cust_email}
+            <br />
+            <h2 className="p-2 border-red-500 border-4 font-normal text-xl">
+              <div className="pb-2 font-semibold">➖ Username ➖</div>
+              <div className="border border-yellow-500">
+                {this.state.cust_name}
+              </div>
+              <div className="p-2 font-semibold">➖ Email ➖</div>
+              <div className="mb-3 py-1 border border-yellow-500">
+                {this.state.cust_email}
+              </div>
+              
+              {this.state.account_type === "customer" && (<><div className="pb-2 font-semibold">➖ Account Type ➖</div>
+              <div className="border border-yellow-500">Customer</div></>)}
             </h2>
-
-            <div>
-              <h2 className="text-3xl">Your Reviews</h2>
-              <br />
-              {this.state.cust_review_list.length == 0 && (
-                <p>You haven't made any reviews.</p>
-              )}
-              <ul>
-                {this.state.cust_review_list.map((review) => (
-                  <li>
-                    <br />
-                    <h2>
-                      <strong>
-                        {" "}
-                        Vendor {review.vendor_name} Rated {review.rating} Stars{" "}
-                      </strong>
-                    </h2>
-                    <p>{review.review_content}</p>
-                    <br />
-                    <hr />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="inline bg-white text-black px-5 py-3 rounded-md text-sm font-medium border-4 hover:border-black w-1/4">
-              <Link href="/">Return to Home</Link>
+            <div className="flex justify-center items-center">
+              <Link href="/editCustomerProfile">
+                <a
+                  href="/editCustomerProfile"
+                  className="mx-1 my-3 bg-white text-center text-black px-5 py-3 rounded-md text-sm font-medium border-4 border-red-700 hover:border-red-700 hover:bg-red-700 hover:text-white"
+                >
+                  Edit Profile
+                </a>
+              </Link>
+              <Link href="/">
+                <a
+                  className="mx-1 my-3 bg-white text-center text-black px-5 py-3 rounded-md text-sm font-medium border-4 border-yellow-500 hover:border-yellow-500 hover:bg-yellow-500 hover:text-white"
+                  href="/"
+                >
+                  Return Home
+                </a>
+              </Link>
             </div>
           </div>
         </div>

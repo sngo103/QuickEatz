@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import styles from '../styles/Profile.module.css';
 import MapContainerVendorPin from '../components/MapContainerVendorPin';
 import Router from "next/router";
 
@@ -354,11 +353,11 @@ constructor(props) {
     render() {
         return (
             <div>
-                <section className={styles.topPage}>
-                    <h2 className={styles.title}>Edit Vendor Profile</h2>
+                <section className="">
+                    <h2 className="">Edit Vendor Profile</h2>
                 </section>
 
-                <section className={styles.midPage}>
+                <section className="">
                     <h2> What would you like to edit today?</h2>
                 
 
