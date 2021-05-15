@@ -98,8 +98,8 @@ export default class ViewVendorProfile extends React.Component {
                 <div className="font-semibold inline-block">Hours: </div> {this.state.vendorObj.hours}
                 <br />
                 <div className="font-semibold inline-block">Public Status: </div> {this.state.vendorObj.is_open
-                  ? "Currently Open For Business! 😃"
-                  : "Currently Closed. 😢"}
+                  ? "Business in Operation! 😃"
+                  : "Temporarily Closed. 😢"}
                 <br />
                 <div className="font-semibold inline-block">Phone Number: </div> {this.state.vendorObj.phone_number}
                 <br />

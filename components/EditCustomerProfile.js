@@ -219,7 +219,6 @@ export default class EditCustomerProfile extends React.Component {
             </a>
           </Link>
           <br />
-          <div className="text-center p-5"></div>
 
           <section className="text-center p-5">
             <h1 className="text-3xl">
@@ -229,6 +228,7 @@ export default class EditCustomerProfile extends React.Component {
               </div>
               <h2 className="text-xl pb-1"> What would you like to edit?</h2>
             </h1>
+            
             <form onSubmit={this.handleUserNameSubmit}>
               <br />
               <label className="font-semibold text-xl" for="upd_username">
