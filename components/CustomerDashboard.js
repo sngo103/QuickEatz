@@ -16,9 +16,12 @@ export default class CustomerDashboard extends React.Component {
       cust_lastname: "",
       cust_review_ids: [],
       cust_review_list: [],
+	  cust_nearby_vendors: [],
       isLoggedIn: false,
       isLoading: true,
     };
+    this.setCoordinates = this.setCoordinates.bind(this);
+    this.handleMapSubmit = this.handleMapSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -96,7 +99,20 @@ export default class CustomerDashboard extends React.Component {
       Router.push("/login");
     }
   }
-
+  async handleMapSubmit(event) {
+	 event.preventDefault();
+    if (this.state.lat != null && this.state.lng != null) {
+      await fetch(
+        `/api/searchLatLon?latitude=${this.state.lat}&longitude=${this.state.lng}&limit=${3}`
+      ).then((data) => data.json())
+		.then((json) => {this.setState({
+			cust_nearby_vendors: json,
+		})});
+	  console.log(this.state.cust_nearby_vendors);
+    } else {
+      console.log("ERROR! POSITION NOT SET");
+    }
+  }
   setCoordinates(coord_pair) {
     console.log(coord_pair);
     this.setState({
@@ -127,18 +143,76 @@ export default class CustomerDashboard extends React.Component {
                 </div>
               </div>
               <div className="flex justify-center items-center px-4 py-6 sm:px-0">
-                <div className="border-2 mb-4 p-2 font-semibold border-dashed border-yellow-500 rounded-sm">
-                  <MapContainerNearbyVendorPin
-                    containerStyle={{
-                      position: "relative",
-                    }}
-                    style={{ height: "100vh", width: "70vw" }}
-                  />
-                </div>
+                <form className="text-center" onSubmit={this.handleMapSubmit}>
+                    <div className="p-2">
+                      Place a pin on the map to find vendors your current location.{" "}
+                    </div>
+                    <button
+                      className="justify-left bg-yellow-500 mb-2 px-4 py-1 text-white rounded-md"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                    <MapContainerNearbyVendorPin
+                      onGPSChange={this.setCoordinates}
+                      containerStyle={{
+                        position: "relative",
+                      }}
+					  initialCenter={{
+                        lat:
+                          this.state.vendor_location != null
+                            ? this.state.vendor_location.coordinates[0]
+                            : 40.7128,
+                        lng:
+                          this.state.vendor_location != null
+                            ? this.state.vendor_location.coordinates[1]
+                            : -74.006,
+                      }}
+                      style={{ height: "60vh", width: "70vw" }}
+                    />
+                  </form>
               </div>
             </div>
             <hr />
             <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+			{this.state.cust_nearby_vendors == [] ? null :
+				<div> Nearby Vendors 
+				
+					<ul>
+					  {this.state.cust_nearby_vendors.map((vendor) => (
+						<li>
+						  <div>
+							<button
+							  className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
+							  onClick={() =>
+								Router.push({
+								  pathname: "/viewVendorSingle",
+								  query: { vendor_id: vendor._id },
+								})
+							  }
+							>
+							  {" "}
+							  {vendor.business_name}{" "}
+							</button>
+						  </div>
+						  <h2>{vendor.website}</h2>
+						  <h3>{vendor.cuisine}</h3>
+						  {vendor.average_rating == -1 ? (
+							<h3>Rating pending</h3>
+						  ) : (
+							<h3> Rated {vendor.average_rating} Stars</h3>
+						  )}
+
+						  <br />
+						  <br />
+						</li>
+					  ))}
+					</ul>
+				</div>
+			
+			
+			}
+			
               <div className="text-3xl font-bold px-4 sm:px-0">My Reviews</div>
               <div className="justify-center items-centerpx-4 py-6 sm:px-0">
                 <div className="text-center p-4 border-4 border-yellow-600 rounded-lg">
