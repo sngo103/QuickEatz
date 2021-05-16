@@ -7,12 +7,14 @@ export class WriteReview extends React.Component {
     super(props);
     console.log("THERE");
     this.state = {
-      current_user: "",
-      current_vendor_name: "NAME HERE",
-      current_vendor_id: "",
+      current_user: localStorage.getItem("quickeatz_email") || "",
+      current_vendor_name: "",
+      current_vendor_id: Router.query.vendor_id || "",
       review_text: "",
       review_rating: "1.0",
       isLoggedIn: false,
+      isLoading: true,
+      account_type: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,30 +63,11 @@ export class WriteReview extends React.Component {
       })
       Router.push("/login")
     }
-    this.setState({
-      current_user: localStorage.getItem("quickeatz_email"), //ASSUMES THE TOKEN IS THE USER's email
-      current_vendor_id: Router.query.vendor_id,
-    });
     fetch(`/api/getVendorName?_id=${Router.query.vendor_id}`) //Get the business name of the reviewee for readability
       .then((v_data) => v_data.json())
       .then((v_json) => {
         this.setState({ current_vendor_name: v_json.business_name });
       }); //Get the name specifically
-    console.log("Here's the latest state!");
-    console.log(this.state);
-  }
-
-  componentDidUpdate() {
-    if (this.state.current_user == "" || this.state.isLoggedIn != null) {
-      this.setState({
-        current_user: localStorage.getItem("quickeatz_email"), //ASSUMES THE TOKEN IS THE USER's email
-        current_vendor_id: Router.query.vendor_id,
-      });
-      if (this.state.current_user == "") {
-        //Failed to get token
-        this.setState({ isLoggedIn: false }); //Set a flag
-      }
-    }
     console.log("Here's the latest state!");
     console.log(this.state);
   }
