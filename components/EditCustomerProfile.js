@@ -219,6 +219,8 @@ export default class EditCustomerProfile extends React.Component {
             </a>
           </Link>
           <br />
+          <br />
+          <br />
 
           <section className="text-center p-5">
             <h1 className="text-3xl">
