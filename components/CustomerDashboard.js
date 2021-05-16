@@ -21,7 +21,7 @@ export default class CustomerDashboard extends React.Component {
       isLoading: true,
     };
     this.setCoordinates = this.setCoordinates.bind(this);
-    this.handleMapSubmit = this.handleMapSubmit.bind(this);
+   // this.handleMapSubmit = this.handleMapSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -99,7 +99,7 @@ export default class CustomerDashboard extends React.Component {
       Router.push("/login");
     }
   }
-  async handleMapSubmit(event) {
+ /* async handleMapSubmit(event) {
 	 event.preventDefault();
     if (this.state.lat != null && this.state.lng != null) {
       await fetch(
@@ -112,13 +112,19 @@ export default class CustomerDashboard extends React.Component {
     } else {
       console.log("ERROR! POSITION NOT SET");
     }
-  }
-  setCoordinates(coord_pair) {
+  } */
+  async setCoordinates(coord_pair) {
     console.log(coord_pair);
     this.setState({
       lat: coord_pair.latitude,
       lng: coord_pair.longitude,
     });
+	await fetch(
+        `/api/searchLatLon?latitude=${coord_pair.latitude}&longitude=${coord_pair.longitude}&limit=${3}`
+      ).then((data) => data.json())
+	   .then((json) => {this.setState({
+			cust_nearby_vendors: json,
+	})});
     //setCoords({lat: coord_pair.latitude, lng: coord_pair.longitude}, console.log(coords));
   }
   render() {
@@ -143,16 +149,11 @@ export default class CustomerDashboard extends React.Component {
                 </div>
               </div>
               <div className="flex justify-center items-center px-4 py-6 sm:px-0">
-                <form className="text-center" onSubmit={this.handleMapSubmit}>
+                <form className="text-center" >
                     <div className="p-2">
                       Place a pin on the map to find vendors your current location.{" "}
                     </div>
-                    <button
-                      className="justify-left bg-yellow-500 mb-2 px-4 py-1 text-white rounded-md"
-                      type="submit"
-                    >
-                      Search
-                    </button>
+                    
                     <MapContainerNearbyVendorPin
                       onGPSChange={this.setCoordinates}
                       containerStyle={{
