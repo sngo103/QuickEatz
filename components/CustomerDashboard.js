@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "next/router";
-import MapContainerVendorPinInitial from "./MapContainerVendorPinInitial";
+import Image from "next/image";
 import MapContainerNearbyVendorPin from "./MapContainerNearbyVendorPin";
 
 export default class CustomerDashboard extends React.Component {
@@ -100,26 +100,6 @@ export default class CustomerDashboard extends React.Component {
     }
   }
 
-  /* async handleMapSubmit(event) {
-	 event.preventDefault();
-    if (this.state.lat != null && this.state.lng != null) {
-      await fetch(
-        `/api/searchLatLon?latitude=${this.state.lat}&longitude=${
-          this.state.lng
-        }&limit=${3}`
-      )
-        .then((data) => data.json())
-        .then((json) => {
-          this.setState({
-            cust_nearby_vendors: json,
-          });
-        });
-      console.log(this.state.cust_nearby_vendors);
-    } else {
-      console.log("ERROR! POSITION NOT SET");
-    }
-  } */
-
   async setCoordinates(coord_pair) {
     console.log(coord_pair);
     this.setState({
@@ -137,22 +117,43 @@ export default class CustomerDashboard extends React.Component {
           cust_nearby_vendors: json,
         });
       });
-    //setCoords({lat: coord_pair.latitude, lng: coord_pair.longitude}, console.log(coords));
   }
-  
+
   render() {
     if (this.state.isLoading) {
-      return <div class="flex justify-around">
-      <span class="inline-flex rounded-md shadow-sm">
-        <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-rose-600 hover:bg-rose-500 focus:border-rose-700 active:bg-rose-700 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
-          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          Processing
-        </button>
-      </span>
-    </div>;
+      return (
+        <div class="flex justify-around">
+          <span class="inline-flex rounded-md shadow-sm">
+            <button
+              type="button"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-rose-600 hover:bg-rose-500 focus:border-rose-700 active:bg-rose-700 transition ease-in-out duration-150 cursor-not-allowed"
+              disabled=""
+            >
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Processing
+            </button>
+          </span>
+        </div>
+      );
     } else if (this.state.isLoggedIn) {
       return (
         <div className="font-pridi">
@@ -189,37 +190,60 @@ export default class CustomerDashboard extends React.Component {
                   }}
                   style={{ height: "500px", width: "800px" }}
                 />
-                {console.log("VENDORS:", this.state.cust_nearby_vendors)}
                 {this.state.cust_nearby_vendors.length == 0 ? null : (
                   <div className="w-full font-pridi">
                     <div className="border-2 border-b-0.5 border-black bg-yellow-500 bg-opacity-50 w-full mx-2 p-2 font-pridi font-semibold text-xl text-center">
                       Nearby Vendors
                     </div>
                     <div className="overflow-y-auto max-h-96 mx-2 border-2 border-black grid grid-cols-1 w-full max-h-96 h-auto border">
-                      {this.state.cust_nearby_vendors.map((vendor) => (
-                        <div className="p-2 border-b-2">
-                          <button
-                            className="text-md w-full border-2 border-black rounded-sm px-2 text-left font-bold hover:bg-yellow-100"
-                            onClick={() =>
-                              Router.push({
-                                pathname: "/viewVendorSingle",
-                                query: { vendor_id: vendor._id },
-                              })
-                            }
-                          >
-                            {vendor.business_name}
-                            <div className="text-left"></div>
-                          </button>
-                          <br />
-                          {vendor.website}<br />
-                          {vendor.cuisine}<br />
-                          {vendor.average_rating == -1 ? (
-                            <>No Ratings Yet</>
-                          ) : (
-                            <>Rated {vendor.average_rating} Stars</>
-                          )}
-                        </div>
-                      ))}
+                      {this.state.cust_nearby_vendors.map((vendor) => {
+                        {/* let lat = vendor.current_location.coordinates[0];
+                        let long = vendor.current_location.coordinates[1];
+                        let formatted_location = fetch(
+                          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+                        )
+                          .then((coordData) => coordData.json())
+                          .then(
+                            (finalData) =>
+                              finalData.results[0].formatted_address
+                          ); */}
+                        return (
+                          <div className="p-2 border-b-2">
+                            <button
+                              className="w-full text-md border-2 border-black rounded-sm px-2 text-left font-bold hover:bg-yellow-100"
+                              onClick={() =>
+                                Router.push({
+                                  pathname: "/viewVendorSingle",
+                                  query: { vendor_id: vendor._id },
+                                })
+                              }
+                            >
+                              {vendor.business_name}
+                              <div className="align-middle float-right">
+                                <Image
+                                  src="/images/right.png"
+                                  width={30}
+                                  height={15}
+                                />
+                              </div>
+                            </button>
+                            <br />
+                            <strong>Website: </strong>
+                            {vendor.website}
+                            <br />
+                            <strong>Cuisine: </strong>
+                            {vendor.cuisine}
+                            <br />
+                            {vendor.average_rating == -1 ? (
+                              <>No Ratings Yet</>
+                            ) : (
+                              <strong>
+                                Rated {vendor.average_rating} Stars
+                              </strong>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
