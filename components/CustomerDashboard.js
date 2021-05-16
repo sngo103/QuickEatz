@@ -113,9 +113,25 @@ export default class CustomerDashboard extends React.Component {
     )
       .then((data) => data.json())
       .then((json) => {
-        this.setState({
-          cust_nearby_vendors: json,
-        });
+		 json.forEach((vend) => {
+			let lattt = vend.current_location.coordinates[0];
+            let lonnn = vend.current_location.coordinates[1];
+            let formatted_location = fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+                    )
+                          .then((coordData) => coordData.json())
+                          .then(
+                            (finalData) => {
+								let loc_obj = vend;
+								vend.loc = finalData.results[0].formatted_address;
+								this.setState({
+								  cust_nearby_vendors: [...this.state.cust_nearby_vendors, vend],
+							})
+							}
+                          );
+		 }
+		 )
+        
       });
   }
 
@@ -233,6 +249,9 @@ export default class CustomerDashboard extends React.Component {
                             <br />
                             <strong>Cuisine: </strong>
                             {vendor.cuisine}
+                            <br />
+							<strong>Location: </strong>
+                            {vendor.loc}
                             <br />
                             {vendor.average_rating == -1 ? (
                               <>No Ratings Yet</>
