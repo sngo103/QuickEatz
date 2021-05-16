@@ -88,7 +88,7 @@ export default class CustomerDashboard extends React.Component {
                       }); //Get the name specifically
                   })
                   .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
-            );
+            )
         });
     } else {
       console.log("Token not found!");
@@ -258,7 +258,7 @@ export default class CustomerDashboard extends React.Component {
                     <p>You haven't made any reviews.</p>
                   )}
                   <ul>
-                    {this.state.cust_review_list.map((review) => (
+                    {this.state.cust_review_list.sort((review1, review2) => review2.created_at - review1.created_at).map((review) => (
                       <li className="text-left border-double border-2 border-yellow-400 p-2">
                         <p className="font-semibold text-xl">
                           {review.vendor_name}
