@@ -37,6 +37,7 @@ export default class EditVendorProfile extends React.Component {
       vendor_new_menuitem_price: "0",
       showing_location: false,
       temp: false, //An idea! If I toggle this useless variable, I can call render whenever I want. Currently unused.
+	  usernameInvalid: false,
     };
     //Bind form/button functions to the instance
     this.handleChange = this.handleChange.bind(this);
@@ -167,20 +168,40 @@ export default class EditVendorProfile extends React.Component {
     }
   }
 
-  handleUserNameSubmit(event) {
+  async handleUserNameSubmit(event) {
     event.preventDefault();
+	
     const new_uname = this.state.vendor_new_uname;
 
     if (new_uname != "") {
       //If the new text isn't blank
-      const user_email_str = this.state.vendor_email;
-      const data = fetch(
-        `/api/sendVendorUsername?email=${user_email_str}&uname=${new_uname}`
-      );
+	  await fetch("/api/users/checkUsername", { //Check if taken
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: new_uname }),
+		})
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) { //Not taken
+		  //console.log("DONE");
+          this.setState({ usernameInvalid: false });
+		  const user_email_str = this.state.cust_email;
+		  const data = fetch(
+			`/api/sendVendorUsername?email=${user_email_str}&uname=${new_uname}`
+			);
       this.setState({
         vendor_name: new_uname,
         vendor_new_uname: "",
       });
+        } else { //Taken
+			//console.log("FAIL");
+          this.setState({ usernameInvalid: true });
+        }
+      });
+      
     } else {
       console.log("This is empty! Bad to submit!");
     }
@@ -403,6 +424,7 @@ export default class EditVendorProfile extends React.Component {
                 {this.state.vendor_name}
               </div>
             </p>
+			{this.state.usernameInvalid == true ? <p> This name is taken. Please try again. </p> : null}
             <input
               type="text"
               id="upd_username"

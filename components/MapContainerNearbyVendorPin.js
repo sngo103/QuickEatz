@@ -44,7 +44,8 @@ export class MapContainerNearbyVendorPin extends React.Component {
     const { latLng } = coord;
     const lat = latLng.lat();
     const lng = latLng.lng();
-
+    const coords = { latitude: lat, longitude: lng };
+    this.props.onGPSChange(coords);
     this.searchLatLon(lat, lng);
     if (this.state.showing_info_box) {
       this.setState({ showing_info_box: false, active_marker: {} });
