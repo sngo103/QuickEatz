@@ -20,6 +20,7 @@ export default class EditCustomerProfile extends React.Component {
       cust_new_email: "",
       cust_new_firstname: "",
       cust_new_lastname: "",
+	  usernameInvalid: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -120,21 +121,41 @@ export default class EditCustomerProfile extends React.Component {
       this.setState({ cust_new_lastname: target.value });
     }
   }
-
-  handleUserNameSubmit(event) {
+  
+  async handleUserNameSubmit(event) {
     event.preventDefault();
+	
     const new_uname = this.state.cust_new_uname;
 
     if (new_uname != "") {
       //If the new text isn't blank
-      const user_email_str = this.state.cust_email;
-      const data = fetch(
-        `/api/sendCustomerUsername?email=${user_email_str}&uname=${new_uname}`
-      );
+	  await fetch("/api/users/checkUsername", { //Check if taken
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: new_uname }),
+		})
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) { //Not taken
+		  //console.log("DONE");
+          this.setState({ usernameInvalid: false });
+		  const user_email_str = this.state.cust_email;
+		  const data = fetch(
+			`/api/sendCustomerUsername?email=${user_email_str}&uname=${new_uname}`
+			);
       this.setState({
         cust_name: new_uname,
         cust_new_uname: "",
       });
+        } else { //Taken
+			//console.log("FAIL");
+          this.setState({ usernameInvalid: true });
+        }
+      });
+      
     } else {
       console.log("This is empty! Bad to submit!");
     }
@@ -241,6 +262,7 @@ export default class EditCustomerProfile extends React.Component {
                 Current Username:
                 <div className="inline-flex border px-2 mx-2">{this.state.cust_name}</div>
               </p>
+			  {this.state.usernameInvalid == true ? <p> This name is taken. Please try again. </p> : null}
               <input
                 type="text"
                 id="upd_username"
