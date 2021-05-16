@@ -16,6 +16,7 @@ export class VendorDisplaySingle extends React.Component {
       vendor_review_ids: [],
       vendor_review_list: [],
       vendor_rating: "",
+	  
     };
   }
 
@@ -91,6 +92,7 @@ export class VendorDisplaySingle extends React.Component {
                       .then((c_data) => c_data.json())
                       .then((c_json) => {
                         (r_json.customer_name = c_json.username),
+						console.log("HERE1."),
                           this.setState({
                             vendor_review_list: [
                               ...this.state.vendor_review_list,
@@ -106,10 +108,11 @@ export class VendorDisplaySingle extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.vendor_id == "") {
+	//  console.log(this.state.vendor_id.length);
+    if (this.state.vendor_id.length == 0 && !this.state.isLoggedIn) {
       //This MAY be bad practice, but it works and shouldnt cause any loops, unless you go to the page directly
       const vendor_id = Router.query.vendor_id;
-      console.log("VENDOR HEERE");
+      console.log("VENDOR HERE");
       console.log(vendor_id);
       console.log(typeof vendor_id);
       const vendor = fetch(`/api/getVendorSingle?_id=${vendor_id}`) //Get the vendor's data
@@ -124,6 +127,7 @@ export class VendorDisplaySingle extends React.Component {
             vendor_rating: json.average_rating,
             vendor_lastname: json.last_name,
             vendor_review_ids: json.reviews,
+			vendor_review_list: [], //RESET TO STOP DUPES, MAY NOT ACTUALLY WORK
           }),
             console.log("I helped!"),
             console.log(json),
@@ -136,6 +140,7 @@ export class VendorDisplaySingle extends React.Component {
                       .then((c_data) => c_data.json())
                       .then((c_json) => {
                         (r_json.customer_name = c_json.username),
+						console.log("HERE2."),
                           this.setState({
                             vendor_review_list: [
                               ...this.state.vendor_review_list,
@@ -149,13 +154,16 @@ export class VendorDisplaySingle extends React.Component {
         });
     }
   }
+  
   render() {
     console.log("Here's the state!");
     console.log(this.state);
     console.log("Here are the reviews!");
-    if (this.state.vendor_review_list.length > 0) {
-      console.log(JSON.stringify(this.state.vendor_review_list[0]));
-    }
+    
+	let revs = this.state.vendor_review_list;
+	let account_type = typeof window !== 'undefined' ? localStorage.getItem("quickeatz_type") : null;
+	console.log(revs.length);
+	console.log(this.state.vendor_review_list);
     return (
       <>
         <Head>
@@ -194,7 +202,7 @@ export class VendorDisplaySingle extends React.Component {
               ))}
             </ul>
           </div>
-
+		  {this.state.account_type == "customer" ?
           <div>
             <button
               className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
@@ -209,15 +217,15 @@ export class VendorDisplaySingle extends React.Component {
               Write a Review!{" "}
             </button>
           </div>
-
+		  : null}
           <div>
             <h2 className="text-3xl">Reviews</h2>
             <br />
-            {this.state.vendor_review_list.length == 0 && (
+            {revs.length == 0 && (
               <p>There are no reviews for this vendor.</p>
             )}
             <ul>
-              {this.state.vendor_review_list.map((review) => (
+              {revs.map((review) => (
                 <li>
                   <br />
                   <h2>
