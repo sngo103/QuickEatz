@@ -21,7 +21,7 @@ export default class CustomerDashboard extends React.Component {
       isLoading: true,
     };
     this.setCoordinates = this.setCoordinates.bind(this);
-    this.handleMapSubmit = this.handleMapSubmit.bind(this);
+    // this.handleMapSubmit = this.handleMapSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -99,8 +99,9 @@ export default class CustomerDashboard extends React.Component {
       Router.push("/login");
     }
   }
-  async handleMapSubmit(event) {
-    event.preventDefault();
+
+  /* async handleMapSubmit(event) {
+	 event.preventDefault();
     if (this.state.lat != null && this.state.lng != null) {
       await fetch(
         `/api/searchLatLon?latitude=${this.state.lat}&longitude=${
@@ -117,13 +118,25 @@ export default class CustomerDashboard extends React.Component {
     } else {
       console.log("ERROR! POSITION NOT SET");
     }
-  }
-  setCoordinates(coord_pair) {
+  } */
+
+  async setCoordinates(coord_pair) {
     console.log(coord_pair);
     this.setState({
       lat: coord_pair.latitude,
       lng: coord_pair.longitude,
     });
+    await fetch(
+      `/api/searchLatLon?latitude=${coord_pair.latitude}&longitude=${
+        coord_pair.longitude
+      }&limit=${3}`
+    )
+      .then((data) => data.json())
+      .then((json) => {
+        this.setState({
+          cust_nearby_vendors: json,
+        });
+      });
     //setCoords({lat: coord_pair.latitude, lng: coord_pair.longitude}, console.log(coords));
   }
   render() {
@@ -131,7 +144,7 @@ export default class CustomerDashboard extends React.Component {
       return <div> Loading... </div>;
     } else if (this.state.isLoggedIn) {
       return (
-        <div>
+        <div className="font-pridi">
           <header className="bg-white shadow">
             <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
               <h1 className="text-3xl font-bold text-gray-900">My Dashboard</h1>
@@ -148,76 +161,63 @@ export default class CustomerDashboard extends React.Component {
                 </div>
               </div>
               <div className="flex justify-center items-center py-6">
-                <form className="text-center" onSubmit={this.handleMapSubmit}>
-                  <div className="p-2">
-                    Place a pin on the map to find vendors your current
-                    location.{" "}
-                  </div>
-                  <button
-                    className="justify-left bg-yellow-500 mb-2 px-4 py-1 text-white rounded-md"
-                    type="submit"
-                  >
-                    Search
-                  </button>
-                  <MapContainerNearbyVendorPin
-                    onGPSChange={this.setCoordinates}
-                    containerStyle={{
-                      position: "relative",
-                    }}
-                    initialCenter={{
-                      lat:
-                        this.state.vendor_location != null
-                          ? this.state.vendor_location.coordinates[0]
-                          : 40.7128,
-                      lng:
-                        this.state.vendor_location != null
-                          ? this.state.vendor_location.coordinates[1]
-                          : -74.006,
-                    }}
-                    style={{ height: "500px", width: "700px" }}
-                  />
-                </form>
-                {this.state.cust_nearby_vendors == [] ? null : (
-                  <div className="mx-2 w-full h-96 border">
-                    Nearby Vendors
-                    <ul>
+                <MapContainerNearbyVendorPin
+                  onGPSChange={this.setCoordinates}
+                  containerStyle={{
+                    position: "relative",
+                  }}
+                  initialCenter={{
+                    lat:
+                      this.state.vendor_location != null
+                        ? this.state.vendor_location.coordinates[0]
+                        : 40.7128,
+                    lng:
+                      this.state.vendor_location != null
+                        ? this.state.vendor_location.coordinates[1]
+                        : -74.006,
+                  }}
+                  style={{ height: "500px", width: "800px" }}
+                />
+                {console.log("VENDORS:", this.state.cust_nearby_vendors)}
+                {this.state.cust_nearby_vendors.length == 0 ? null : (
+                  <div className="w-full font-pridi">
+                    <div className="border-2 border-b-0.5 border-black bg-yellow-500 bg-opacity-50 w-full mx-2 p-2 font-pridi font-semibold text-xl text-center">
+                      Nearby Vendors
+                    </div>
+                    <div className="overflow-y-auto max-h-96 mx-2 border-2 border-black grid grid-cols-1 w-full max-h-96 h-auto border">
                       {this.state.cust_nearby_vendors.map((vendor) => (
-                        <li className="flex">
-                          <div>
-                            <button
-                              className="text-xl border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
-                              onClick={() =>
-                                Router.push({
-                                  pathname: "/viewVendorSingle",
-                                  query: { vendor_id: vendor._id },
-                                })
-                              }
-                            >
-                              {" "}
-                              {vendor.business_name}{" "}
-                            </button>
-                          </div>
-                          <h2>{vendor.website}</h2>
-                          <h3>{vendor.cuisine}</h3>
+                        <div className="p-2 border-b-2">
+                          <button
+                            className="text-md w-full border-2 border-black rounded-sm px-2 text-left font-bold hover:bg-yellow-100"
+                            onClick={() =>
+                              Router.push({
+                                pathname: "/viewVendorSingle",
+                                query: { vendor_id: vendor._id },
+                              })
+                            }
+                          >
+                            {vendor.business_name}
+                            <div className="text-left"></div>
+                          </button>
+                          <br />
+                          {vendor.website}<br />
+                          {vendor.cuisine}<br />
                           {vendor.average_rating == -1 ? (
-                            <h3>Rating pending</h3>
+                            <>No Ratings Yet</>
                           ) : (
-                            <h3> Rated {vendor.average_rating} Stars</h3>
+                            <>Rated {vendor.average_rating} Stars</>
                           )}
-
-                          <br />
-                          <br />
-                        </li>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
             <hr />
             <div className="max-w-7xl mx-auto py-6">
-              <div className="text-3xl font-bold px-4 sm:px-0">My Reviews</div>
-              <div className="justify-center items-centerpx-4 py-6 sm:px-0">
+              <div className="text-3xl font-bold px-4">My Reviews</div>
+              <div className="justify-center items-centerpx-4 py-6">
                 <div className="text-center p-4 border-4 border-yellow-600 rounded-lg">
                   {this.state.cust_review_list.length == 0 && (
                     <p>You haven't made any reviews.</p>
