@@ -30,7 +30,7 @@ export class MapContainerNearbyVendorPin extends React.Component {
 
   async searchLatLon(latitude, longitude) {
     await fetch(
-      `http://localhost:3000/api/searchLatLon?latitude=${latitude}&longitude=${longitude}&limit=2`
+      `http://localhost:3000/api/searchLatLon?latitude=${latitude}&longitude=${longitude}&limit=10`
     )
       .then((data) => data.json())
       .then((json) => {

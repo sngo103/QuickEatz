@@ -105,11 +105,12 @@ export default class CustomerDashboard extends React.Component {
     this.setState({
       lat: coord_pair.latitude,
       lng: coord_pair.longitude,
+	  cust_nearby_vendors: [],
     });
     await fetch(
       `/api/searchLatLon?latitude=${coord_pair.latitude}&longitude=${
         coord_pair.longitude
-      }&limit=${3}`
+      }&limit=${10}`
     )
       .then((data) => data.json())
       .then((json) => {

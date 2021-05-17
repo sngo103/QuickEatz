@@ -185,7 +185,7 @@ class VendorSearch extends React.Component {
 				
 					<ul>
 					  {this.state.vendor_results.map((vendor) => (<>
-						  {this.state.cuisine_search == "" || vendor.cuisine.includes(this.state.cuisine_search) ? 
+						  {this.state.cuisine_search == "" || vendor.cuisine.toLowerCase().includes(this.state.cuisine_search.toLowerCase()) ? 
 							<li>
 							  <div>
 								<button

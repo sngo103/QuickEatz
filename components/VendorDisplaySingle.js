@@ -195,7 +195,7 @@ export class VendorDisplaySingle extends React.Component {
                   </h2>
                   <h2>{menu_item.desc}</h2>
                   <h2>
-                    <strong>Price:</strong> {menu_item.price}
+                    <strong>Price:</strong> ${menu_item.price.toFixed(2)}
                   </h2>
                   <br />
                 </li>
