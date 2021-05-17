@@ -90,8 +90,10 @@ export default class ViewVendorProfile extends React.Component {
                 <h1 className="text-3xl font-semibold">
                   {this.state.vendorObj.business_name}
                 </h1>
-                <div className="font-semibold inline-block">Currently Rated: </div> {this.state.vendorObj.average_rating}
-                {" Stars "}
+                {this.state.vendorObj.average_rating != -1 ? 
+				(<div className="font-semibold inline-block">Currently Rated: {this.state.vendorObj.average_rating} Stars</div> ) 
+				: (<div className="font-semibold inline-block"> Not rated. </div>)}
+                
                 <br />
                 <div className="font-semibold inline-block">Cuisine: </div> {this.state.vendorObj.cuisine}
                 <br />
@@ -116,7 +118,7 @@ export default class ViewVendorProfile extends React.Component {
                         <strong>{menu_item.food_name}</strong>
                         <br />
                         {menu_item.desc} <br />
-                        <strong>Price:</strong> ${menu_item.price}
+                        <strong>Price:</strong> ${menu_item.price.toFixed(2)}
                       </h2>
                       <hr />
                     </li>

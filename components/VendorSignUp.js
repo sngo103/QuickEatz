@@ -88,8 +88,8 @@ class VendorSignUp extends React.Component {
       business_name: event.target.business_name.value,
       phone_number: event.target.phone.value || "N/A",
       website: event.target.website.value || "N/A",
-      xCor: 40.85088985991754,
-      yCor: -73.97110926821726,
+      xCor: -73.97110926821726,
+      yCor: 40.85088985991754,
       hours: hoursStr,
       cuisine: event.target.cuisine.value,
       menu: this.state.menu,
@@ -145,41 +145,47 @@ class VendorSignUp extends React.Component {
 
   handleMenuSubmit(event) {
     event.preventDefault();
-    const new_item = {
-      food_name: this.state.item_name,
-      desc: this.state.item_desc,
-      price: parseFloat(this.state.item_price.toFixed(2)),
-      in_stock: true,
-    };
-    const newMenu = this.state.menu;
-    newMenu.push(new_item);
-    let newMenuDisplay = this.state.menuDisplay;
-    let new_xml = (
-      <div className="border-b-2 font-normal col-span-1">
-        {this.state.item_name}
-      </div>
-    );
-    newMenuDisplay.push(new_xml);
-    new_xml = (
-      <div className="border-b-2 pl-3 font-normal col-span-1">
-        {this.state.item_price.toFixed(2)}
-      </div>
-    );
-    newMenuDisplay.push(new_xml);
-    new_xml = (
-      <div className="border-b-2 font-normal col-span-4">
-        {this.state.item_desc}
-      </div>
-    );
-    newMenuDisplay.push(new_xml);
+	if(this.state.item_name == "" || this.state.item_desc == "" || this.state.item_price == ""){
+		console.log("Can't do that. 1 or more fields blank.");
+	}
+	else{
+		const new_item = {
+		  food_name: this.state.item_name,
+		  desc: this.state.item_desc,
+		  price: parseFloat(this.state.item_price.toFixed(2)),
+		  in_stock: true,
+		};
+		const newMenu = this.state.menu;
+		newMenu.push(new_item);
+		let newMenuDisplay = this.state.menuDisplay;
+		let new_xml = (
+		  <div className="border-b-2 font-normal col-span-1">
+			{this.state.item_name}
+		  </div>
+		);
+		newMenuDisplay.push(new_xml);
+		new_xml = (
+		  <div className="border-b-2 pl-3 font-normal col-span-1">
+			{this.state.item_price.toFixed(2)}
+		  </div>
+		);
+		newMenuDisplay.push(new_xml);
+		new_xml = (
+		  <div className="border-b-2 font-normal col-span-4">
+			{this.state.item_desc}
+		  </div>
+		);
+		newMenuDisplay.push(new_xml);
 
-    this.setState({
-      item_name: "",
-      item_price: 0,
-      item_desc: "",
-      menu: newMenu,
-      menuDisplay: newMenuDisplay,
-    });
+		this.setState({
+		  item_name: "",
+		  item_price: 0,
+		  item_desc: "",
+		  menu: newMenu,
+		  menuDisplay: newMenuDisplay,
+		});
+	}
+    
   }
 
   handlePass(event) {

@@ -119,6 +119,7 @@ export default class VendorDashboard extends React.Component {
       Router.push("/login");
     }
   }
+  /*
   componentDidUpdate() {
     //Not needed
 
@@ -214,6 +215,7 @@ export default class VendorDashboard extends React.Component {
       }
     }
   }
+  */
   setCoordinates(coord_pair) {
     console.log(coord_pair);
     this.setState({
