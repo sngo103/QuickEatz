@@ -14,6 +14,7 @@ class NavBar extends React.Component {
       isUpToDate: false,
       isLoggedIn: false,
       isLoading: true,
+      account_type: ""
     };
     this.handleLogout = this.handleLogout.bind(this);
     this.openMenu = this.openMenu.bind(this);
@@ -23,6 +24,7 @@ class NavBar extends React.Component {
   componentDidMount() {
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
+    const storedType = localStorage.getItem("quickeatz_type");
     const storedState = localStorage.getItem("quickeatz");
     if (storedState) {
       const data = {
@@ -44,6 +46,7 @@ class NavBar extends React.Component {
             this.setState({
               isLoggedIn: true,
               isLoading: false,
+              account_type: storedType
             });
           } else {
             this.setState({
@@ -99,7 +102,7 @@ class NavBar extends React.Component {
     await logout(this.state.email);
     localStorage.removeItem("quickeatz_token");
     localStorage.removeItem("quickeatz_email");
-	localStorage.removeItem("quickeatz_type");
+    localStorage.removeItem("quickeatz_type");
     localStorage.setItem("quickeatz", false);
     this.setState({
       isLoggedIn: false,
@@ -145,7 +148,11 @@ class NavBar extends React.Component {
               </button>
             </div>
             {this.state.openMenu && (
-              <div className="container" ref={this.container} onMouseLeave={this.closeMenu}>
+              <div
+                className="container"
+                ref={this.container}
+                onMouseLeave={this.closeMenu}
+              >
                 <div
                   className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
@@ -155,21 +162,20 @@ class NavBar extends React.Component {
                   <Link href="/profile">
                     <a
                       href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
                       Your Profile
                     </a>
                   </Link>
-                  
-                    <button
-                      onClick={this.handleLogout}
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                      role="menuitem"
-                    >
-                      Sign out
-                    </button>
-                  
+
+                  <button
+                    onClick={this.handleLogout}
+                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Sign out
+                  </button>
                 </div>
               </div>
             )}
@@ -182,18 +188,22 @@ class NavBar extends React.Component {
       <>
         <div key="signedOutNav" className="hidden md:block">
           <div className="ml-4 flex items-center md:ml-6">
-          <Link href="/createAccount"><a
-              href="/createAccount"
-              className="bg-gray-900 text-white mx-1 px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-            >
-              Sign Up
-            </a></Link>
-            <Link href="/login"><a
-              href="/login"
-              className="bg-gray-900 text-white mx-1 px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-            >
-              Log In
-            </a></Link>
+            <Link href="/createAccount">
+              <a
+                href="/createAccount"
+                className="bg-gray-900 text-white mx-1 px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+              >
+                Sign Up
+              </a>
+            </Link>
+            <Link href="/login">
+              <a
+                href="/login"
+                className="bg-gray-900 text-white mx-1 px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+              >
+                Log In
+              </a>
+            </Link>
           </div>
         </div>
       </>
@@ -211,26 +221,38 @@ class NavBar extends React.Component {
               <div className="flex items-center">
                 <div className="flex-shrink-0 text-white font-bungee text-2xl">
                   {" "}
-                  <Link href={this.state.isLoggedIn ? "/dashboard" : "/"}>QuickEatz</Link>{" "}
+                  <Link href={this.state.isLoggedIn ? "/dashboard" : "/"}>
+                    QuickEatz
+                  </Link>{" "}
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                  <Link href="/trending">
-                    <a
-                      href="/trending"
-                      className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                    >
-                      Trending
-                    </a>
+                    <Link href="/trending">
+                      <a
+                        href="/trending"
+                        className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                      >
+                        Trending
+                      </a>
                     </Link>
                     {this.state.isLoggedIn && (
                       <Link href="/dashboard">
-                      <a
-                        href="/dashboard"
-                        className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
-                      >
-                        Dashboard
-                      </a>
+                        <a
+                          href="/dashboard"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Dashboard
+                        </a>
+                      </Link>
+                    )}
+                    {this.state.isLoggedIn && (
+                      <Link href="/vendorLookup">
+                        <a
+                          href="/vendorLookup"
+                          className="bg-gray-900 text-white px-3 py-1 rounded-md text-sm font-medium border-4 border-black hover:border-white"
+                        >
+                          Vendors
+                        </a>
                       </Link>
                     )}
                   </div>
