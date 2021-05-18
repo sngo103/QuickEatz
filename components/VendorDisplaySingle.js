@@ -184,7 +184,11 @@ export class VendorDisplaySingle extends React.Component {
                     {this.state.vendor_lastname}
                   </h2>
                   <div className="inline-flex font-semibold">Address: </div>
-                  <> ({this.state.vendor_location[0]}, {this.state.vendor_location[1]})</>
+                  <>
+                    {" "}
+                    ({this.state.vendor_location[0]},{" "}
+                    {this.state.vendor_location[1]})
+                  </>
                   <br />
                   <div className="inline-flex font-semibold">Cuisine: </div>
                   <> {this.state.vendor_cuisine}</>
@@ -198,9 +202,7 @@ export class VendorDisplaySingle extends React.Component {
                     <> {this.state.vendor_rating} Stars</>
                   )}
                   <br />
-                  <div className="inline-flex font-semibold">
-                    Phone Number: 
-                  </div>
+                  <div className="inline-flex font-semibold">Phone Number:</div>
                   <> {this.state.vendor_phone} </>
                   <br />
                   <div className="inline-flex font-semibold">Website:</div>{" "}
@@ -211,6 +213,23 @@ export class VendorDisplaySingle extends React.Component {
                     {this.state.vendor_website}
                   </a>
                   <br />
+                  <br />
+                  {this.state.account_type == "customer" ? (
+                    <div>
+                      <button
+                        className="text-lg border-2 border-black rounded-md px-2 py-1 hover:bg-yellow-500 hover:text-white"
+                        onClick={() =>
+                          Router.push({
+                            pathname: "/writeReview",
+                            query: { vendor_id: this.state.vendor_id },
+                          })
+                        }
+                      >
+                        {" "}
+                        ⭐ Leave a Review{" "}
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
 
@@ -237,44 +256,38 @@ export class VendorDisplaySingle extends React.Component {
               </div>
             </div>
           </div>
-          <hr className="border-2 border-black mx-14" /><br />
-          {this.state.account_type == "customer" ? (
-            <div>
-              <button
-                className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
-                onClick={() =>
-                  Router.push({
-                    pathname: "/writeReview",
-                    query: { vendor_id: this.state.vendor_id },
-                  })
-                }
-              >
-                {" "}
-                Write a Review!{" "}
-              </button>
+          <hr className="border-2 border-black mx-14" />
+          <br />
+          <div className="flex justify-center items-center">
+            <div className="border-2 border-black w-2/3 p-2 pt-4">
+              <h2 className="text-3xl pb-2">➖ Reviews ➖</h2>
+              {revs.length == 0 && (
+                <p className="text-md font-semibold">
+                  There are no reviews for this vendor.
+                </p>
+              )}
+              <ul>
+                {revs.map((review) => (
+                  <>
+                    <li className="text-md p-2 border-2 text-left font-semibold shadow-sm">
+                      <strong> User {review.customer_name} </strong>
+                      <br /> ⭐{review.rating} Stars{" "}
+                      <div className="float-right font-bold">
+                        {new Date(review.created_at).toLocaleDateString()}{" "}
+                        {new Date(review.created_at).toLocaleTimeString()}
+                      </div>
+                      <p className="font-normal">{review.review_content}</p>
+                    </li>
+                    <hr />
+                  </>
+                ))}
+              </ul>
             </div>
-          ) : null}
-          <div>
-            <h2 className="text-3xl">➖ Reviews ➖</h2>
-            <br />
-            {revs.length == 0 && <p>There are no reviews for this vendor.</p>}
-            <ul>
-              {revs.map((review) => (
-                <li>
-                  <br />
-                  <h2>
-                    <strong>
-                      {" "}
-                      User {review.customer_name} Rated {review.rating} Stars{" "}
-                    </strong>
-                  </h2>
-                  <p>{review.review_content}</p>
-                  <br />
-                  <hr />
-                </li>
-              ))}
-            </ul>
           </div>
+          <br />
+          <br />
+          <br />
+          <br />
         </body>
       </>
     );
