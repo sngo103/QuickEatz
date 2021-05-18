@@ -162,7 +162,7 @@ class NavBar extends React.Component {
                   <Link href="/profile">
                     <a
                       href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
                       Your Profile
