@@ -68,6 +68,22 @@ class VendorSearch extends React.Component {
     await fetch(`/api/getVendorsByCuisine?limit=${3}`)
       .then((data) => data.json())
       .then((json) => {
+		  json.forEach((vend) => {
+			let lattt = vend.current_location.coordinates[0];
+            let lonnn = vend.current_location.coordinates[1];
+            let formatted_location = fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+                    )
+                          .then((coordData) => coordData.json())
+                          .then(
+                            (finalData) => {
+								vend.loc = finalData.results[0].formatted_address;
+								this.setState({
+								  vendor_results: json,
+								}); 
+							}
+                          );
+		 }),
         //let vendor_list = [],
         /*json.forEach((vendor) => {
 				if(vendor_list.includes(vendor.cuisine)){
@@ -89,8 +105,23 @@ class VendorSearch extends React.Component {
     await fetch(`/api/getVendorsByRating?limit=${3}`)
       .then((data) => data.json())
       .then((json) => {
+		  json.forEach((vend) => {
+			let lattt = vend.current_location.coordinates[0];
+            let lonnn = vend.current_location.coordinates[1];
+            let formatted_location = fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+                    )
+                          .then((coordData) => coordData.json())
+                          .then(
+                            (finalData) => {
+								vend.loc = finalData.results[0].formatted_address;
+								this.setState({
+								  vendor_results: json,
+								}); 
+							}
+                          );
+		 }),
         this.setState({
-          vendor_results: json,
           rating_mode: true,
           cuisine_mode: false,
           alph_mode: false,
@@ -101,12 +132,27 @@ class VendorSearch extends React.Component {
     await fetch(`/api/getVendorByName?limit=${3}`)
       .then((data) => data.json())
       .then((json) => {
+		json.forEach((vend) => {
+			let lattt = vend.current_location.coordinates[0];
+            let lonnn = vend.current_location.coordinates[1];
+            let formatted_location = fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+                    )
+                          .then((coordData) => coordData.json())
+                          .then(
+                            (finalData) => {
+								vend.loc = finalData.results[0].formatted_address;
+								this.setState({
+								  vendor_results: json,
+								}); 
+							}
+                          );
+		 }),
         this.setState({
-          vendor_results: json,
           rating_mode: false,
           cuisine_mode: false,
           alph_mode: true,
-        });
+        })
       });
   }
 
@@ -181,8 +227,7 @@ class VendorSearch extends React.Component {
                             <div className="inline-flex font-semibold">
                               Address:
                             </div>{" "}
-                            ({vendor.current_location.coordinates[0]},{" "}
-                            {vendor.current_location.coordinates[1]}) <br />
+                            {vendor.loc} <br />
                             <div className="inline-flex font-semibold">
                               Cuisine:
                             </div>{" "}
@@ -272,8 +317,7 @@ class VendorSearch extends React.Component {
                                   <div className="inline-flex font-semibold">
                                     Address:
                                   </div>{" "}
-                                  ({vendor.current_location.coordinates[0]},{" "}
-                                  {vendor.current_location.coordinates[1]}){" "}
+                                  {vendor.loc}{" "}
                                   <br />
                                   <div className="inline-flex font-semibold">
                                     Cuisine:

@@ -22,6 +22,7 @@ export class WriteReview extends React.Component {
       current_vendor_website: "",
       current_vendor_menu: [],
       current_vendor_cuisine: "",
+	  vendor_address: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -73,7 +74,6 @@ export class WriteReview extends React.Component {
     fetch(`/api/getVendorName?_id=${Router.query.vendor_id}`) //Get the business name of the reviewee for readability
       .then((v_data) => v_data.json())
       .then((v_json) => {
-        console.log("VJSON:", v_json);
         this.setState({
           current_vendor_name: v_json.business_name,
           current_vendor_firstname: v_json.first_name,
@@ -83,7 +83,15 @@ export class WriteReview extends React.Component {
           current_vendor_website: v_json.website,
           current_vendor_menu: v_json.menu,
           current_vendor_cuisine: v_json.cuisine,
-        });
+        }),
+		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${v_json.current_location.coordinates[0]},${v_json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`)
+				.then((coordData) => coordData.json())
+				.then((finalData) => {
+					this.setState({
+					vendor_address: finalData.results[0].formatted_address,
+						}
+						  )
+				})
       }); //Get the name specifically
     console.log("Here's the latest state!");
     console.log(this.state);
@@ -149,9 +157,8 @@ export class WriteReview extends React.Component {
                   </h2>
                   <div className="inline-flex font-semibold">Address: </div>
                   <>
-                    {" "}
-                    ({this.state.current_vendor_address[0]},{" "}
-                    {this.state.current_vendor_address[1]})
+					{" "}
+                    {this.state.vendor_address}
                   </>
                   <br />
                   <div className="inline-flex font-semibold">Cuisine: </div>
