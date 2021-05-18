@@ -174,22 +174,46 @@ class VendorSearch extends React.Component {
                             {vendor.business_name}{" "}
                           </div>
                           <div className="p-2 text-left col-span-7 border">
+                            <div className="inline-flex font-semibold">
+                              {vendor.business_name}
+                            </div>{" "}
+                            <br />
+                            <div className="inline-flex font-semibold">
+                              Address:
+                            </div>{" "}
+                            ({vendor.current_location.coordinates[0]},{" "}
+                            {vendor.current_location.coordinates[1]}) <br />
+                            <div className="inline-flex font-semibold">
+                              Cuisine:
+                            </div>{" "}
+                            {vendor.cuisine} <br />
+                            <div className="inline-flex font-semibold">
+                              Average Rating:
+                            </div>
+                            {vendor.average_rating == -1 ? (
+                              <> Pending </>
+                            ) : (
+                              <> {vendor.average_rating} Stars</>
+                            )}
+                            <br />
+                            <div className="inline-flex font-semibold">
+                              Phone Number:
+                            </div>{" "}
+                            {vendor.phone_number} <br />
+                            <div className="inline-flex font-semibold">
+                              Website:
+                            </div>{" "}
                             <a
                               className="font-semibold text-yellow-400 hover:text-yellow-500"
                               href={vendor.website}
                             >
                               {vendor.website}
                             </a>
-                            <h3>{vendor.cuisine}</h3>
-                            {vendor.average_rating == -1 ? (
-                              <h3>Rating pending</h3>
-                            ) : (
-                              <h3> Rated {vendor.average_rating} Stars</h3>
-                            )}
+                            <br />
                           </div>
                           <div className="p-2 col-span-1 border flex justify-center items-center">
                             <button
-                              className="flex justify-center items-center border-4 border-yellow-400 rounded-full hover:border-yellow-500 hover:text-white"
+                              className="flex justify-center items-center border-4 border-yellow-400 rounded-full hover:border-yellow-500 hover:text-white focus:outline-none"
                               onClick={() =>
                                 Router.push({
                                   pathname: "/viewVendorSingle",
@@ -227,7 +251,7 @@ class VendorSearch extends React.Component {
                     <br />
                     <div>
                       {" "}
-                      <ul>
+                      <div className="grid grid-cols-1 border">
                         {this.state.vendor_results.map((vendor) => (
                           <>
                             {this.state.cuisine_search == "" ||
@@ -236,10 +260,52 @@ class VendorSearch extends React.Component {
                               .includes(
                                 this.state.cuisine_search.toLowerCase()
                               ) ? (
-                              <li>
-                                <div>
+                              <div className="grid grid-cols-12 border">
+                                <div className="flex justify-center items-center p-2 col-span-4 border text-3xl font-semibold">
+                                  {vendor.business_name}{" "}
+                                </div>
+                                <div className="p-2 text-left col-span-7 border">
+                                  <div className="inline-flex font-semibold">
+                                    {vendor.business_name}
+                                  </div>{" "}
+                                  <br />
+                                  <div className="inline-flex font-semibold">
+                                    Address:
+                                  </div>{" "}
+                                  ({vendor.current_location.coordinates[0]},{" "}
+                                  {vendor.current_location.coordinates[1]}){" "}
+                                  <br />
+                                  <div className="inline-flex font-semibold">
+                                    Cuisine:
+                                  </div>{" "}
+                                  {vendor.cuisine} <br />
+                                  <div className="inline-flex font-semibold">
+                                    Average Rating:
+                                  </div>
+                                  {vendor.average_rating == -1 ? (
+                                    <> Pending </>
+                                  ) : (
+                                    <> {vendor.average_rating} Stars</>
+                                  )}
+                                  <br />
+                                  <div className="inline-flex font-semibold">
+                                    Phone Number:
+                                  </div>{" "}
+                                  {vendor.phone_number} <br />
+                                  <div className="inline-flex font-semibold">
+                                    Website:
+                                  </div>{" "}
+                                  <a
+                                    className="font-semibold text-yellow-400 hover:text-yellow-500"
+                                    href={vendor.website}
+                                  >
+                                    {vendor.website}
+                                  </a>
+                                  <br />
+                                </div>
+                                <div className="p-2 col-span-1 border flex justify-center items-center">
                                   <button
-                                    className="text-xl w-1/6 border-2 border-black rounded-md p-2 hover:bg-black hover:text-white"
+                                    className="flex justify-center items-center border-4 border-yellow-400 rounded-full hover:border-yellow-500 hover:text-white focus:outline-none"
                                     onClick={() =>
                                       Router.push({
                                         pathname: "/viewVendorSingle",
@@ -247,22 +313,18 @@ class VendorSearch extends React.Component {
                                       })
                                     }
                                   >
-                                    {" "}
-                                    {vendor.business_name}{" "}
+                                    <Image
+                                      src="/images/right3.png"
+                                      width={40}
+                                      height={40}
+                                    />
                                   </button>
                                 </div>
-                                <h2>{vendor.website}</h2>
-                                <h3>{vendor.cuisine}</h3>
-                                {vendor.average_rating == -1 ? (
-                                  <h3>Rating pending</h3>
-                                ) : (
-                                  <h3> Rated {vendor.average_rating} Stars</h3>
-                                )}
-                              </li>
+                              </div>
                             ) : null}
                           </>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   </>
                 )}
