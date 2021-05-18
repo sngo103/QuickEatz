@@ -112,6 +112,7 @@ export class MapContainerNearbyVendorPin extends React.Component {
           ) => (
             <Marker
               key={single_vendor._id.toString()}
+			  icon={"/images/quickeatzicon.png"}
               position={{
                 lat: single_vendor.current_location.coordinates[0],
                 lng: single_vendor.current_location.coordinates[1],
