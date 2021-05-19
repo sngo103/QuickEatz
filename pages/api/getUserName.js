@@ -13,7 +13,6 @@ export default async function handler(req, res){
   const user_search_param = { "_id": user_id_param };
   
   const response = await db.collection("customers").findOne(user_search_param);
-  //console.log(response);
   
   res.json(response); 
   

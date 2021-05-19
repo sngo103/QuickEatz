@@ -48,16 +48,13 @@ export default function mApp({ vendors }) {
 
     const res = await data.json();
 
-    console.log(res);
     close_vendors = res;
-    console.log(close_vendors);
     return res;
   };
 
   if (loadError) return "Error loading Maps";
   if (!isLoaded) return "Loading Maps";
 
-  console.log(vendors);
   return (
     <>
       <p id="empty_text"> </p>
@@ -76,7 +73,6 @@ export default function mApp({ vendors }) {
             fetch(geo_url)
               .then((response) => response.json())
               .then((data) => {
-                console.log(data);
                 your_address_parts = data.results[0].formatted_address;
                 setMarkers((current) => [
                   {
@@ -117,7 +113,6 @@ export default function mApp({ vendors }) {
                 fetch(geo_url)
                   .then((response) => response.json())
                   .then((data) => {
-                    console.log(data);
                     address_parts = data.results[0].formatted_address;
                     setSelected({
                       owner_id: single_vendor._id,
@@ -137,7 +132,6 @@ export default function mApp({ vendors }) {
           {selected ? (
             <InfoWindow
               position={{ lat: selected.lat, lng: selected.lng }}
-              onClick={() => console.log("Power Pizza")}
               onCloseClick={() => {
                 setSelected(null);
               }}
@@ -196,7 +190,6 @@ export async function getServerSideProps() {
     .limit(20)
     .toArray();
 
-  console.log(current_vendor);
   return {
     props: {
       vendors: JSON.parse(JSON.stringify(vendors)),

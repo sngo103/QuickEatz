@@ -40,7 +40,6 @@ class VendorSearch extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -56,7 +55,6 @@ class VendorSearch extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: false,
@@ -68,91 +66,76 @@ class VendorSearch extends React.Component {
     await fetch(`/api/getVendorsByCuisine?limit=${3}`)
       .then((data) => data.json())
       .then((json) => {
-		  json.forEach((vend) => {
-			let lattt = vend.current_location.coordinates[0];
-            let lonnn = vend.current_location.coordinates[1];
-            let formatted_location = fetch(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
-                    )
-                          .then((coordData) => coordData.json())
-                          .then(
-                            (finalData) => {
-								vend.loc = finalData.results[0].formatted_address;
-								this.setState({
-								  vendor_results: json,
-								}); 
-							}
-                          );
-		 }),
-        //let vendor_list = [],
-        /*json.forEach((vendor) => {
-				if(vendor_list.includes(vendor.cuisine)){
-					//Do nothing, this cuisine's in the list
-				}
-				else{
-					vendor_list.push(vendor.cuisine);
-				}
-			}),*/
-        this.setState({
-          vendor_results: json,
-          rating_mode: false,
-          cuisine_mode: true,
-          alph_mode: false,
-        });
+        json.forEach((vend) => {
+          let lattt = vend.current_location.coordinates[0];
+          let lonnn = vend.current_location.coordinates[1];
+          let formatted_location = fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+          )
+            .then((coordData) => coordData.json())
+            .then((finalData) => {
+              vend.loc = finalData.results[0].formatted_address;
+              this.setState({
+                vendor_results: json,
+              });
+            });
+        }),
+          this.setState({
+            vendor_results: json,
+            rating_mode: false,
+            cuisine_mode: true,
+            alph_mode: false,
+          });
       });
   }
   async onRatingClick() {
     await fetch(`/api/getVendorsByRating?limit=${3}`)
       .then((data) => data.json())
       .then((json) => {
-		  json.forEach((vend) => {
-			let lattt = vend.current_location.coordinates[0];
-            let lonnn = vend.current_location.coordinates[1];
-            let formatted_location = fetch(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
-                    )
-                          .then((coordData) => coordData.json())
-                          .then(
-                            (finalData) => {
-								vend.loc = finalData.results[0].formatted_address;
-								this.setState({
-								  vendor_results: json,
-								}); 
-							}
-                          );
-		 }),
-        this.setState({
-          rating_mode: true,
-          cuisine_mode: false,
-          alph_mode: false,
-        });
+        json.forEach((vend) => {
+          let lattt = vend.current_location.coordinates[0];
+          let lonnn = vend.current_location.coordinates[1];
+          let formatted_location = fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+          )
+            .then((coordData) => coordData.json())
+            .then((finalData) => {
+              vend.loc = finalData.results[0].formatted_address;
+              this.setState({
+                vendor_results: json,
+              });
+            });
+        }),
+          this.setState({
+            rating_mode: true,
+            cuisine_mode: false,
+            alph_mode: false,
+          });
       });
   }
   async onAlphClick() {
     await fetch(`/api/getVendorByName?limit=${3}`)
       .then((data) => data.json())
       .then((json) => {
-		json.forEach((vend) => {
-			let lattt = vend.current_location.coordinates[0];
-            let lonnn = vend.current_location.coordinates[1];
-            let formatted_location = fetch(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
-                    )
-                          .then((coordData) => coordData.json())
-                          .then(
-                            (finalData) => {
-								vend.loc = finalData.results[0].formatted_address;
-								this.setState({
-								  vendor_results: json,
-								}); 
-							}
-                          );
-		 }),
-        this.setState({
-          rating_mode: false,
-          cuisine_mode: false,
-          alph_mode: true,
-        })
+        json.forEach((vend) => {
+          let lattt = vend.current_location.coordinates[0];
+          let lonnn = vend.current_location.coordinates[1];
+          let formatted_location = fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+          )
+            .then((coordData) => coordData.json())
+            .then((finalData) => {
+              vend.loc = finalData.results[0].formatted_address;
+              this.setState({
+                vendor_results: json,
+              });
+            });
+        }),
+          this.setState({
+            rating_mode: false,
+            cuisine_mode: false,
+            alph_mode: true,
+          });
       });
   }
 
@@ -317,8 +300,7 @@ class VendorSearch extends React.Component {
                                   <div className="inline-flex font-semibold">
                                     Address:
                                   </div>{" "}
-                                  {vendor.loc}{" "}
-                                  <br />
+                                  {vendor.loc} <br />
                                   <div className="inline-flex font-semibold">
                                     Cuisine:
                                   </div>{" "}

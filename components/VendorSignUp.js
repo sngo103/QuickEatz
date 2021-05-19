@@ -28,8 +28,6 @@ class VendorSignUp extends React.Component {
 
   formatHours(hoursArr) {
     let retStr = "";
-    console.log(hoursArr);
-    console.log(typeof hoursArr);
     for (const element in hoursArr) {
       retStr += element.day + " " + element.start + " - " + element.end + "\n";
     }
@@ -38,7 +36,6 @@ class VendorSignUp extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    console.log("TARGET VALS:", event.target);
     let hoursStr = "";
     hoursStr +=
       "Monday: " +
@@ -172,12 +169,9 @@ class VendorSignUp extends React.Component {
   handleMenuSubmit(event) {
     event.preventDefault();
     if (
-      this.state.item_name == "" ||
-      this.state.item_desc == "" ||
-      this.state.item_price == ""
+      this.state.item_name != "" &&
+      this.state.item_price != ""
     ) {
-      console.log("Can't do that. 1 or more fields blank.");
-    } else {
       const new_item = {
         food_name: this.state.item_name,
         desc: this.state.item_desc,
@@ -326,7 +320,6 @@ class VendorSignUp extends React.Component {
                       name="monStart"
                       type="time"
                       required
-                      onChange={(e) => console.log(typeof e.target.value)}
                     />
                   </div>
                   <div className="col-span-2">
@@ -385,7 +378,7 @@ class VendorSignUp extends React.Component {
                   {this.state.menuDisplay.map((cell) => cell)}
                 </div>
                 <div className="text-sm">
-                  Name:{" "}
+                  *Name:{" "}
                   <input
                     name="item_name"
                     value={this.state.item_name}
@@ -393,7 +386,7 @@ class VendorSignUp extends React.Component {
                     type="text"
                     className="m-2 px-2 border rounded-md"
                   />
-                  Price: $
+                  *Price: $
                   <input
                     name="item_price"
                     value={this.state.item_price}

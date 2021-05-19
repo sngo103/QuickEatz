@@ -40,7 +40,6 @@ export default class EditCustomerProfile extends React.Component {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -51,7 +50,6 @@ export default class EditCustomerProfile extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -78,8 +76,6 @@ export default class EditCustomerProfile extends React.Component {
             cust_lastname: json.last_name,
             cust_review_ids: json.reviews,
           }),
-            console.log("I helped!"),
-            console.log(json),
             json.reviews.forEach(
               (r_id) =>
                 fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
@@ -101,7 +97,6 @@ export default class EditCustomerProfile extends React.Component {
             );
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,
@@ -141,8 +136,6 @@ export default class EditCustomerProfile extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            //Not taken
-            //console.log("DONE");
             this.setState({ usernameInvalid: false });
             const user_email_str = this.state.cust_email;
             const data = fetch(
@@ -153,13 +146,9 @@ export default class EditCustomerProfile extends React.Component {
               cust_new_uname: "",
             });
           } else {
-            //Taken
-            //console.log("FAIL");
             this.setState({ usernameInvalid: true });
           }
         });
-    } else {
-      console.log("This is empty! Bad to submit!");
     }
   }
 
@@ -177,8 +166,6 @@ export default class EditCustomerProfile extends React.Component {
         cust_firstname: new_fname,
         cust_new_firstname: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
     }
   }
   handleLastNameSubmit(event) {
@@ -195,8 +182,6 @@ export default class EditCustomerProfile extends React.Component {
         cust_lastname: new_lname,
         cust_new_lastname: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
     }
   }
   handleEmailSubmit(event) {
@@ -219,13 +204,11 @@ export default class EditCustomerProfile extends React.Component {
             });
             localStorage.setItem("quickeatz_email", new_email);
           } else {
-            console.log("That email's in use!");
+            console.log("Error:", e_json.error);
           }
         })
-        .catch((error) => console.log(error)); //Log it for now
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+        .catch((error) => console.log(error)); // Log it for now
+    } 
   }
 
   render() {

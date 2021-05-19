@@ -17,16 +17,10 @@ export default async function handler(req, res){ //TAKES THE EMAIL AND SEARCHES,
 	  food_name: data.food_name,
 	  desc: data.desc,
 	  price: parseFloat(data.price),};
-  //console.log(new_menuitem);
-  //console.log(search_param);
-  const pull_menuitem_vendor = { $pull: { menu: old_menuitem } };
- 
 
+    const pull_menuitem_vendor = { $pull: { menu: old_menuitem } };
+ 
   await db
       .collection("vendors")
       .updateOne(vendor_search_param, pull_menuitem_vendor);
- 
-  //MIGHT NOT BE GOOD STYLE TO DO NOTHING WHEN DONE
-
-  //res.json(response);
 }

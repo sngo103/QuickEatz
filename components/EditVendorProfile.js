@@ -65,7 +65,6 @@ export default class EditVendorProfile extends React.Component {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -76,7 +75,6 @@ export default class EditVendorProfile extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -110,8 +108,6 @@ export default class EditVendorProfile extends React.Component {
             vendor_cuisine: json.cuisine,
             vendor_open: json.is_open,
           }),
-            console.log("I helped!"),
-            console.log(json),
             json.reviews.forEach(
               (r_id) =>
                 fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
@@ -129,11 +125,11 @@ export default class EditVendorProfile extends React.Component {
                           });
                       }); //Get the name specifically
                   })
-                  .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
+                  // If there is some review that doesn't exist in the table, but referenced for some reason
+                  .catch((error) => console.log(error)) 
             );
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,
@@ -186,7 +182,6 @@ export default class EditVendorProfile extends React.Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.success) { //Not taken
-		  //console.log("DONE");
           this.setState({ usernameInvalid: false });
 		  const user_email_str = this.state.cust_email;
 		  const data = fetch(
@@ -197,14 +192,11 @@ export default class EditVendorProfile extends React.Component {
         vendor_new_uname: "",
       });
         } else { //Taken
-			//console.log("FAIL");
           this.setState({ usernameInvalid: true });
         }
       });
       
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
 
   handleFirstNameSubmit(event) {
@@ -221,9 +213,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_firstname: new_fname,
         vendor_new_firstname: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
   handleLastNameSubmit(event) {
     event.preventDefault();
@@ -239,9 +229,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_lastname: new_lname,
         vendor_new_lastname: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
   handleEmailSubmit(event) {
     event.preventDefault();
@@ -263,13 +251,11 @@ export default class EditVendorProfile extends React.Component {
             });
             localStorage.setItem("quickeatz_email", new_email);
           } else {
-            console.log("That email's in use!");
+            console.log("Error:", e_json.error);
           }
         })
         .catch((error) => console.log(error)); //Log it for now
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
   handleCuisineSubmit(event) {
     event.preventDefault();
@@ -284,8 +270,6 @@ export default class EditVendorProfile extends React.Component {
         vendor_cuisine: new_cuisine,
         vendor_new_cuisine: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
     }
   }
   handleWebsiteSubmit(event) {
@@ -302,9 +286,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_website: new_website,
         vendor_new_website: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
   handleHoursSubmit(event) {
     event.preventDefault();
@@ -320,9 +302,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_hours: new_hours,
         vendor_new_hours: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
   handlePhoneNumberSubmit(event) {
     event.preventDefault();
@@ -338,9 +318,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_phonenumber: new_phonenumber,
         vendor_new_phonenumber: "",
       });
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
 
   handleMapToggle(event) {
@@ -382,9 +360,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_new_menuitem_price: "0",
       });
       Router.reload(); //FORCE A RELOAD TO UPDATE THE MENU, TEMPORARY SOLUTION UNTIL SOMETHING BETTER FOUND
-    } else {
-      console.log("This is empty! Bad to submit!");
-    }
+    } 
   }
 
   render() {

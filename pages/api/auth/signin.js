@@ -27,10 +27,6 @@ export default async (req, res) => {
     } else {
       const user = response[0];
       const accepted = compareSync(req.body.password, user.password);
-	 // const accepted = (req.body.password == user.password);
-	 // console.log(accepted);
-	 // console.log(req.body.password.length);
-	 // console.log(user.password.length);
       if (accepted) {
         res.status(200).json({ 
             message: "Password accepted.",

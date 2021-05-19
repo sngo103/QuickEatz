@@ -14,7 +14,6 @@ export default async function handler(req, res){ //TAKES THE EMAIL AND SEARCHES,
   
   
   const new_phonenumber = data.phonenumber;
-  //console.log(search_param);
   const push_phone_vendor = { $set: { phone_number: new_phonenumber } };
  
 
@@ -22,7 +21,4 @@ export default async function handler(req, res){ //TAKES THE EMAIL AND SEARCHES,
       .collection("vendors")
       .updateOne(vendor_search_param, push_phone_vendor);
  
-  //MIGHT NOT BE GOOD STYLE TO DO NOTHING WHEN DONE
-
-  //res.json(response);
 }

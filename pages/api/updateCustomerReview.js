@@ -19,7 +19,6 @@ export default async function handler(req, res) {
   const response = await db
     .collection("customers")
     .updateOne(user_search_param, insert_review);
-  console.log(response);
 
   res.json(response);
 }

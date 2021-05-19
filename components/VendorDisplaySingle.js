@@ -42,7 +42,6 @@ export class VendorDisplaySingle extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -58,7 +57,6 @@ export class VendorDisplaySingle extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: false,
@@ -68,9 +66,6 @@ export class VendorDisplaySingle extends React.Component {
     if (this.state.vendor_id == "") {
       //This MAY be bad practice, but it works and shouldnt cause any loops, unless you go to the page directly
       const vendor_id = Router.query.vendor_id;
-      console.log("VENDOR HEERE");
-      console.log(vendor_id);
-      console.log(typeof vendor_id);
       const vendor = fetch(`/api/getVendorSingle?_id=${vendor_id}`) //Get the vendor's data
         .then((data) => data.json())
         .then((json) => {
@@ -96,8 +91,6 @@ export class VendorDisplaySingle extends React.Component {
 						}
 						  )
 				}),
-            console.log("I helped!"),
-            console.log(json),
             json.reviews.forEach(
               (r_id) =>
                 fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
@@ -107,7 +100,6 @@ export class VendorDisplaySingle extends React.Component {
                       .then((c_data) => c_data.json())
                       .then((c_json) => {
                         (r_json.customer_name = c_json.username),
-                          console.log("HERE1."),
                           this.setState({
                             vendor_review_list: [
                               ...this.state.vendor_review_list,
@@ -123,13 +115,8 @@ export class VendorDisplaySingle extends React.Component {
   }
 
   componentDidUpdate() {
-    //  console.log(this.state.vendor_id.length);
     if (this.state.vendor_id.length == 0 && !this.state.isLoggedIn) {
-      //This MAY be bad practice, but it works and shouldnt cause any loops, unless you go to the page directly
       const vendor_id = Router.query.vendor_id;
-      console.log("VENDOR HERE");
-      console.log(vendor_id);
-      console.log(typeof vendor_id);
       const vendor = fetch(`/api/getVendorSingle?_id=${vendor_id}`) //Get the vendor's data
         .then((data) => data.json())
         .then((json) => {
@@ -147,8 +134,6 @@ export class VendorDisplaySingle extends React.Component {
             vendor_phone: json.phone_number,
             vendor_location: json.current_location.coordinates,
           }),
-            console.log("I helped!"),
-            console.log(json),
             json.reviews.forEach(
               (r_id) =>
                 fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
@@ -158,7 +143,6 @@ export class VendorDisplaySingle extends React.Component {
                       .then((c_data) => c_data.json())
                       .then((c_json) => {
                         (r_json.customer_name = c_json.username),
-                          console.log("HERE2."),
                           this.setState({
                             vendor_review_list: [
                               ...this.state.vendor_review_list,

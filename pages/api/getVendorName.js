@@ -13,7 +13,6 @@ export default async function handler(req, res){
   const vendor_search_param = { "_id": vendor_id_param };
   
   const response = await db.collection("vendors").findOne(vendor_search_param);
-  //console.log(response);
   
   res.json(response); 
   

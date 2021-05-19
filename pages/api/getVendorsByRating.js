@@ -8,11 +8,7 @@ export default async function handler(req, res) {
 
 
     const response = await db.collection("vendors").find().sort({average_rating: -1}).limit(20).toArray();
-    // no array for testing purposes for now
-    //console.log(response);
 
     res.json(response);
 
-    //
-    //return response;
 }

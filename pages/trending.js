@@ -79,7 +79,6 @@ export async function getServerSideProps() {
     .sort({ average_rating: -1 })
     .limit(25)
     .toArray();
-  console.log(top_vendors);
   return {
     props: {
       top_vendors: JSON.parse(JSON.stringify(top_vendors)),

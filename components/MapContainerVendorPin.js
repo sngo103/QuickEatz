@@ -1,14 +1,6 @@
 import React from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 
-/*
-import {
-  GoogleMap,
-  Marker,
-  InfoWindow,
-  useLoadScript,
-} from "@react-google-maps/api";
-*/
 export class MapContainerVendorPin extends React.Component {
   constructor(props) {
     super(props);

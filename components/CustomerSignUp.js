@@ -37,7 +37,6 @@ class CustomerSignUp extends React.Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         if (json.success) {
           console.log("Success!");
           Router.push("/login");

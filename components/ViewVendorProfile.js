@@ -24,7 +24,6 @@ export default class ViewVendorProfile extends React.Component {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -35,7 +34,6 @@ export default class ViewVendorProfile extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -54,14 +52,12 @@ export default class ViewVendorProfile extends React.Component {
       const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
         .then((data) => data.json())
         .then((json) => {
-          console.log("VENDOR JSON:", json);
           this.setState({
             vendorObj: json,
           });
         })
         .catch((error) => console.log(error));
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,

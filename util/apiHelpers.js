@@ -15,15 +15,11 @@ export async function findUser(email, coll) {
 // Token == ObjId
 export async function checkToken(token) {
   const { db } = await connectToDatabase();
-  //console.log("CHECKING TOKEN");
-  //console.log(token);
   const obj_id = ObjectId(token);
-  //console.log("TOKEN:", obj_id)
   const query = {
     _id: obj_id,
   };
   const searchResult = await db.collection("user_sessions").findOne(query);
-  //console.log(searchResult);
   return searchResult;
 }
 
@@ -41,7 +37,6 @@ export async function addNewToken(email, type) {
     .collection("user_sessions")
     .insertOne(sessionDoc)
     .then((result) => {
-      console.log(result.insertedId);
       return result.insertedId;
     })
     .catch((err) => console.log("Error:", err));

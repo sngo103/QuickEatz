@@ -33,7 +33,6 @@ class Dashboard extends React.Component {
         .then(res => res.json())
         .then(json => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -49,7 +48,6 @@ class Dashboard extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!")
       this.setState({
         isLoggedIn: false,
         isLoading: false

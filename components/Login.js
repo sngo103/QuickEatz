@@ -40,7 +40,6 @@ class LoginForm extends React.Component {
         .then(res => res.json())
         .then(json => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -54,7 +53,6 @@ class LoginForm extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!")
       this.setState({
         isLoggedIn: false,
       })
@@ -96,12 +94,10 @@ class LoginForm extends React.Component {
   }
 
   toggleCustomerLogin() {
-    console.log("Switching to customer!");
     this.setState({ account_type: "customer" });
   }
 
   toggleVendorLogin() {
-    console.log("Switching to vendor!");
     this.setState({ account_type: "vendor" });
   }
 

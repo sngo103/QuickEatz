@@ -10,7 +10,6 @@ export default async function handler(req, res) {
   const id_param = new ObjectId(id_str);
 
   const search_param = { _id: id_param };
-  //console.log(search_param);
 
   const to_update = {
     $set: {
@@ -20,7 +19,6 @@ export default async function handler(req, res) {
       ],
     },
   };
-  //console.log(to_update);
 
   const response = await db
     .collection("vendors")

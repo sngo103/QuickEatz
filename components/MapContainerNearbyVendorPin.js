@@ -1,15 +1,8 @@
 import React from "react";
 import Router from "next/router";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import InfoWindowEX from "./InfoWindowEX";
-/*
-import {
-  GoogleMap,
-  Marker,
-  InfoWindow,
-  useLoadScript,
-} from "@react-google-maps/api";
-*/
+
 export class MapContainerNearbyVendorPin extends React.Component {
   constructor(props) {
     super(props);
@@ -62,15 +55,27 @@ export class MapContainerNearbyVendorPin extends React.Component {
       <div className="inline-block">
         <Map
           google={this.props.google}
-		  style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}
-		  containerStyle={{position: 'relative',  width: this.props.containerStyle.width, height: this.props.containerStyle.height}}
+          style={{
+            height: this.props.style.height,
+            position: "relative",
+            width: this.props.style.width,
+          }}
+          containerStyle={{
+            position: "relative",
+            width: this.props.containerStyle.width,
+            height: this.props.containerStyle.height,
+          }}
           zoom={11}
           initialCenter={{
             lat: 40.7128,
             lng: -74.006,
           }}
           onClick={this.onMapClick}
-		  style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}
+          style={{
+            height: this.props.style.height,
+            position: "relative",
+            width: this.props.style.width,
+          }}
         >
           {this.state.user_marker.position != null ? (
             <Marker
@@ -84,10 +89,6 @@ export class MapContainerNearbyVendorPin extends React.Component {
                 fetch(geo_url)
                   .then((response) => response.json())
                   .then((data) => {
-                    //console.log(data);
-                    //your_address_parts = data.results[0].formatted_address;
-                    //console.log(your_address_parts);
-
                     this.setState({
                       //The user's pin
                       marker_set: true,
@@ -107,41 +108,42 @@ export class MapContainerNearbyVendorPin extends React.Component {
             />
           ) : null}
 
-          {Array.from(this.state.nearby_vendors).map((
-            single_vendor //The found nearby vendors
-          ) => (
-            <Marker
-              key={single_vendor._id.toString()}
-			  icon={"/images/quickeatzicon.png"}
-              position={{
-                lat: single_vendor.current_location.coordinates[0],
-                lng: single_vendor.current_location.coordinates[1],
-              }}
-              onClick={() => {
-
-                let geo_url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${single_vendor.current_location.coordinates[0]},${single_vendor.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`;
-                fetch(geo_url)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    let address_parts = data.results[0].formatted_address;
-                    this.setState({
-                      showing_info_box: true,
-                      active_marker: {
-                        owner_id: single_vendor._id,
-                        owner: single_vendor.business_name,
-                        lat: single_vendor.current_location.coordinates[0],
-                        lng: single_vendor.current_location.coordinates[1],
-                        time: new Date(),
-                        buttontext: "Go to the vendor!",
-                        actualaddress: address_parts,
-                      },
-                    });
-                  })
-                  .catch((err) => console.warn(err.message));
-                this.setState({ showing_info_box: true });
-              }}
-            />
-          ))}
+          {Array.from(this.state.nearby_vendors).map(
+            (
+              single_vendor // The found nearby vendors
+            ) => (
+              <Marker
+                key={single_vendor._id.toString()}
+                icon={"/images/quickeatzicon.png"}
+                position={{
+                  lat: single_vendor.current_location.coordinates[0],
+                  lng: single_vendor.current_location.coordinates[1],
+                }}
+                onClick={() => {
+                  let geo_url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${single_vendor.current_location.coordinates[0]},${single_vendor.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`;
+                  fetch(geo_url)
+                    .then((response) => response.json())
+                    .then((data) => {
+                      let address_parts = data.results[0].formatted_address;
+                      this.setState({
+                        showing_info_box: true,
+                        active_marker: {
+                          owner_id: single_vendor._id,
+                          owner: single_vendor.business_name,
+                          lat: single_vendor.current_location.coordinates[0],
+                          lng: single_vendor.current_location.coordinates[1],
+                          time: new Date(),
+                          buttontext: "Go to the vendor!",
+                          actualaddress: address_parts,
+                        },
+                      });
+                    })
+                    .catch((err) => console.warn(err.message));
+                  this.setState({ showing_info_box: true });
+                }}
+              />
+            )
+          )}
 
           {this.state.showing_info_box && this.state.active_marker != null ? (
             <InfoWindowEX
@@ -150,7 +152,6 @@ export class MapContainerNearbyVendorPin extends React.Component {
                 lng: this.state.active_marker.lng,
               }}
               visible={this.state.showing_info_box}
-              onClick={() => console.log("Power Pizza")}
               onCloseClick={() => {
                 this.setState({
                   active_marker: {},

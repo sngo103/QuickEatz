@@ -31,7 +31,6 @@ export default class ViewCustomerProfile extends React.Component {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -42,7 +41,6 @@ export default class ViewCustomerProfile extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -70,8 +68,6 @@ export default class ViewCustomerProfile extends React.Component {
             cust_lastname: json.last_name,
             cust_review_ids: json.reviews,
           }),
-            console.log("I helped!"),
-            console.log(json),
             json.reviews.forEach(
               (r_id) =>
                 fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
@@ -93,7 +89,6 @@ export default class ViewCustomerProfile extends React.Component {
             );
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,

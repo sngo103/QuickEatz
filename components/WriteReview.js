@@ -5,7 +5,6 @@ import Router from "next/router";
 export class WriteReview extends React.Component {
   constructor(props) {
     super(props);
-    console.log("THERE");
     this.state = {
       current_user: localStorage.getItem("quickeatz_email") || "",
       current_vendor_name: "",
@@ -48,7 +47,6 @@ export class WriteReview extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -64,7 +62,6 @@ export class WriteReview extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: false,
@@ -93,8 +90,6 @@ export class WriteReview extends React.Component {
 						  )
 				})
       }); //Get the name specifically
-    console.log("Here's the latest state!");
-    console.log(this.state);
   }
 
   handleChange(event) {
@@ -108,8 +103,6 @@ export class WriteReview extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("Im handing over this state to the Review call!");
-    console.log(this.state);
     const rev_info = {
       review_rating: this.state.review_rating,
       review_text: this.state.review_text,
@@ -121,20 +114,16 @@ export class WriteReview extends React.Component {
     const data = fetch(
       `/api/sendReview?user_email=${user_id_str}&vendor_id=${vendor_id_str}&review_content=${rev_info.review_text}&rating=${rev_info.review_rating}`
     ).then((response) => {
-      console.log(response);
       fetch(`/api/updateVendorRating?vendor_id=${vendor_id_str}`);
       if (response.status != 400) {
-        //Im probably misusing the convention, but Ill leave it as 400 for now. See sendReview.
         Router.push("/reviewSubmitted");
       } else {
-        Router.push("/dashboard"); //REPLACE WITH SOMETHING ELSE
+        Router.push("/dashboard");
       }
     });
   }
 
   render() {
-    console.log("YOU ARE: ");
-    console.log(this.state.current_user);
     return (
       <>
         <Head>

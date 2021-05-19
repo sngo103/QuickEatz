@@ -97,7 +97,6 @@ export default function mApp({ current_vendor, vendors, customers }) {
               }}
             />
           ))}
-          console.log(selected);
           {selected ? (
             <InfoWindow
               position={{ lat: selected.lat, lng: selected.lng }}

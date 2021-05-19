@@ -6,15 +6,12 @@ export default async function handler(req, res) {
 
   const data = req.query;
 
-  console.log("Data Received:");
-  console.log(data);
   const user_email = data.user_email;
   const user_email_search_param = { email: user_email };
 
   const user_data = await db
     .collection("customers")
     .findOne(user_email_search_param);
-  console.log(user_data);
 
   const user_id_str = user_data._id;
   const user_id_param = new ObjectId(user_id_str);
@@ -24,7 +21,6 @@ export default async function handler(req, res) {
 
   const user_search_param = { _id: user_id_param };
   const vendor_search_param = { _id: vendor_id_param };
-  //console.log(search_param);
   const vendor_data = await db.collection("vendors").findOne(vendor_id_param);
 
   const rating = parseFloat(data.rating);
@@ -47,7 +43,6 @@ export default async function handler(req, res) {
 
   var vendor_reviews_str = [];
   for (i = 0; i < vendor_data.reviews.length; i++) {
-    //console.log(i +":" + vendor_data.reviews[i]);
     vendor_reviews_str.push(vendor_data.reviews[i].toString());
   }
 
@@ -56,7 +51,6 @@ export default async function handler(req, res) {
   );
 
   if (already_reviewed.length > 0) {
-    //console.log("This should fail!");
     res.status(400).json({
       error: "The user has already reviewed this vendor.",
       success: false,

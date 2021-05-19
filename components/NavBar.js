@@ -14,7 +14,7 @@ class NavBar extends React.Component {
       isUpToDate: false,
       isLoggedIn: false,
       isLoading: true,
-      account_type: ""
+      account_type: "",
     };
     this.handleLogout = this.handleLogout.bind(this);
     this.openMenu = this.openMenu.bind(this);
@@ -41,12 +41,11 @@ class NavBar extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
               isLoading: false,
-              account_type: storedType
+              account_type: storedType,
             });
           } else {
             this.setState({
@@ -56,7 +55,6 @@ class NavBar extends React.Component {
           }
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,
@@ -85,8 +83,7 @@ class NavBar extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success && !this.state.isLoggedIn) {
-            //Prevent loop. ASSUMES LOG OUT WORKS. If logged out when actually logged in, update.
-            console.log("Token verified!");
+            // Prevent loops. If logged out when actually logged in, update.
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -136,7 +133,7 @@ class NavBar extends React.Component {
                 className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 id="user-menu"
                 aria-expanded="false"
-                aria-haspopup="true" /*true*/
+                aria-haspopup="true"
               >
                 <span className="sr-only">Open user menu</span>
                 <Image

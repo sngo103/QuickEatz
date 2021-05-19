@@ -33,7 +33,6 @@ export default class CustomerDashboard extends React.Component {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -44,7 +43,6 @@ export default class CustomerDashboard extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -87,11 +85,11 @@ export default class CustomerDashboard extends React.Component {
                           });
                       }); //Get the name specifically
                   })
-                  .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
+                  // If there is some review that doesn't exist in the table, but referenced for some reason:
+                  .catch((error) => console.log(error)) 
             );
         });
     } else {
-      console.log("Token not found!");
       this.setState({
         isLoggedIn: false,
         isLoading: true,
@@ -101,7 +99,6 @@ export default class CustomerDashboard extends React.Component {
   }
 
   async setCoordinates(coord_pair) {
-    console.log(coord_pair);
     this.setState({
       lat: coord_pair.latitude,
       lng: coord_pair.longitude,
@@ -212,18 +209,6 @@ export default class CustomerDashboard extends React.Component {
                     {this.state.cust_nearby_vendors.length == 0 ? <div className="flex justify-center items-center text-lg text-center h-80">Choose a location to view nearby vendors.</div> : (
                       <>
                         {this.state.cust_nearby_vendors.map((vendor) => {
-                          {
-                            /* let lat = vendor.current_location.coordinates[0];
-                        let long = vendor.current_location.coordinates[1];
-                        let formatted_location = fetch(
-                          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
-                        )
-                          .then((coordData) => coordData.json())
-                          .then(
-                            (finalData) =>
-                              finalData.results[0].formatted_address
-                          ); */
-                          }
                           return (
                             <div className="p-2 border-b-2">
                               <button

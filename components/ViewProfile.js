@@ -23,7 +23,6 @@ export default class ViewProfile extends React.Component {
         token: storedToken,
         email: storedEmail,
       };
-      console.log(JSON.stringify(data));
       fetch("/api/auth/verifyShallow", {
         method: "POST",
         headers: {
@@ -34,7 +33,6 @@ export default class ViewProfile extends React.Component {
         .then((res) => res.json())
         .then((json) => {
           if (json.success) {
-            console.log("Token verified!");
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
@@ -50,7 +48,6 @@ export default class ViewProfile extends React.Component {
           }
         });
       } else {
-        console.log("Token not found!");
         this.setState({
           isLoggedIn: false,
           isLoading: true,
@@ -60,7 +57,6 @@ export default class ViewProfile extends React.Component {
     }
     
     render() {
-      console.log("ACCOUNT:", this.state.account_type);
       if (this.state.account_type === "vendor") {
       return <ViewVendorProfile />;
     } else {
