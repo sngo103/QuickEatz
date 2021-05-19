@@ -20,7 +20,4 @@ export default async function handler(req, res){ //TAKES THE EMAIL AND SEARCHES,
       .collection("customers")
       .updateOne(cust_search_param, push_uname_cust);
  
-  //MIGHT NOT BE GOOD STYLE TO DO NOTHING WHEN DONE
-
-  //res.json(response);
 }

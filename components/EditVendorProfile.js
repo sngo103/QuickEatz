@@ -36,10 +36,10 @@ export default class EditVendorProfile extends React.Component {
       vendor_new_menuitem_desc: "",
       vendor_new_menuitem_price: "0",
       showing_location: false,
-      temp: false, //An idea! If I toggle this useless variable, I can call render whenever I want. Currently unused.
+
 	  usernameInvalid: false,
     };
-    //Bind form/button functions to the instance
+    // Bind form/button functions to the instance
     this.handleChange = this.handleChange.bind(this);
     this.handleUserNameSubmit = this.handleUserNameSubmit.bind(this);
     this.handleFirstNameSubmit = this.handleFirstNameSubmit.bind(this);
@@ -56,7 +56,6 @@ export default class EditVendorProfile extends React.Component {
   }
 
   componentDidMount() {
-    //DONT NEED ALL OF THIS, WILL SHAVE DOWN UNNEEDED STUFF
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
@@ -89,7 +88,7 @@ export default class EditVendorProfile extends React.Component {
           }
         });
 
-      //Get the vendor's information
+      // Get the vendor's information
       const vendor = fetch(`/api/getVendorSingleEmail?email=${storedEmail}`) //Get the vendor's data
         .then((data) => data.json())
         .then((json) => {
@@ -110,10 +109,10 @@ export default class EditVendorProfile extends React.Component {
           }),
             json.reviews.forEach(
               (r_id) =>
-                fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
+                fetch(`/api/getReviewsVendor?_id=${r_id}`) // Get the reviews (structure of review system seems flawed, works for now)
                   .then((r_data) => r_data.json())
                   .then((r_json) => {
-                    fetch(`/api/getUserName?_id=${r_json.customer_id}`) //Get the customer name of the reviewee for readability
+                    fetch(`/api/getUserName?_id=${r_json.customer_id}`) // Get the customer name of the reviewee for readability
                       .then((c_data) => c_data.json())
                       .then((c_json) => {
                         (r_json.vendor_name = c_json.business_name),
@@ -359,7 +358,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_new_menuitem_name: "",
         vendor_new_menuitem_price: "0",
       });
-      Router.reload(); //FORCE A RELOAD TO UPDATE THE MENU, TEMPORARY SOLUTION UNTIL SOMETHING BETTER FOUND
+      Router.reload(); 
     } 
   }
 
@@ -668,7 +667,7 @@ export default class EditVendorProfile extends React.Component {
                       fetch(
                         `/api/removeVendorMenuItem?email=${this.state.vendor_email}&food_name=${menu_item.food_name}&desc=${menu_item.desc}&price=${menu_item.price}`
                       );
-                      Router.reload(); //FORCE PAGE REFRESH TO UPDATE MENU, VERY TEMPORARY
+                      Router.reload(); 
                     }}
                     className="float-right border-black border p-1 hover:bg-red-500 hover:bg-opacity-25"
                   >

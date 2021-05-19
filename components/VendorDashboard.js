@@ -81,7 +81,6 @@ export default class VendorDashboard extends React.Component {
             )
               .then((response) => response.json())
               .then((data) => {
-                //address_parts = data.results[0].formatted_address;
                 this.setState({
                   vendor_address: data.results[0].formatted_address,
                 });

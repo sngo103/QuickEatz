@@ -10,7 +10,6 @@ export class MapContainerVendorPinInitial extends React.Component {
       vendorName: "",
       marker: {},
     };
-    //this.handleChange = this.handleChange.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
   }
 
@@ -44,7 +43,6 @@ export class MapContainerVendorPinInitial extends React.Component {
     const lng = latLng.lng();
     const coords = { latitude: lat, longitude: lng };
     this.props.onGPSChange(coords);
-    //this.sendLatLon(lat, lng);
     this.setState((previousState) => {
       return {
         marker: { title: "Position updated!", position: { lat, lng } },

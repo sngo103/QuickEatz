@@ -64,7 +64,7 @@ class NavBar extends React.Component {
 
   componentDidUpdate() {
     // To get the navbar to change on load
-    // When updating the page, check if we're logged in. THis is more frequent than componentDidMount
+    // When updating the page, check if we're logged in. This is more frequent than componentDidMount
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");

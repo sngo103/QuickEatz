@@ -31,7 +31,6 @@ export default class EditCustomerProfile extends React.Component {
   }
 
   componentDidMount() {
-    //DONT NEED ALL OF THIS, WILL SHAVE DOWN UNNEEDED STUFF
     const storedToken = localStorage.getItem("quickeatz_token");
     const storedEmail = localStorage.getItem("quickeatz_email");
     const storedState = localStorage.getItem("quickeatz");
@@ -64,8 +63,8 @@ export default class EditCustomerProfile extends React.Component {
           }
         });
 
-      //Get the customer's information
-      const cust = fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`) //Get the customer's data
+      // Get the customer's information
+      const cust = fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`) // Get the customer's data
         .then((data) => data.json())
         .then((json) => {
           this.setState({
@@ -78,10 +77,10 @@ export default class EditCustomerProfile extends React.Component {
           }),
             json.reviews.forEach(
               (r_id) =>
-                fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
+                fetch(`/api/getReviewsVendor?_id=${r_id}`) // Get the reviews (structure of review system seems flawed, works for now)
                   .then((r_data) => r_data.json())
                   .then((r_json) => {
-                    fetch(`/api/getVendorSingle?_id=${r_json.vendor_id}`) //Get the Vendor name of the reviewee for readability
+                    fetch(`/api/getVendorSingle?_id=${r_json.vendor_id}`) // Get the Vendor name of the reviewee for readability
                       .then((v_data) => v_data.json())
                       .then((v_json) => {
                         (r_json.vendor_name = v_json.business_name),
@@ -91,9 +90,9 @@ export default class EditCustomerProfile extends React.Component {
                               r_json,
                             ],
                           });
-                      }); //Get the name specifically
+                      }); // Get the name specifically
                   })
-                  .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
+                  .catch((error) => console.log(error)) // If there is some review that doesn't exist in the table, but referenced for some reason
             );
         });
     } else {
@@ -123,9 +122,9 @@ export default class EditCustomerProfile extends React.Component {
     const new_uname = this.state.cust_new_uname;
 
     if (new_uname != "") {
-      //If the new text isn't blank
+      // If the new text isn't blank
       await fetch("/api/users/checkUsername", {
-        //Check if taken
+        // Check if taken
         method: "POST",
         credentials: "include",
         headers: {
@@ -157,7 +156,7 @@ export default class EditCustomerProfile extends React.Component {
     const new_fname = this.state.cust_new_firstname;
 
     if (new_fname != "") {
-      //If the new text isn't blank
+      // If the new text isn't blank
       const user_email_str = this.state.cust_email;
       const data = fetch(
         `/api/sendCustomerFirstname?email=${user_email_str}&firstname=${new_fname}`
@@ -173,7 +172,7 @@ export default class EditCustomerProfile extends React.Component {
     const new_lname = this.state.cust_new_lastname;
 
     if (new_lname != "") {
-      //If the new text isn't blank
+      // If the new text isn't blank
       const user_email_str = this.state.cust_email;
       const data = fetch(
         `/api/sendCustomerLastname?email=${user_email_str}&lastname=${new_lname}`
@@ -189,7 +188,7 @@ export default class EditCustomerProfile extends React.Component {
     const new_email = this.state.cust_new_email;
 
     if (new_email != "") {
-      //If the new text isn't blank
+      // If the new text isn't blank
       const user_email_str = this.state.cust_email;
       const data = fetch(
         `/api/sendCustomerEmail?email=${user_email_str}&newemail=${new_email}`
@@ -197,7 +196,7 @@ export default class EditCustomerProfile extends React.Component {
         .then((data) => data.json())
         .then((e_json) => {
           if (e_json.error == null) {
-            //If successful
+            // If successful
             this.setState({
               cust_email: new_email,
               cust_new_email: "",

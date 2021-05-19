@@ -1,4 +1,3 @@
-// import { connectToDatabase } from "../../../../util/mongodb";
 import { addNewToken } from "../../../util/apiHelpers";
 import _ from "lodash";
 

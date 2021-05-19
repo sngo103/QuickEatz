@@ -64,7 +64,6 @@ export class VendorDisplaySingle extends React.Component {
       Router.push("/login");
     }
     if (this.state.vendor_id == "") {
-      //This MAY be bad practice, but it works and shouldnt cause any loops, unless you go to the page directly
       const vendor_id = Router.query.vendor_id;
       const vendor = fetch(`/api/getVendorSingle?_id=${vendor_id}`) //Get the vendor's data
         .then((data) => data.json())
@@ -129,7 +128,7 @@ export class VendorDisplaySingle extends React.Component {
             vendor_rating: json.average_rating,
             vendor_lastname: json.last_name,
             vendor_review_ids: json.reviews,
-            vendor_review_list: [], //RESET TO STOP DUPES, MAY NOT ACTUALLY WORK
+            vendor_review_list: [], 
             vendor_website: json.website,
             vendor_phone: json.phone_number,
             vendor_location: json.current_location.coordinates,

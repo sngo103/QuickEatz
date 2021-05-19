@@ -21,7 +21,6 @@ export default class CustomerDashboard extends React.Component {
       isLoading: true,
     };
     this.setCoordinates = this.setCoordinates.bind(this);
-    // this.handleMapSubmit = this.handleMapSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -57,7 +56,8 @@ export default class CustomerDashboard extends React.Component {
           }
         });
 
-      const cust = fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`) //Get the customer's data
+      // Get the customer's data
+      const cust = fetch(`/api/getCustomerSingleEmail?email=${storedEmail}`)
         .then((data) => data.json())
         .then((json) => {
           this.setState({
@@ -68,25 +68,26 @@ export default class CustomerDashboard extends React.Component {
             cust_lastname: json.last_name,
             cust_review_ids: json.reviews,
           }),
-            json.reviews.forEach(
-              (r_id) =>
-                fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
-                  .then((r_data) => r_data.json())
-                  .then((r_json) => {
-                    fetch(`/api/getVendorSingle?_id=${r_json.vendor_id}`) //Get the Vendor name of the reviewee for readability
-                      .then((v_data) => v_data.json())
-                      .then((v_json) => {
-                        (r_json.vendor_name = v_json.business_name),
-                          this.setState({
-                            cust_review_list: [
-                              ...this.state.cust_review_list,
-                              r_json,
-                            ],
-                          });
-                      }); //Get the name specifically
-                  })
-                  // If there is some review that doesn't exist in the table, but referenced for some reason:
-                  .catch((error) => console.log(error)) 
+            json.reviews.forEach((r_id) =>
+              // Get the reviews (structure of review system seems flawed, works for now)
+              fetch(`/api/getReviewsVendor?_id=${r_id}`)
+                .then((r_data) => r_data.json())
+                .then((r_json) => {
+                  // Get the Vendor name of the reviewee for readability
+                  fetch(`/api/getVendorSingle?_id=${r_json.vendor_id}`)
+                    .then((v_data) => v_data.json())
+                    .then((v_json) => {
+                      (r_json.vendor_name = v_json.business_name),
+                        this.setState({
+                          cust_review_list: [
+                            ...this.state.cust_review_list,
+                            r_json,
+                          ],
+                        });
+                    }); // Get the name specifically
+                })
+                // If there is some review that doesn't exist in the table, but referenced for some reason:
+                .catch((error) => console.log(error))
             );
         });
     } else {
@@ -206,7 +207,11 @@ export default class CustomerDashboard extends React.Component {
                     Nearby Vendors
                   </div>
                   <div className="overflow-y-auto max-h-96 mx-2 border-2 border-black grid grid-cols-1 w-full max-h-96 h-auto border">
-                    {this.state.cust_nearby_vendors.length == 0 ? <div className="flex justify-center items-center text-lg text-center h-80">Choose a location to view nearby vendors.</div> : (
+                    {this.state.cust_nearby_vendors.length == 0 ? (
+                      <div className="flex justify-center items-center text-lg text-center h-80">
+                        Choose a location to view nearby vendors.
+                      </div>
+                    ) : (
                       <>
                         {this.state.cust_nearby_vendors.map((vendor) => {
                           return (

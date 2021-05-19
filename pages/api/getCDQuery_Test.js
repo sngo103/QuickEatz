@@ -17,9 +17,8 @@ export default async function getCDQuery({ vendors }) {
 }
 
 export async function getServerSideProps() {
-  // context
+  // Context
   const { db } = await connectToDatabase();
-  //const data = await db.collection("vendors").find({}).sort({ _id: 1 }).limit(5).toArray();
   const vendors = await db.collection("vendors").limit(2).toArray();
 
   return {

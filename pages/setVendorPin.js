@@ -10,7 +10,7 @@ import {
 
 const ObjectId = require("mongodb").ObjectID;
 
-const libraries = ["places"]; //libraries to avoid rerender?
+const libraries = ["places"]; 
 const mapContainerStyle = {
   width: "100vw",
   height: "100vh",
@@ -20,16 +20,12 @@ const center = {
   lng: -74.006,
 };
 
-const options = {}; // Leave this just in case.
-
 export default function mApp({ current_vendor, vendors, customers }) {
-  //NOTE BAD PRACTICE TO SHOEHORN API KEY IN USE ENVLOCAL MAYBE
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4",
     libraries,
   });
-  const [markers, setMarkers] = React.useState([]); //MAYBE A BETTER WAY TO DO THIS
+  const [markers, setMarkers] = React.useState([]); 
 
   const [selected, setSelected] = React.useState(null); //FOR INFO BOX
 
@@ -110,46 +106,9 @@ export default function mApp({ current_vendor, vendors, customers }) {
               </div>
             </InfoWindow>
           ) : null}{" "}
-          //ternary
         </GoogleMap>
       </div>
     </>
   );
-}
 
-export async function getServerSideProps() {
-  const { db } = await connectToDatabase();
-
-  //HARDCODED
-  const test_id_str = "6072359ab6856651fcb451c1";
-  const test_id = new ObjectId(test_id_str);
-
-  const current_vendor = await db
-    .collection("vendors")
-    .find({ _id: test_id })
-    .sort({ average_rating: -1 })
-    .limit(1)
-    .toArray();
-
-  const vendors = await db
-    .collection("vendors")
-    .find({ _id: test_id })
-    .sort({ average_rating: -1 })
-    .limit(20)
-    .toArray();
-
-  const customers = await db
-    .collection("customers")
-    .find({})
-    .sort({})
-    .limit(20)
-    .toArray();
-
-  return {
-    props: {
-      vendors: JSON.parse(JSON.stringify(vendors)),
-      customers: JSON.parse(JSON.stringify(customers)),
-      current_vendor: JSON.parse(JSON.stringify(current_vendor[0])),
-    },
-  };
 }

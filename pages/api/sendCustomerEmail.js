@@ -13,7 +13,7 @@ export default async function handler(req, res){ //TAKES THE EMAIL AND SEARCHES,
   const cust_search_param = {"email": cust_email_param };
   const new_email = data.newemail;
   
-  const customer = await findUser(new_email, "customers"); //HIJACKING SAMANTHA's EMAIL CHECK
+  const customer = await findUser(new_email, "customers");
     if (customer.length != 0) { // Is an array
       // If user already exists, return error
       res.status(400).json({ error: "User with this email already exists." });
@@ -27,9 +27,4 @@ export default async function handler(req, res){ //TAKES THE EMAIL AND SEARCHES,
 		  .updateOne(cust_search_param, push_email_cust);
       res.status(200).json({ message: "New user created." });
     }
-  
-  
-
-
-  //res.json(response);
 }

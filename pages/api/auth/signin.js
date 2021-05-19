@@ -1,4 +1,3 @@
-// import { connectToDatabase } from "../../../../util/mongodb";
 import { findUser } from "../../../util/apiHelpers";
 import _ from "lodash";
 import { compareSync } from "bcrypt";

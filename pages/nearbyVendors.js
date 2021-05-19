@@ -10,7 +10,7 @@ import {
 
 const ObjectId = require("mongodb").ObjectID;
 
-const libraries = ["places"]; //libraries to avoid rerender?
+const libraries = ["places"]; 
 const mapContainerStyle = {
   width: "100vw",
   height: "100vh",
@@ -20,27 +20,23 @@ const center = {
   lng: -74.006,
 };
 
-const options = {}; // Leave this just in case.
-
 var close_vendors = [];
 var geo_url = "";
 var address_parts = [];
 var your_address_parts = [];
 
 export default function mApp({ vendors }) {
-  //NOTE BAD PRACTICE TO SHOEHORN API KEY IN USE ENVLOCAL MAYBE
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4",
     libraries,
   });
-  const [markers, setMarkers] = React.useState([]); //MAYBE A BETTER WAY TO DO THIS
+  const [markers, setMarkers] = React.useState([]); 
 
   const [selected, setSelected] = React.useState(null); //FOR INFO BOX
 
   const [nearby_vendors, setVendors] = React.useState([]);
 
-  //I think this is the right notation for function declaration
   const searchLatLon = async (latitude, longitude) => {
     const data = await fetch(
       `http://localhost:3000/api/searchLatLon?latitude=${latitude}&longitude=${longitude}`
@@ -128,7 +124,6 @@ export default function mApp({ vendors }) {
               }}
             />
           ))}
-          //AGAIN, DONT SHOEHORN API KEY
           {selected ? (
             <InfoWindow
               position={{ lat: selected.lat, lng: selected.lng }}
@@ -155,45 +150,8 @@ export default function mApp({ vendors }) {
               </div>
             </InfoWindow>
           ) : null}{" "}
-          //ternary
         </GoogleMap>
       </div>
     </>
   );
-}
-
-export async function getServerSideProps() {
-  const { db } = await connectToDatabase();
-
-  //HARDCODED
-  const test_id_str = "60519b709b7aa38721d085f7";
-  const test_id = new ObjectId(test_id_str);
-
-  const current_vendor = await db
-    .collection("vendors")
-    .find({ _id: test_id })
-    .sort({ average_rating: -1 })
-    .limit(1)
-    .toArray();
-
-  const vendors = await db
-    .collection("vendors")
-    .find({ _id: test_id })
-    .sort({ average_rating: -1 })
-    .limit(20)
-    .toArray();
-
-  const customers = await db
-    .collection("customers")
-    .find({})
-    .sort({})
-    .limit(20)
-    .toArray();
-
-  return {
-    props: {
-      vendors: JSON.parse(JSON.stringify(vendors)),
-      customers: JSON.parse(JSON.stringify(customers)),
-    },
-  };
 }

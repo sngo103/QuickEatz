@@ -90,7 +90,7 @@ export class MapContainerNearbyVendorPin extends React.Component {
                   .then((response) => response.json())
                   .then((data) => {
                     this.setState({
-                      //The user's pin
+                      //The user's marker
                       marker_set: true,
                       active_marker: {
                         owner: "YOU",

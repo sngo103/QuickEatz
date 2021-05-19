@@ -1,7 +1,7 @@
 import { connectToDatabase } from "../../util/mongodb";
 const ObjectId = require('mongodb').ObjectID;
 
-//MISLEADING NAME, GETS ALL OF A CUSTOMER'S INFO
+// GETS ALL OF A CUSTOMER'S INFO
 export default async function handler(req, res){
   const { db } = await connectToDatabase();
   

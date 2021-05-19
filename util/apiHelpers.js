@@ -1,9 +1,6 @@
 import { connectToDatabase } from "./mongodb";
 import { ObjectId, Double } from "mongodb";
-// import ObjectId from 'mongodb';
 import { hashSync } from "bcrypt";
-
-// var ObjectId = require('mongodb').ObjectID;
 
 export async function findUser(email, coll) {
   const { db } = await connectToDatabase();

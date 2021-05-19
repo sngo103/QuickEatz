@@ -2,7 +2,6 @@ import { connectToDatabase } from "../../util/mongodb";
 const ObjectId = require("mongodb").ObjectID;
 
 export default async function handler(req, res) {
-  //IMPLEMENTATION POTENTIALLY SLOW, LOOK INTO LATER
   const { db } = await connectToDatabase();
 
   const data = req.query;
