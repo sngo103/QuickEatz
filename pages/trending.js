@@ -6,7 +6,7 @@ import Router from "next/router";
 export default function Trending({ top_vendors }) {
   let counter = 0;
   return (
-    <div>
+    <div className="font-pridi">
       <Head>
         <title>Trending</title>
       </Head>
@@ -31,7 +31,8 @@ export default function Trending({ top_vendors }) {
                   <text className="text-7xl">{counter}</text>
                   {suffix}
                 </div>
-                <div className="col-span-2 rounded-r-2xl p-2">
+                <div className="col-span-2 rounded-r-2xl p-2 flex justify-center items-center">
+                <div className="w-full">
                   <button
                     className="text-xl w-full font-semibold rounded-md p-2 hover:bg-yellow-100 hover:text-black"
                     onClick={() =>
@@ -64,11 +65,14 @@ export default function Trending({ top_vendors }) {
                     </div>
                   )}
                 </div>
+                </div>
               </div>
             );
           })}
         </div>
       </div>
+      <br />
+      <hr /><br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer><br />
     </div>
   );
 }

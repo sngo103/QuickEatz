@@ -298,6 +298,8 @@ export default class CustomerDashboard extends React.Component {
               </div>
             </div>
           </main>
+          <hr />
+          <br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer> <br />
         </div>
       );
     } else {

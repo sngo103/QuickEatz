@@ -364,7 +364,7 @@ export default class EditVendorProfile extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="font-pridi">
         <Link href="/profile">
           <a
             href="/profile"

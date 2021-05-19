@@ -125,7 +125,8 @@ export default class ViewVendorProfile extends React.Component {
                       <h2>
                         <strong>{menu_item.food_name}</strong>
                         <br />
-                        {menu_item.desc} <br />
+                        {menu_item.desc} 
+                        {menu_item.desc.trim() ? <br /> : null}
                         <strong>Price:</strong> ${menu_item.price.toFixed(2)}
                       </h2>
                       <hr />

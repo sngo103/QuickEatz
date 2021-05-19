@@ -286,6 +286,7 @@ export default class VendorDashboard extends React.Component {
               </div>
             </div>
           </main>
+          <br /><hr /><br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer><br />
         </div>
       );
     } else {

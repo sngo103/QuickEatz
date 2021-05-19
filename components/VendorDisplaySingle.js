@@ -274,9 +274,8 @@ export class VendorDisplaySingle extends React.Component {
             </div>
           </div>
           <br />
-          <br />
-          <br />
-          <br />
+          <hr /><br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer><br />
+
         </body>
       </>
     );

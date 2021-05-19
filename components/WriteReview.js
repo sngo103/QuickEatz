@@ -237,10 +237,10 @@ export class WriteReview extends React.Component {
                 >
                   Submit Review
                 </button>
-                <hr className="my-2" />
               </div>
             </form>
           </div>
+          <hr /><br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer><br />
         </div>
       </>
     );

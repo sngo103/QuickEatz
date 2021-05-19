@@ -149,6 +149,7 @@ export default class ViewCustomerProfile extends React.Component {
               </Link>
             </div>
           </div>
+          <hr /><br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer><br />
         </div>
       );
     } else {

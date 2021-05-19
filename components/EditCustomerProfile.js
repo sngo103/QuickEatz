@@ -212,7 +212,7 @@ export default class EditCustomerProfile extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="font-pridi">
         <div>
           <Link href="/profile">
             <a
@@ -356,7 +356,7 @@ export default class EditCustomerProfile extends React.Component {
             <footer>🍔 Made By the QuickEatz Team 🍜</footer>
           </section>
         </div>
-      </>
+      </div>
     );
   }
 }

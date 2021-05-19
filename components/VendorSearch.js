@@ -357,6 +357,7 @@ class VendorSearch extends React.Component {
               </>
             )}
           </div>
+          <br /><hr /><br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer><br />
         </div>
       );
     }

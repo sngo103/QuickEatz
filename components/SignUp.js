@@ -79,6 +79,7 @@ class SignUp extends React.Component {
           )}
           <br />
         </div>
+        <hr /><br /> <footer className="text-center">🍔 Made By the QuickEatz Team 🍜</footer><br />
       </div>
     );
   }

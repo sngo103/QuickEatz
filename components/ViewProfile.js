@@ -58,9 +58,9 @@ export default class ViewProfile extends React.Component {
 
   render() {
     if (this.state.account_type === "vendor") {
-      return <ViewVendorProfile />;
+      return <div className="font-pridi"><ViewVendorProfile /></div>;
     } else {
-      return <ViewCustomerProfile />;
+      return <div className="font-pridi"><ViewCustomerProfile /></div>;
     }
   }
 }
