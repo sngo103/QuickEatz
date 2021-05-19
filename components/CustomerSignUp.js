@@ -8,7 +8,10 @@ class CustomerSignUp extends React.Component {
       usernameInvalid: false,
       currentPass: "",
       passMatch: true,
+      userExists: false,
+      somethingWrong: false,
     };
+    this.checkEmail = this.checkEmail.bind(this);
     this.checkUsername = this.checkUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,16 +37,39 @@ class CustomerSignUp extends React.Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json)
+        console.log(json);
         if (json.success) {
           console.log("Success!");
+          Router.push("/login");
         } else {
           console.log("Failed");
+          this.setState({
+            somethingWrong: true,
+          });
         }
       });
   }
 
-  async checkUsername(event){
+  async checkEmail(event) {
+    await fetch("/api/users/checkEmail", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: event.target.value }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          this.setState({ userExists: false });
+        } else {
+          this.setState({ userExists: true });
+        }
+      });
+  }
+
+  async checkUsername(event) {
     await fetch("/api/users/checkUsername", {
       method: "POST",
       credentials: "include",
@@ -54,24 +80,24 @@ class CustomerSignUp extends React.Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        if(json.success){
-          this.setState({usernameInvalid: false})
+        if (json.success) {
+          this.setState({ usernameInvalid: false });
         } else {
-          this.setState({usernameInvalid: true})
+          this.setState({ usernameInvalid: true });
         }
       });
   }
 
-  handlePass(event){
-    this.setState({ currentPass: event.target.value })
+  handlePass(event) {
+    this.setState({ currentPass: event.target.value });
   }
 
-  checkPass(event){
-    const inputPass = event.target.value
-    if(inputPass != this.state.currentPass){
-      this.setState({passMatch : false})
+  checkPass(event) {
+    const inputPass = event.target.value;
+    if (inputPass != this.state.currentPass) {
+      this.setState({ passMatch: false });
     } else {
-      this.setState({passMatch : true})
+      this.setState({ passMatch: true });
     }
   }
 
@@ -91,14 +117,16 @@ class CustomerSignUp extends React.Component {
                 type="text"
                 required
                 className="m-2 px-2 border rounded-md"
-              /><br />
+              />
+              <br />
               *Last Name
               <input
                 name="last_name"
                 type="text"
                 required
                 className="m-2 px-2 border rounded-md"
-              /><br />
+              />
+              <br />
               *Email Address
               <input
                 name="email"
@@ -106,7 +134,14 @@ class CustomerSignUp extends React.Component {
                 autocomplete="email"
                 required
                 className="m-2 px-2 border rounded-md"
-              /><br />
+                onChange={this.checkEmail}
+              />
+              {this.state.userExists ? (
+                <div className="inline-flex text-md p-0 m-0 font-normal text-red-500">
+                  An account with this email already exists! 😧{" "}
+                </div>
+              ) : null}{" "}
+              <br />
               *Username
               <input
                 name="username"
@@ -114,7 +149,13 @@ class CustomerSignUp extends React.Component {
                 required
                 className="m-2 px-2 border rounded-md"
                 onChange={this.checkUsername}
-              />{this.state.usernameInvalid ? <div className="text-l p-3 font-normal text-red-500 float-right">Username already taken. 😢 </div> : null } <br />
+              />
+              {this.state.usernameInvalid ? (
+                <div className="text-l p-3 font-normal text-red-500 float-right">
+                  Username already taken. 😢{" "}
+                </div>
+              ) : null}{" "}
+              <br />
               *Password
               <input
                 name="password"
@@ -122,7 +163,8 @@ class CustomerSignUp extends React.Component {
                 required
                 className="m-2 px-2 border rounded-md"
                 onChange={this.handlePass}
-              /><br />
+              />
+              <br />
               *Confirm Password
               <input
                 name="confirm_password"
@@ -130,18 +172,40 @@ class CustomerSignUp extends React.Component {
                 required
                 className="m-2 px-2 border rounded-md"
                 onChange={this.checkPass}
-              />{!this.state.passMatch ? <div className="text-l pt-3 font-normal text-red-500 float-right">❗ Passwords must match! </div> : null }<br />
-              <div className="flex items-center justify-center text-center">
-              <input
-                type="submit"
-                value="Create Customer Account"
-                class="w-1/3 py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600"
               />
+              {!this.state.passMatch ? (
+                <div className="text-l pt-3 font-normal text-red-500 float-right">
+                  ❗ Passwords must match!{" "}
+                </div>
+              ) : null}
+              <br />
+              <div className="flex items-center justify-center text-center">
+                {this.state.usernameInvalid ||
+                !this.state.passMatch ||
+                this.state.userExists ? (
+                  <input
+                    disabled
+                    type="submit"
+                    value="Create Customer Account"
+                    class="w-1/3 py-2 my-2 text-sm font-medium rounded-md text-gray-500 bg-gray-200 focus:outline-none"
+                  />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Create Customer Account"
+                    class="w-1/3 py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600"
+                  />
+                )}
               </div>
+              {this.state.somethingWrong ? (
+                <div className="p-2 border-2 border-red-500 text-center text-red-500 text-lg font-normal">
+                  {" "}
+                  ❗ Something went wrong! Please refresh and try again. ❗
+                </div>
+              ) : null}
             </form>
           </div>
         </div>
-
         <br />
       </div>
     );

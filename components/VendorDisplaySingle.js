@@ -19,6 +19,7 @@ export class VendorDisplaySingle extends React.Component {
       vendor_website: "",
       vendor_phone: "",
       vendor_location: "",
+	  vendor_address: "",
     };
   }
 
@@ -86,6 +87,15 @@ export class VendorDisplaySingle extends React.Component {
             vendor_phone: json.phone_number,
             vendor_location: json.current_location.coordinates,
           }),
+			
+			fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${json.current_location.coordinates[0]},${json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`)
+				.then((coordData) => coordData.json())
+				.then((finalData) => {
+					this.setState({
+					vendor_address: finalData.results[0].formatted_address,
+						}
+						  )
+				}),
             console.log("I helped!"),
             console.log(json),
             json.reviews.forEach(
@@ -186,8 +196,7 @@ export class VendorDisplaySingle extends React.Component {
                   <div className="inline-flex font-semibold">Address: </div>
                   <>
                     {" "}
-                    ({this.state.vendor_location[0]},{" "}
-                    {this.state.vendor_location[1]})
+                    {this.state.vendor_address}
                   </>
                   <br />
                   <div className="inline-flex font-semibold">Cuisine: </div>

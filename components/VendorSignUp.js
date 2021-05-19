@@ -14,7 +14,10 @@ class VendorSignUp extends React.Component {
       menu: [],
       menuDisplay: [],
       error: false,
+      userExists: false,
+      somethingWrong: false,
     };
+    this.checkEmail = this.checkEmail.bind(this);
     this.checkUsername = this.checkUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.checkPass = this.checkPass.bind(this);
@@ -106,9 +109,32 @@ class VendorSignUp extends React.Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.success) {
-          Router.push("/login")
+          console.log("Success!");
+          Router.push("/login");
         } else {
           console.log("Failed");
+          this.setState({
+            somethingWrong: true,
+          });
+        }
+      });
+  }
+
+  async checkEmail(event) {
+    await fetch("/api/users/checkEmail", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: event.target.value }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          this.setState({ userExists: true });
+        } else {
+          this.setState({ userExists: false });
         }
       });
   }
@@ -145,47 +171,49 @@ class VendorSignUp extends React.Component {
 
   handleMenuSubmit(event) {
     event.preventDefault();
-	if(this.state.item_name == "" || this.state.item_desc == "" || this.state.item_price == ""){
-		console.log("Can't do that. 1 or more fields blank.");
-	}
-	else{
-		const new_item = {
-		  food_name: this.state.item_name,
-		  desc: this.state.item_desc,
-		  price: parseFloat(this.state.item_price.toFixed(2)),
-		  in_stock: true,
-		};
-		const newMenu = this.state.menu;
-		newMenu.push(new_item);
-		let newMenuDisplay = this.state.menuDisplay;
-		let new_xml = (
-		  <div className="border-b-2 font-normal col-span-1">
-			{this.state.item_name}
-		  </div>
-		);
-		newMenuDisplay.push(new_xml);
-		new_xml = (
-		  <div className="border-b-2 pl-3 font-normal col-span-1">
-			{this.state.item_price.toFixed(2)}
-		  </div>
-		);
-		newMenuDisplay.push(new_xml);
-		new_xml = (
-		  <div className="border-b-2 font-normal col-span-4">
-			{this.state.item_desc}
-		  </div>
-		);
-		newMenuDisplay.push(new_xml);
+    if (
+      this.state.item_name == "" ||
+      this.state.item_desc == "" ||
+      this.state.item_price == ""
+    ) {
+      console.log("Can't do that. 1 or more fields blank.");
+    } else {
+      const new_item = {
+        food_name: this.state.item_name,
+        desc: this.state.item_desc,
+        price: parseFloat(this.state.item_price.toFixed(2)),
+        in_stock: true,
+      };
+      const newMenu = this.state.menu;
+      newMenu.push(new_item);
+      let newMenuDisplay = this.state.menuDisplay;
+      let new_xml = (
+        <div className="border-b-2 font-normal col-span-1">
+          {this.state.item_name}
+        </div>
+      );
+      newMenuDisplay.push(new_xml);
+      new_xml = (
+        <div className="border-b-2 pl-3 font-normal col-span-1">
+          {this.state.item_price.toFixed(2)}
+        </div>
+      );
+      newMenuDisplay.push(new_xml);
+      new_xml = (
+        <div className="border-b-2 font-normal col-span-4">
+          {this.state.item_desc}
+        </div>
+      );
+      newMenuDisplay.push(new_xml);
 
-		this.setState({
-		  item_name: "",
-		  item_price: 0,
-		  item_desc: "",
-		  menu: newMenu,
-		  menuDisplay: newMenuDisplay,
-		});
-	}
-    
+      this.setState({
+        item_name: "",
+        item_price: 0,
+        item_desc: "",
+        menu: newMenu,
+        menuDisplay: newMenuDisplay,
+      });
+    }
   }
 
   handlePass(event) {
@@ -234,6 +262,11 @@ class VendorSignUp extends React.Component {
                 required
                 className="m-2 px-2 border rounded-md"
               />
+              {this.state.userExists ? (
+                <div className="text-l p-3 font-normal text-red-500 float-right">
+                  An account with this email already exists! 😧{" "}
+                </div>
+              ) : null}{" "}
               <br />
               *Business Name
               <input
@@ -424,13 +457,31 @@ class VendorSignUp extends React.Component {
                 </div>
               ) : null}
               <br />
-              <div className="flex items-center justify-center text-center">
-                <input
-                  type="submit"
-                  value="Create Vendor Account"
-                  class="w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600"
-                />
-              </div>
+              {!this.state.passMatch ||
+              this.state.usernameInvalid ||
+              this.state.userExists ? (
+                <div className="flex items-center justify-center text-center">
+                  <input
+                    disabled
+                    type="submit"
+                    value="Create Vendor Account"
+                    class="w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-gray-500 bg-gray-200 focus:outline-none"
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center justify-center text-center">
+                  <input
+                    type="submit"
+                    value="Create Vendor Account"
+                    class="w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600"
+                  />
+                </div>
+              )}
+              {this.state.somethingWrong ? (
+                <div className="p-2 border-2 border-red-500 text-center text-red-500 text-lg font-normal">
+                  ❗ Something went wrong! Please refresh and try again. ❗
+                </div>
+              ) : null}
             </form>
           </div>
         </div>

@@ -88,7 +88,7 @@ export default class CustomerDashboard extends React.Component {
                       }); //Get the name specifically
                   })
                   .catch((error) => console.log(error)) //If there is some review that doesn't exist in the table, but referenced for some reason
-            )
+            );
         });
     } else {
       console.log("Token not found!");
@@ -105,7 +105,7 @@ export default class CustomerDashboard extends React.Component {
     this.setState({
       lat: coord_pair.latitude,
       lng: coord_pair.longitude,
-	  cust_nearby_vendors: [],
+      cust_nearby_vendors: [],
     });
     await fetch(
       `/api/searchLatLon?latitude=${coord_pair.latitude}&longitude=${
@@ -114,25 +114,21 @@ export default class CustomerDashboard extends React.Component {
     )
       .then((data) => data.json())
       .then((json) => {
-		 json.forEach((vend) => {
-			let lattt = vend.current_location.coordinates[0];
-            let lonnn = vend.current_location.coordinates[1];
-            let formatted_location = fetch(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
-                    )
-                          .then((coordData) => coordData.json())
-                          .then(
-                            (finalData) => {
-								let loc_obj = vend;
-								vend.loc = finalData.results[0].formatted_address;
-								this.setState({
-								  cust_nearby_vendors: [...this.state.cust_nearby_vendors, vend],
-							})
-							}
-                          );
-		 }
-		 )
-        
+        json.forEach((vend) => {
+          let lattt = vend.current_location.coordinates[0];
+          let lonnn = vend.current_location.coordinates[1];
+          let formatted_location = fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lattt},${lonnn}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+          )
+            .then((coordData) => coordData.json())
+            .then((finalData) => {
+              let loc_obj = vend;
+              vend.loc = finalData.results[0].formatted_address;
+              this.setState({
+                cust_nearby_vendors: [...this.state.cust_nearby_vendors, vend],
+              });
+            });
+        });
       });
   }
 
@@ -207,14 +203,17 @@ export default class CustomerDashboard extends React.Component {
                   }}
                   style={{ height: "500px", width: "800px" }}
                 />
-                {this.state.cust_nearby_vendors.length == 0 ? null : (
-                  <div className="w-full font-pridi">
-                    <div className="border-2 border-b-0.5 border-black bg-yellow-500 bg-opacity-50 w-full mx-2 p-2 font-pridi font-semibold text-xl text-center">
-                      Nearby Vendors
-                    </div>
-                    <div className="overflow-y-auto max-h-96 mx-2 border-2 border-black grid grid-cols-1 w-full max-h-96 h-auto border">
-                      {this.state.cust_nearby_vendors.map((vendor) => {
-                        {/* let lat = vendor.current_location.coordinates[0];
+
+                <div className="w-full font-pridi">
+                  <div className="border-2 border-b-0.5 border-black bg-yellow-500 bg-opacity-50 w-full mx-2 p-2 font-pridi font-semibold text-xl text-center">
+                    Nearby Vendors
+                  </div>
+                  <div className="overflow-y-auto max-h-96 mx-2 border-2 border-black grid grid-cols-1 w-full max-h-96 h-auto border">
+                    {this.state.cust_nearby_vendors.length == 0 ? <div className="flex justify-center items-center text-lg text-center h-80">Choose a location to view nearby vendors.</div> : (
+                      <>
+                        {this.state.cust_nearby_vendors.map((vendor) => {
+                          {
+                            /* let lat = vendor.current_location.coordinates[0];
                         let long = vendor.current_location.coordinates[1];
                         let formatted_location = fetch(
                           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
@@ -223,50 +222,52 @@ export default class CustomerDashboard extends React.Component {
                           .then(
                             (finalData) =>
                               finalData.results[0].formatted_address
-                          ); */}
-                        return (
-                          <div className="p-2 border-b-2">
-                            <button
-                              className="w-full text-md border-2 border-black rounded-sm px-2 text-left font-bold hover:bg-yellow-100"
-                              onClick={() =>
-                                Router.push({
-                                  pathname: "/viewVendorSingle",
-                                  query: { vendor_id: vendor._id },
-                                })
-                              }
-                            >
-                              {vendor.business_name}
-                              <div className="align-middle float-right">
-                                <Image
-                                  src="/images/right.png"
-                                  width={30}
-                                  height={15}
-                                />
-                              </div>
-                            </button>
-                            <br />
-                            <strong>Website: </strong>
-                            {vendor.website}
-                            <br />
-                            <strong>Cuisine: </strong>
-                            {vendor.cuisine}
-                            <br />
-							<strong>Location: </strong>
-                            {vendor.loc}
-                            <br />
-                            {vendor.average_rating == -1 ? (
-                              <>No Ratings Yet</>
-                            ) : (
-                              <strong>
-                                Rated {vendor.average_rating} Stars
-                              </strong>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
+                          ); */
+                          }
+                          return (
+                            <div className="p-2 border-b-2">
+                              <button
+                                className="w-full text-md border-2 border-black rounded-sm px-2 text-left font-bold hover:bg-yellow-100"
+                                onClick={() =>
+                                  Router.push({
+                                    pathname: "/viewVendorSingle",
+                                    query: { vendor_id: vendor._id },
+                                  })
+                                }
+                              >
+                                {vendor.business_name}
+                                <div className="align-middle float-right">
+                                  <Image
+                                    src="/images/right.png"
+                                    width={30}
+                                    height={15}
+                                  />
+                                </div>
+                              </button>
+                              <br />
+                              <strong>Website: </strong>
+                              {vendor.website}
+                              <br />
+                              <strong>Cuisine: </strong>
+                              {vendor.cuisine}
+                              <br />
+                              <strong>Location: </strong>
+                              {vendor.loc}
+                              <br />
+                              {vendor.average_rating == -1 ? (
+                                <>No Ratings Yet</>
+                              ) : (
+                                <strong>
+                                  Rated {vendor.average_rating} Stars
+                                </strong>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
             <hr />
@@ -278,25 +279,30 @@ export default class CustomerDashboard extends React.Component {
                     <p>You haven't made any reviews.</p>
                   )}
                   <ul>
-                    {this.state.cust_review_list.sort((review1, review2) => review2.created_at - review1.created_at).map((review) => (
-                      <li className="text-left border-double border-2 border-yellow-400 p-2">
-                        <p className="font-semibold text-xl">
-                          {review.vendor_name}
-                        </p>
-                        <p className="inline-block pr-2 font-semibold">
-                          Your Rating:{" "}
-                        </p>
-                        {review.rating} Stars <br />
-                        <p className="inline-block pr-2 font-semibold">
-                          Your Review:{" "}
-                        </p>
-                        {review.review_content}
-                        <div className="float-right font-bold">
-                          {new Date(review.created_at).toLocaleDateString()}{" "}
-                          {new Date(review.created_at).toLocaleTimeString()}
-                        </div>
-                      </li>
-                    ))}
+                    {this.state.cust_review_list
+                      .sort(
+                        (review1, review2) =>
+                          review2.created_at - review1.created_at
+                      )
+                      .map((review) => (
+                        <li className="text-left border-double border-2 border-yellow-400 p-2">
+                          <p className="font-semibold text-xl">
+                            {review.vendor_name}
+                          </p>
+                          <p className="inline-block pr-2 font-semibold">
+                            Your Rating:{" "}
+                          </p>
+                          {review.rating} Stars <br />
+                          <p className="inline-block pr-2 font-semibold">
+                            Your Review:{" "}
+                          </p>
+                          {review.review_content}
+                          <div className="float-right font-bold">
+                            {new Date(review.created_at).toLocaleDateString()}{" "}
+                            {new Date(review.created_at).toLocaleTimeString()}
+                          </div>
+                        </li>
+                      ))}
                   </ul>
                 </div>
               </div>
