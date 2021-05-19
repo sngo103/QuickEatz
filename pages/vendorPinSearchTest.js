@@ -9,7 +9,7 @@ export default function VendorSearchPinPage() {
         <title>Get Vendor location</title>
       </Head>
 
-      <MapContainerNearbyVendorPin /> 
+      <MapContainerNearbyVendorPin />
     </div>
   );
 }

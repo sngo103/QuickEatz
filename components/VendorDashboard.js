@@ -132,7 +132,7 @@ export default class VendorDashboard extends React.Component {
       console.log("Error: POSITION NOT SET");
     }
   }
-  
+
   render() {
     if (this.state.isLoading) {
       return (

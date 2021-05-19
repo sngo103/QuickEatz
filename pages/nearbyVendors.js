@@ -10,7 +10,7 @@ import {
 
 const ObjectId = require("mongodb").ObjectID;
 
-const libraries = ["places"]; 
+const libraries = ["places"];
 const mapContainerStyle = {
   width: "100vw",
   height: "100vh",
@@ -26,12 +26,11 @@ var address_parts = [];
 var your_address_parts = [];
 
 export default function mApp({ vendors }) {
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4",
     libraries,
   });
-  const [markers, setMarkers] = React.useState([]); 
+  const [markers, setMarkers] = React.useState([]);
 
   const [selected, setSelected] = React.useState(null); //FOR INFO BOX
 

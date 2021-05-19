@@ -11,7 +11,7 @@ class LoginForm extends React.Component {
       password: "",
       account_type: "customer",
       incorrect: false,
-      success: false, 
+      success: false,
       isLoggedIn: false,
     };
 
@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
     if (storedToken && storedEmail && storedState) {
       const data = {
         token: storedToken,
-        email: storedEmail
+        email: storedEmail,
       };
       fetch("/api/auth/verifyShallow", {
         method: "POST",
@@ -37,26 +37,26 @@ class LoginForm extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           if (json.success) {
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
             });
-            Router.push("/dashboard")
+            Router.push("/dashboard");
           } else {
             this.setState({
               isLoggedIn: false,
             });
-            Router.push("/login")
+            Router.push("/login");
           }
         });
     } else {
       this.setState({
         isLoggedIn: false,
-      })
-      Router.push("/login")
+      });
+      Router.push("/login");
     }
   }
 
@@ -115,7 +115,11 @@ class LoginForm extends React.Component {
                 type="email"
                 autocomplete="email"
                 required
-                class={this.state.account_type === "customer" ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-300 z-10 sm:text-sm" : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"}
+                class={
+                  this.state.account_type === "customer"
+                    ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-300 z-10 sm:text-sm"
+                    : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"
+                }
                 placeholder="Email address"
                 onChange={this.handleChange}
                 value={this.state.email}
@@ -131,7 +135,11 @@ class LoginForm extends React.Component {
                 type="password"
                 autocomplete="current-password"
                 required
-                class={this.state.account_type === "customer" ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-300 z-10 sm:text-sm" : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"}
+                class={
+                  this.state.account_type === "customer"
+                    ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-300 z-10 sm:text-sm"
+                    : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"
+                }
                 placeholder="Password"
                 onChange={this.handleChange}
                 value={this.state.password}
@@ -177,7 +185,11 @@ class LoginForm extends React.Component {
                 type="email"
                 autocomplete="email"
                 required
-                class={this.state.account_type === "vendor" ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-600 z-10 sm:text-sm" : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"}
+                class={
+                  this.state.account_type === "vendor"
+                    ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-600 z-10 sm:text-sm"
+                    : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"
+                }
                 placeholder="Email address"
                 onChange={this.handleChange}
                 value={this.state.email}
@@ -193,7 +205,11 @@ class LoginForm extends React.Component {
                 type="password"
                 autocomplete="current-password"
                 required
-                class={this.state.account_type === "vendor" ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-600 z-10 sm:text-sm" : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"}
+                class={
+                  this.state.account_type === "vendor"
+                    ? "appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none ring-4 ring-yellow-600 z-10 sm:text-sm"
+                    : "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none"
+                }
                 placeholder="Password"
                 onChange={this.handleChange}
                 value={this.state.password}
@@ -246,13 +262,21 @@ class LoginForm extends React.Component {
           <div className="w-full">
             <button
               onClick={this.toggleCustomerLogin}
-              class={this.state.account_type === "customer" ? "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-300 focus:outline-none ring-2 ring-offset-2 ring-yellow-300" : "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-300 hover:bg-yellow-200 focus:outline-none"}
+              class={
+                this.state.account_type === "customer"
+                  ? "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-300 focus:outline-none ring-2 ring-offset-2 ring-yellow-300"
+                  : "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-300 hover:bg-yellow-200 focus:outline-none"
+              }
             >
               Customer
             </button>
             <button
               onClick={this.toggleVendorLogin}
-              class={this.state.account_type === "vendor" ? "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-600 focus:outline-none ring-2 ring-offset-2 ring-yellow-600" : "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-600 hover:bg-yellow-500 focus:outline-none"}
+              class={
+                this.state.account_type === "vendor"
+                  ? "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-600 focus:outline-none ring-2 ring-offset-2 ring-yellow-600"
+                  : "w-1/4 py-2 px-6 text-sm font-medium text-white rounded-t-md bg-yellow-600 hover:bg-yellow-500 focus:outline-none"
+              }
             >
               Vendor
             </button>

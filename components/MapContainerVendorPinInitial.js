@@ -51,28 +51,34 @@ export class MapContainerVendorPinInitial extends React.Component {
   }
 
   render() {
-   
-      return (
-        <>
-          <Map
-            google={this.props.google}
-			style={{height: this.props.style.height, position: 'relative', width: this.props.style.width}}
-			containerStyle={{position: 'relative',  width: this.props.containerStyle.width, height: this.props.containerStyle.height}}
-            zoom={9}
-            initialCenter={this.props.initialCenter}
-			center={this.state.marker.position}
-            onClick={this.onMapClick}
-          >
-            {
-              <Marker
-                title={this.state.marker.title}
-                position={this.state.marker.position}
-              />
-            }
-          </Map>
-        </>
-      );
-    
+    return (
+      <>
+        <Map
+          google={this.props.google}
+          style={{
+            height: this.props.style.height,
+            position: "relative",
+            width: this.props.style.width,
+          }}
+          containerStyle={{
+            position: "relative",
+            width: this.props.containerStyle.width,
+            height: this.props.containerStyle.height,
+          }}
+          zoom={9}
+          initialCenter={this.props.initialCenter}
+          center={this.state.marker.position}
+          onClick={this.onMapClick}
+        >
+          {
+            <Marker
+              title={this.state.marker.title}
+              position={this.state.marker.position}
+            />
+          }
+        </Map>
+      </>
+    );
   }
 }
 export default GoogleApiWrapper({

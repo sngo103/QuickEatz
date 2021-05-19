@@ -1,10 +1,10 @@
 import React from "react";
 import NavBar from "../components/NavBar";
 
-function ExtendedNavBar({pageProps}) {
+function ExtendedNavBar({ pageProps }) {
   return (
     <>
-      <NavBar {...pageProps}/>
+      <NavBar {...pageProps} />
     </>
   );
 }

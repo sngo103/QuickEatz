@@ -42,8 +42,11 @@ export default function Trending({ top_vendors }) {
                     }
                   >
                     {" "}
-                    {vendor.business_name}{"    "}
-                    <div className="float-right"><Image src="/images/right.png" width={30} height={15} /></div>
+                    {vendor.business_name}
+                    {"    "}
+                    <div className="float-right">
+                      <Image src="/images/right.png" width={30} height={15} />
+                    </div>
                   </button>
                   <h2>{vendor.website}</h2>
                   <h3>{vendor.cuisine}</h3>

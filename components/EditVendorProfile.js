@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import MapContainerVendorPin from "../components/MapContainerVendorPin";
 import Router from "next/router";
 
 export default class EditVendorProfile extends React.Component {
@@ -37,7 +36,7 @@ export default class EditVendorProfile extends React.Component {
       vendor_new_menuitem_price: "0",
       showing_location: false,
 
-	  usernameInvalid: false,
+      usernameInvalid: false,
     };
     // Bind form/button functions to the instance
     this.handleChange = this.handleChange.bind(this);
@@ -107,25 +106,24 @@ export default class EditVendorProfile extends React.Component {
             vendor_cuisine: json.cuisine,
             vendor_open: json.is_open,
           }),
-            json.reviews.forEach(
-              (r_id) =>
-                fetch(`/api/getReviewsVendor?_id=${r_id}`) // Get the reviews (structure of review system seems flawed, works for now)
-                  .then((r_data) => r_data.json())
-                  .then((r_json) => {
-                    fetch(`/api/getUserName?_id=${r_json.customer_id}`) // Get the customer name of the reviewee for readability
-                      .then((c_data) => c_data.json())
-                      .then((c_json) => {
-                        (r_json.vendor_name = c_json.business_name),
-                          this.setState({
-                            vendor_review_list: [
-                              ...this.state.vendor_review_list,
-                              r_json,
-                            ],
-                          });
-                      }); //Get the name specifically
-                  })
-                  // If there is some review that doesn't exist in the table, but referenced for some reason
-                  .catch((error) => console.log(error)) 
+            json.reviews.forEach((r_id) =>
+              fetch(`/api/getReviewsVendor?_id=${r_id}`) // Get the reviews (structure of review system seems flawed, works for now)
+                .then((r_data) => r_data.json())
+                .then((r_json) => {
+                  fetch(`/api/getUserName?_id=${r_json.customer_id}`) // Get the customer name of the reviewee for readability
+                    .then((c_data) => c_data.json())
+                    .then((c_json) => {
+                      (r_json.vendor_name = c_json.business_name),
+                        this.setState({
+                          vendor_review_list: [
+                            ...this.state.vendor_review_list,
+                            r_json,
+                          ],
+                        });
+                    }); //Get the name specifically
+                })
+                // If there is some review that doesn't exist in the table, but referenced for some reason
+                .catch((error) => console.log(error))
             );
         });
     } else {
@@ -165,37 +163,39 @@ export default class EditVendorProfile extends React.Component {
 
   async handleUserNameSubmit(event) {
     event.preventDefault();
-	
+
     const new_uname = this.state.vendor_new_uname;
 
     if (new_uname != "") {
       //If the new text isn't blank
-	  await fetch("/api/users/checkUsername", { //Check if taken
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: new_uname }),
-		})
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.success) { //Not taken
-          this.setState({ usernameInvalid: false });
-		  const user_email_str = this.state.cust_email;
-		  const data = fetch(
-			`/api/sendVendorUsername?email=${user_email_str}&uname=${new_uname}`
-			);
-      this.setState({
-        vendor_name: new_uname,
-        vendor_new_uname: "",
-      });
-        } else { //Taken
-          this.setState({ usernameInvalid: true });
-        }
-      });
-      
-    } 
+      await fetch("/api/users/checkUsername", {
+        //Check if taken
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: new_uname }),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.success) {
+            //Not taken
+            this.setState({ usernameInvalid: false });
+            const user_email_str = this.state.cust_email;
+            const data = fetch(
+              `/api/sendVendorUsername?email=${user_email_str}&uname=${new_uname}`
+            );
+            this.setState({
+              vendor_name: new_uname,
+              vendor_new_uname: "",
+            });
+          } else {
+            //Taken
+            this.setState({ usernameInvalid: true });
+          }
+        });
+    }
   }
 
   handleFirstNameSubmit(event) {
@@ -212,7 +212,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_firstname: new_fname,
         vendor_new_firstname: "",
       });
-    } 
+    }
   }
   handleLastNameSubmit(event) {
     event.preventDefault();
@@ -228,7 +228,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_lastname: new_lname,
         vendor_new_lastname: "",
       });
-    } 
+    }
   }
   handleEmailSubmit(event) {
     event.preventDefault();
@@ -254,7 +254,7 @@ export default class EditVendorProfile extends React.Component {
           }
         })
         .catch((error) => console.log(error)); //Log it for now
-    } 
+    }
   }
   handleCuisineSubmit(event) {
     event.preventDefault();
@@ -285,7 +285,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_website: new_website,
         vendor_new_website: "",
       });
-    } 
+    }
   }
   handleHoursSubmit(event) {
     event.preventDefault();
@@ -301,7 +301,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_hours: new_hours,
         vendor_new_hours: "",
       });
-    } 
+    }
   }
   handlePhoneNumberSubmit(event) {
     event.preventDefault();
@@ -317,7 +317,7 @@ export default class EditVendorProfile extends React.Component {
         vendor_phonenumber: new_phonenumber,
         vendor_new_phonenumber: "",
       });
-    } 
+    }
   }
 
   handleMapToggle(event) {
@@ -358,8 +358,8 @@ export default class EditVendorProfile extends React.Component {
         vendor_new_menuitem_name: "",
         vendor_new_menuitem_price: "0",
       });
-      Router.reload(); 
-    } 
+      Router.reload();
+    }
   }
 
   render() {
@@ -399,7 +399,9 @@ export default class EditVendorProfile extends React.Component {
                 {this.state.vendor_name}
               </div>
             </p>
-			{this.state.usernameInvalid == true ? <p> This name is taken. Please try again. </p> : null}
+            {this.state.usernameInvalid == true ? (
+              <p> This name is taken. Please try again. </p>
+            ) : null}
             <input
               type="text"
               id="upd_username"
@@ -651,8 +653,11 @@ export default class EditVendorProfile extends React.Component {
             </button>
           )}
           <br />
-		  <br />
-          <div className="inline-flex border text-l m-2 italic font-semibold">*Check and change your current business location by going to your dashboard.</div>
+          <br />
+          <div className="inline-flex border text-l m-2 italic font-semibold">
+            *Check and change your current business location by going to your
+            dashboard.
+          </div>
           <br />
           <div className="text-3xl m-2">Current Menu</div>
           <div className="inline-block border-4 p-2 border-black w-1/2 text-left">
@@ -667,7 +672,7 @@ export default class EditVendorProfile extends React.Component {
                       fetch(
                         `/api/removeVendorMenuItem?email=${this.state.vendor_email}&food_name=${menu_item.food_name}&desc=${menu_item.desc}&price=${menu_item.price}`
                       );
-                      Router.reload(); 
+                      Router.reload();
                     }}
                     className="float-right border-black border p-1 hover:bg-red-500 hover:bg-opacity-25"
                   >

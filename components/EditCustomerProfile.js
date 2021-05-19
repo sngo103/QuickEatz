@@ -207,7 +207,7 @@ export default class EditCustomerProfile extends React.Component {
           }
         })
         .catch((error) => console.log(error)); // Log it for now
-    } 
+    }
   }
 
   render() {

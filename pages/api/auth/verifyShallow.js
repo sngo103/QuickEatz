@@ -14,7 +14,7 @@ export default async (req, res) => {
       res.status(200).json({
         message: "Session found.",
         success: true,
-        account_type: response.account_type
+        account_type: response.account_type,
       }); // User is authorized to view page.
     }
   } else {

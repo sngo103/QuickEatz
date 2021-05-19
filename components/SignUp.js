@@ -1,37 +1,43 @@
 import React from "react";
 import Image from "next/image";
-import CustomerSignUp from "./CustomerSignUp"
-import VendorSignUp from "./VendorSignUp"
+import CustomerSignUp from "./CustomerSignUp";
+import VendorSignUp from "./VendorSignUp";
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       account_type: "customer",
-      customer_class: "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600",
-      vendor_class: "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600",
+      customer_class:
+        "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600",
+      vendor_class:
+        "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600",
     };
 
-    this.handleCustomerSelect = this.handleCustomerSelect.bind(this)
-    this.handleVendorSelect = this.handleVendorSelect.bind(this)    
+    this.handleCustomerSelect = this.handleCustomerSelect.bind(this);
+    this.handleVendorSelect = this.handleVendorSelect.bind(this);
   }
 
   handleCustomerSelect(event) {
-    event.preventDefault()
+    event.preventDefault();
     this.setState({
       account_type: "customer",
-      customer_class: "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 bg-yellow-400 outline-none ring-2 ring-offset-2 ring-yellow-600",
-      vendor_class: "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400",
-    })
+      customer_class:
+        "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 bg-yellow-400 outline-none ring-2 ring-offset-2 ring-yellow-600",
+      vendor_class:
+        "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400",
+    });
   }
 
   handleVendorSelect(event) {
-    event.preventDefault()
+    event.preventDefault();
     this.setState({
       account_type: "vendor",
-      vendor_class: "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 bg-yellow-400 outline-none ring-2 ring-offset-2 ring-yellow-600",
-      customer_class: "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400",
-    })
+      vendor_class:
+        "w-1/3 justify-center py-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 bg-yellow-400 outline-none ring-2 ring-offset-2 ring-yellow-600",
+      customer_class:
+        "w-1/3 py-2 mx-2 my-2 text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-400",
+    });
   }
 
   render() {
@@ -66,7 +72,11 @@ class SignUp extends React.Component {
               </button>
             </div>
           </div>
-            {this.state.account_type === "vendor" ? <VendorSignUp /> : <CustomerSignUp />}
+          {this.state.account_type === "vendor" ? (
+            <VendorSignUp />
+          ) : (
+            <CustomerSignUp />
+          )}
           <br />
         </div>
       </div>

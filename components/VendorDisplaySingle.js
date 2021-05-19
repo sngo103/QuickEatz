@@ -19,7 +19,7 @@ export class VendorDisplaySingle extends React.Component {
       vendor_website: "",
       vendor_phone: "",
       vendor_location: "",
-	  vendor_address: "",
+      vendor_address: "",
     };
   }
 
@@ -81,15 +81,15 @@ export class VendorDisplaySingle extends React.Component {
             vendor_phone: json.phone_number,
             vendor_location: json.current_location.coordinates,
           }),
-			
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${json.current_location.coordinates[0]},${json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`)
-				.then((coordData) => coordData.json())
-				.then((finalData) => {
-					this.setState({
-					vendor_address: finalData.results[0].formatted_address,
-						}
-						  )
-				}),
+            fetch(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${json.current_location.coordinates[0]},${json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+            )
+              .then((coordData) => coordData.json())
+              .then((finalData) => {
+                this.setState({
+                  vendor_address: finalData.results[0].formatted_address,
+                });
+              }),
             json.reviews.forEach(
               (r_id) =>
                 fetch(`/api/getReviewsVendor?_id=${r_id}`) //Get the reviews (structure of review system seems flawed, works for now)
@@ -128,7 +128,7 @@ export class VendorDisplaySingle extends React.Component {
             vendor_rating: json.average_rating,
             vendor_lastname: json.last_name,
             vendor_review_ids: json.reviews,
-            vendor_review_list: [], 
+            vendor_review_list: [],
             vendor_website: json.website,
             vendor_phone: json.phone_number,
             vendor_location: json.current_location.coordinates,
@@ -177,10 +177,7 @@ export class VendorDisplaySingle extends React.Component {
                     {this.state.vendor_lastname}
                   </h2>
                   <div className="inline-flex font-semibold">Address: </div>
-                  <>
-                    {" "}
-                    {this.state.vendor_address}
-                  </>
+                  <> {this.state.vendor_address}</>
                   <br />
                   <div className="inline-flex font-semibold">Cuisine: </div>
                   <> {this.state.vendor_cuisine}</>

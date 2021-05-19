@@ -19,7 +19,6 @@ export default async function handler(req, res) {
     .collection("vendors")
     .findOne(vendor_search_param);
 
-
   //Get that vendor's list of review ids
   const review_list = vendor_reviewed.reviews;
 
@@ -37,7 +36,6 @@ export default async function handler(req, res) {
     sum += all_vendor_reviews[i].rating;
   }
   var avg = parseFloat((sum / all_vendor_reviews.length).toFixed(2));
-
 
   //Update the vendor
   const update_rating = { $set: { average_rating: avg } };

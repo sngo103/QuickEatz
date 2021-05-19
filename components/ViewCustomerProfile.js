@@ -122,9 +122,13 @@ export default class ViewCustomerProfile extends React.Component {
               <div className="mb-3 py-1 border border-yellow-500">
                 {this.state.cust_email}
               </div>
-              
-              {this.state.account_type === "customer" && (<><div className="pb-2 font-semibold">➖ Account Type ➖</div>
-              <div className="border border-yellow-500">Customer</div></>)}
+
+              {this.state.account_type === "customer" && (
+                <>
+                  <div className="pb-2 font-semibold">➖ Account Type ➖</div>
+                  <div className="border border-yellow-500">Customer</div>
+                </>
+              )}
             </h2>
             <div className="flex justify-center items-center">
               <Link href="/editCustomerProfile">

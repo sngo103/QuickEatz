@@ -1,4 +1,4 @@
-import SignUp from '../components/SignUp.js'
+import SignUp from "../components/SignUp.js";
 
 export default function createAccount() {
   return (

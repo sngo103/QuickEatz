@@ -21,7 +21,7 @@ export class WriteReview extends React.Component {
       current_vendor_website: "",
       current_vendor_menu: [],
       current_vendor_cuisine: "",
-	  vendor_address: "",
+      vendor_address: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -81,14 +81,15 @@ export class WriteReview extends React.Component {
           current_vendor_menu: v_json.menu,
           current_vendor_cuisine: v_json.cuisine,
         }),
-		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${v_json.current_location.coordinates[0]},${v_json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`)
-				.then((coordData) => coordData.json())
-				.then((finalData) => {
-					this.setState({
-					vendor_address: finalData.results[0].formatted_address,
-						}
-						  )
-				})
+          fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${v_json.current_location.coordinates[0]},${v_json.current_location.coordinates[1]}&key=AIzaSyClhKv-XaZs679aVBkHB2dqTsQ1asckVx4`
+          )
+            .then((coordData) => coordData.json())
+            .then((finalData) => {
+              this.setState({
+                vendor_address: finalData.results[0].formatted_address,
+              });
+            });
       }); //Get the name specifically
   }
 
@@ -145,10 +146,7 @@ export class WriteReview extends React.Component {
                     {this.state.current_vendor_lastname}
                   </h2>
                   <div className="inline-flex font-semibold">Address: </div>
-                  <>
-					{" "}
-                    {this.state.vendor_address}
-                  </>
+                  <> {this.state.vendor_address}</>
                   <br />
                   <div className="inline-flex font-semibold">Cuisine: </div>
                   <> {this.state.current_vendor_cuisine}</>
@@ -210,7 +208,9 @@ export class WriteReview extends React.Component {
                 onChange={this.handleChange}
                 required
               >
-                <option value="" selected>None </option>
+                <option value="" selected>
+                  None{" "}
+                </option>
                 <option value="1.0"> 1 Star </option>
                 <option value="1.5">1.5 Stars </option>
                 <option value="2.0"> 2 Stars </option>
@@ -237,7 +237,7 @@ export class WriteReview extends React.Component {
                 >
                   Submit Review
                 </button>
-              <hr className="my-2" />
+                <hr className="my-2" />
               </div>
             </form>
           </div>

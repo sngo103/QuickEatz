@@ -28,9 +28,9 @@ export default async (req, res) => {
     const customer = await findUser(_.get(req, "body.email"), "customers");
     if (!_.isEmpty(customer)) {
       // If user already exists, return error
-      res.status(400).json({ 
+      res.status(400).json({
         success: false,
-        error: "User with this email already exists." 
+        error: "User with this email already exists.",
       });
     } else {
       // If not, create a new user

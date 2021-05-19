@@ -1,4 +1,3 @@
-
 const colors = require("tailwindcss/colors");
 
 module.exports = {
@@ -31,7 +30,7 @@ module.exports = {
       turquoise: "4ECDC4",
       mintcream: "F7FFF7",
       bittersweetred: "FF6B6B",
-      naplesyellow: "FFE66D"
+      naplesyellow: "FFE66D",
     },
     spacing: {
       px: "1px",
@@ -77,13 +76,13 @@ module.exports = {
       pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       bounce: "bounce 1s infinite",
     },
-    backgroundColor: theme => ({
-      ...theme('colors'),
+    backgroundColor: (theme) => ({
+      ...theme("colors"),
       eaglegreen: "1A535C",
       turquoise: "4ECDC4",
       mintcream: "F7FFF7",
       bittersweetred: "FF6B6B",
-      naplesyellow: "FFE66D"
+      naplesyellow: "FFE66D",
     }),
     backgroundImage: {
       none: "none",
@@ -144,12 +143,9 @@ module.exports = {
       sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
       DEFAULT:
         "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
-      md:
-        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-      lg:
-        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-      xl:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      md: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      xl: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
       inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
       none: "none",
@@ -221,8 +217,8 @@ module.exports = {
         '"Courier New"',
         "monospace",
       ],
-      pridi: ['Pridi'],
-      bungee: ['"Bungee Shade"']
+      pridi: ["Pridi"],
+      bungee: ['"Bungee Shade"'],
     },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],
@@ -936,4 +932,3 @@ module.exports = {
   },
   plugins: [],
 };
-

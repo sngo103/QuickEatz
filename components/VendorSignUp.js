@@ -168,10 +168,7 @@ class VendorSignUp extends React.Component {
 
   handleMenuSubmit(event) {
     event.preventDefault();
-    if (
-      this.state.item_name != "" &&
-      this.state.item_price != ""
-    ) {
+    if (this.state.item_name != "" && this.state.item_price != "") {
       const new_item = {
         food_name: this.state.item_name,
         desc: this.state.item_desc,
@@ -315,12 +312,7 @@ class VendorSignUp extends React.Component {
                   <div className="col-span-4 font-bold">Hours</div>
                   <div className="col-span-2">Monday</div>
                   <div className="col-span-2">
-                    Opens:{" "}
-                    <input
-                      name="monStart"
-                      type="time"
-                      required
-                    />
+                    Opens: <input name="monStart" type="time" required />
                   </div>
                   <div className="col-span-2">
                     Closes: <input name="monEnd" type="time" required />

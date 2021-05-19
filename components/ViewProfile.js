@@ -37,7 +37,7 @@ export default class ViewProfile extends React.Component {
             this.setState({
               isLoggedIn: true,
               isLoading: false,
-              account_type: storedType
+              account_type: storedType,
             });
           } else {
             this.setState({
@@ -47,17 +47,17 @@ export default class ViewProfile extends React.Component {
             Router.push("/login");
           }
         });
-      } else {
-        this.setState({
-          isLoggedIn: false,
-          isLoading: true,
-        });
-        Router.push("/login");
-      }
+    } else {
+      this.setState({
+        isLoggedIn: false,
+        isLoading: true,
+      });
+      Router.push("/login");
     }
-    
-    render() {
-      if (this.state.account_type === "vendor") {
+  }
+
+  render() {
+    if (this.state.account_type === "vendor") {
       return <ViewVendorProfile />;
     } else {
       return <ViewCustomerProfile />;

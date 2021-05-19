@@ -86,22 +86,34 @@ export default class ViewVendorProfile extends React.Component {
                 <h1 className="text-3xl font-semibold">
                   {this.state.vendorObj.business_name}
                 </h1>
-                {this.state.vendorObj.average_rating != -1 ? 
-				(<div className="font-semibold inline-block">Currently Rated: {this.state.vendorObj.average_rating} Stars</div> ) 
-				: (<div className="font-semibold inline-block"> Not rated. </div>)}
-                
+                {this.state.vendorObj.average_rating != -1 ? (
+                  <div className="font-semibold inline-block">
+                    Currently Rated: {this.state.vendorObj.average_rating} Stars
+                  </div>
+                ) : (
+                  <div className="font-semibold inline-block"> Not rated. </div>
+                )}
                 <br />
-                <div className="font-semibold inline-block">Cuisine: </div> {this.state.vendorObj.cuisine}
+                <div className="font-semibold inline-block">Cuisine: </div>{" "}
+                {this.state.vendorObj.cuisine}
                 <br />
-                <div className="font-semibold inline-block">Hours: </div> {this.state.vendorObj.hours}
+                <div className="font-semibold inline-block">Hours: </div>{" "}
+                {this.state.vendorObj.hours}
                 <br />
-                <div className="font-semibold inline-block">Public Status: </div> {this.state.vendorObj.is_open
+                <div className="font-semibold inline-block">
+                  Public Status:{" "}
+                </div>{" "}
+                {this.state.vendorObj.is_open
                   ? "Business in Operation! 😃"
                   : "Temporarily Closed. 😢"}
                 <br />
-                <div className="font-semibold inline-block">Phone Number: </div> {this.state.vendorObj.phone_number}
+                <div className="font-semibold inline-block">
+                  Phone Number:{" "}
+                </div>{" "}
+                {this.state.vendorObj.phone_number}
                 <br />
-                <div className="font-semibold inline-block">Website: </div> {this.state.vendorObj.website}
+                <div className="font-semibold inline-block">Website: </div>{" "}
+                {this.state.vendorObj.website}
                 <br />
               </div>
               <div className="col-span-3 border-4 border-double border-black p-2 pl-4 pr-4">

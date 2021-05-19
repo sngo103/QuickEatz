@@ -18,7 +18,7 @@ export default class Homepage extends React.Component {
     if (storedToken && storedEmail && storedState) {
       const data = {
         token: storedToken,
-        email: storedEmail
+        email: storedEmail,
       };
       fetch("/api/auth/verifyShallow", {
         method: "POST",
@@ -27,14 +27,14 @@ export default class Homepage extends React.Component {
         },
         body: JSON.stringify(data),
       })
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           if (json.success) {
             localStorage.setItem("quickeatz", true);
             this.setState({
               isLoggedIn: true,
             });
-            Router.push("/dashboard")
+            Router.push("/dashboard");
           } else {
             this.setState({
               isLoggedIn: false,
@@ -44,7 +44,7 @@ export default class Homepage extends React.Component {
     } else {
       this.setState({
         isLoggedIn: false,
-      })
+      });
     }
   }
 

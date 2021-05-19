@@ -1,9 +1,9 @@
-import ViewProfile from '../components/ViewProfile';
+import ViewProfile from "../components/ViewProfile";
 
 export default function Profile() {
   return (
     <div>
       <ViewProfile />
     </div>
-  )
+  );
 }
