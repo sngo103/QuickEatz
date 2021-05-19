@@ -231,7 +231,7 @@ export default class VendorDashboard extends React.Component {
                       containerStyle={{
                         position: "relative",
                       }}
-                      style={{ height: "60vh", width: "70vw" }}
+                      style={{ height: "500px", width: "1200px" }}
                     />
                   </form>
                 </div>

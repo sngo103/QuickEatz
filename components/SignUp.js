@@ -43,7 +43,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div>
-        <div className="container inline-block p-6 text-center font-pridi text-lg">
+        <div className="p-6 text-center font-pridi text-lg">
           <Image
             src="/images/quickeatzlogo.png" // Route of the image file
             height={150} // Desired size with correct aspect ratio
