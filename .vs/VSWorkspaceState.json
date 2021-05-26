@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\components"
   ],
+  "SelectedNode": "\\components\\CustomerDashboard.js",
   "PreviewInSolutionExplorer": false
 }
